@@ -1,5 +1,5 @@
 // Script file for HTML page: setup.html
-
+var finalParseData;
 // Show/hide element based on div id and current state
 function toggleVisiblity(tab) {
   var element = document.getElementById(tab);
