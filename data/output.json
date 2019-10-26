@@ -1,0 +1,43 @@
+{
+  "model": {
+    "hasConflicts": true
+  },
+  "teams": {
+    "1": {
+      "members": ["jdoe2", "kbrown3"]
+    },
+    "2": {
+      "members": ["jsmith1", "mlee4"]
+    }
+  },
+  "people": {
+    "jsmith1": {
+      "id": "jsmith1",
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "jsmith1@uwaterloo.ca",
+      "conflicts": ["jdoe2"]
+    },
+    "jdoe2": {
+      "id": "jdoe2",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jdoe2@uwaterloo.ca",
+      "conflicts": ["jsmith1", "kbrown3", "mlee4"]
+    },
+    "kbrown3": {
+      "id": "kbrown3",
+      "firstName": "Kelly",
+      "lastName": "Brown",
+      "email": "kbrown3@uwaterloo.ca",
+      "conflicts": ["mlee4", "jsmith1", "jdoe2"]
+    },
+    "mlee4": {
+      "id": "mlee4",
+      "firstName": "Mike",
+      "lastName": "Lee",
+      "email": "mlee4@uwaterloo.ca",
+      "conflicts": []
+    }
+  }
+}
