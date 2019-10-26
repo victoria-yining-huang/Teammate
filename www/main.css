@@ -1,0 +1,53 @@
+.hidden {
+  display: none;
+}
+
+.page-content {
+  margin-top: 51px;
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.tab-header {
+  margin: 0px -16px 0px;
+  text-align: left;
+  padding: 16px 64px 16px;
+}
+
+.tab-content {
+  margin: 0px -16px 0px;
+  padding: 16px 64px 16px;
+}
+
+.tab-footer {
+  margin: 0px -16px 0px;
+  text-align: right;
+  padding: 16px;
+}
+
+.row-team {
+  margin: 16px 0px 16px;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Lato", sans-serif;
+}
+.w3-bar,
+h1,
+button {
+  font-family: "Montserrat", sans-serif;
+}
+.fa-anchor,
+.fa-coffee {
+  font-size: 200px;
+}
