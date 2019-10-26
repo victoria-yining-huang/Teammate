@@ -32,8 +32,24 @@
                 <h3>Tab 1</h3>
               </div>
               <div class="w3-container tab-content">
-                Insert tab content here.
-              </div>
+  				<h1 class="w3-margin w3-jumbo"></h1>
+				<p class="w3-xlarge">Start the team generating process by:</p>
+				<div class="w3-large">
+      				<h5> Uploading the exported class roster from 'Team 7 output' as a .csv file.
+      				</h5>
+ 						<input type="file" id="student_data"/>
+            			<button onclick="upload()"class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload Class Roaster</button>
+            		<br><h5> See a sample dataset for uploading class roaster.
+      				</h5>	
+            			<button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" onclick="">Download Sample Files</button>
+
+ 				<!--	<br> <h5>2) Uploading an existing team file as a .xlsx file</h5> -->
+				</div>	
+				<!--	
+            	<input type="file" id="student_data"/>
+            	<button onclick="upload()"class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload</button>
+            -->
+        	  </div>
               <div class="w3-container w3-blue tab-footer page-footer">
                 <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-1', 'tab-2')">
                   Next Tab
@@ -41,6 +57,7 @@
               </div>
             </div>
           </div>
+
           <div id="tab-2" class="hidden">
             <div>
               <div class="w3-container tab-header">
