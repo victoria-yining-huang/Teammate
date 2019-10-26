@@ -30,8 +30,36 @@
 }
 
 .row-team {
-  margin: 16px 0px 16px;
+  margin: 20px 0px 20px;
 }
+
+
+.card-name {
+  padding: 16px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.team-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.cell-team-members {
+  width: 73%;
+  padding: 0px;
+}
+
+.cell-team-issues {
+  width: 25%;
+  padding: 0px;
+}
+
+.cell-divider {
+  width: 2%;
+}
+
+
 
 body,
 h1,

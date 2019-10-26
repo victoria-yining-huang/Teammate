@@ -8,7 +8,7 @@ $.getJSON("data/output.json", function(json) {
 
 function getContent() {
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
-    var team = data["teams"][i]["members"];
+    var team = data["teams"][i];
     createTeam(i, team);
   }
 }
@@ -17,26 +17,54 @@ function createTeam(team_num, team) {
   var row = document.createElement("div");
   row.setAttribute("class", "w3-cell-row row-team");
   var cell_team_members = document.createElement("div");
-  cell_team_members.setAttribute("class", "w3-container w3-cell");
+  cell_team_members.setAttribute("class", "w3-container w3-cell cell-team-members w3-card");
+  var cell_divider = document.createElement("div");
+  cell_divider.setAttribute("class", "w3-cell cell-divider");
   var cell_team_issues = document.createElement("div");
-  cell_team_issues.setAttribute("class", "w3-container w3-cell");
+  cell_team_issues.setAttribute("class", "w3-container w3-cell cell-team-issues w3-card");
   row.appendChild(cell_team_members);
+  row.appendChild(cell_divider);
   row.appendChild(cell_team_issues);
 
-  var card = document.createElement("div");
-  card.setAttribute("class", "w3-card");
-  cell_team_members.appendChild(card);
+  var teamName = document.createElement("div");
+  teamName.setAttribute("class", "card-name");
+  teamName.innerHTML = "Team ".concat(team_num);
+  cell_team_members.appendChild(teamName);
 
-  var table_members = document.createElement("div");
-  table_members.setAttribute("class", "w3-table w3-bordered");
+  var issueName = document.createElement("div");
+  issueName.setAttribute("class", "card-name ");
+  issueName.innerHTML = "Issues";
+  cell_team_issues.appendChild(issueName);
+
+  var table_members = document.createElement("table");
+  table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
-  for (const header_text of ["ID", "Name", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"]) {
+  
+  for (const header_text of ["ID", "Name", "Acad", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"]) {
     var header_cell = document.createElement("th");
     header_cell.innerHTML = header_text;
     header.appendChild(header_cell);
   }
+
   table_members.appendChild(header);
-  card.appendChild(table_members);
+
+  for (const member of team["members"]) {
+    var memberRow = document.createElement("tr");
+    const member_data = data["people"][member]
+
+      for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
+      //create cell for each header and populate each 
+        var memberCell = document.createElement("td");
+        
+        if (memberCellIndex != "") {
+            memberCell.innerHTML = member_data[memberCellIndex];
+        }
+      memberRow.appendChild(memberCell);
+     }
+  table_members.appendChild(memberRow);
+}
+
+  cell_team_members.appendChild(table_members);
 
   var container = document.getElementById("teams-container");
   container.appendChild(row);
@@ -88,7 +116,7 @@ function temp() {
       //create conflict card and populate it
       var conflictsCard = document.createElement("div");
       conflictsCard.setAttribute("class", "card");
-      conflictsCard.style.boxShadow = "0 10px 6px -6px #BBBBBB";
+      conflictsCard.style.boxShadow = "0 10px 6px -6px white";
       conflictsCard.style.height = "100%";
       conflictsColumn.appendChild(conflictsCard);
 
