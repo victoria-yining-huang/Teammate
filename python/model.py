@@ -199,4 +199,7 @@ def testWithGeneratedData(num_students, team_size, num_conflicts):
 # testWithGeneratedData(num_students=74, team_size=7, num_conflicts=10)
 # testWithData()
 
-getTeams()
+try:
+    getTeams()
+except Exception as e:
+    print(e)
