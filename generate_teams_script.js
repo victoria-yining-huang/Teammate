@@ -20,10 +20,11 @@ window.onload = function generateTeams() {
       if (!("error" in obj) && !(obj == null)) {
         console.log(obj.result)
 
-        var index = obj.result.indexOf("json_result_output");
-        
-        sessionStorage.setItem('output', obj.result[index + 1]);
-        window.location.href = "teams.html";
+        if (!obj.result.includes("python_error")){
+          var index = obj.result.indexOf("json_result_output");
+          sessionStorage.setItem('output', obj.result[index + 1]);
+          window.location.href = "teams.html";
+        } 
       } else {
         console.log(obj.error);
       }

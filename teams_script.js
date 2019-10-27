@@ -12,6 +12,11 @@ window.onload = function() {
 }
 
 function getContent(data) {
+
+  if (data["model"]["hasConflicts"]) {
+    document.getElementById("warning").classList.remove("w3-hide");
+  }
+
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
     var team = data["teams"][i];
     createTeam(i, team);
