@@ -1,32 +1,25 @@
 <?php
     header('Content-Type: application/json');
+    setlocale(LC_CTYPE, "en_US.UTF-8");
 
     $aResult = array();
 
     if( !isset($_POST['functionname']) ) { $aResult['error'] = 'No function name!'; }
 
-    //if( !isset($_POST['arguments']) ) { $aResult['error'] = 'No function arguments!'; }
+    if( !isset($_POST['arguments']) ) { $aResult['error'] = 'No function arguments!'; }
 
     if( !isset($aResult['error']) ) {
 
         switch($_POST['functionname']) {
-            case 'add':
-               if( !is_array($_POST['arguments']) || (count($_POST['arguments']) < 2) ) {
-                   $aResult['error'] = 'Error in arguments!';
-               }
-               else {
-                   $aResult['result'] = add(floatval($_POST['arguments'][0]), floatval($_POST['arguments'][1]));
-               }
-               break;
 
-            case 'ping':
-                $aResult['result'] = "Hey";
-                $var = "Hello!";
-                $command = escapeshellcmd('python3 python/model_mamp.py');
+            case 'generate':
+                $args = $_POST['arguments'];
+                $students = escapeshellarg($args["students"] );
+                $conflicts = escapeshellarg($args["conflicts"]);
+                $team_size = escapeshellarg($args["team_size"]);
+                $command = escapeshellcmd('python3 python/mamp.py ' . $students .' '. $conflicts .' '. $team_size);
                 exec($command, $out, $status);
                 $aResult['result'] = $out[2];
-                //$output = shell_exec('python /python/model.py' . $var);
-                //$aResult['result'] = $output;
                 break;
 
             default:

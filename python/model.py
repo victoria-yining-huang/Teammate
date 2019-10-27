@@ -57,8 +57,6 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
         if inverse_conflict not in conflicts:
             conflicts.append(conflict)
 
-    print(conflicts)
-
     d_vars = runModel(num_teams, team_size, num_students, conflicts)
 
     output = {}
@@ -83,8 +81,6 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
         output['teams'][team + 1] = {
             'members': []
         }
-
-    print(output['teams'][1])
 
     # Fill teams with assignments
     for i in range(num_students * num_teams):
@@ -113,9 +109,9 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
 def getTeams():
 
-    data_ids = json.loads(sys.argv[2])
-    data_conflicts = json.loads(sys.argv[2])
-    team_size = sys.argv[3]
+    data_ids = json.loads(sys.argv[1].replace('\\', ''), strict=False)
+    data_conflicts = json.loads(sys.argv[2].replace('\\', ''), strict=False)
+    team_size = int(sys.argv[3])
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
 
