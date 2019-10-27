@@ -31,9 +31,10 @@ def runModel(num_teams, team_size, num_students, conflicts):
                   for j in range(num_students)) + y[i] == team_size
 
     # Constraint: for each conflict, both people cannot be in the same team
+    print(len(xs))
     for i, c in enumerate(conflicts):
         for j in range(num_teams):
-            m += x[team_size*c[0]+j] + x[team_size*c[1]+j] - xs[i+j] <= 1
+            m += x[num_teams*c[0]+j] + x[num_teams*c[1]+j] - xs[i+j] <= 1
 
     # Constraint: the highest slack value is used in min objective
     for i in range(num_teams):
@@ -126,23 +127,24 @@ def getTeams():
 
 def testWithData():
     data_ids = [
-        ["John", "Smith", "jsmith1", "jsmith1@uwaterloo.ca"],
-        ["Jane", "Doe", "jdoe2", "jdoe2@uwaterloo.ca"],
-        ["Kelly", "Brown", "kbrown3", "kbrown3@uwaterloo.ca"],
-        ["Mike", "Lee", "mlee4", "mlee4@uwaterloo.ca"]
+        ["A", "A", "a", "jsmith1@uwaterloo.ca"],
+        ["B", "B", "b", "jdoe2@uwaterloo.ca"],
+        ["C", "C", "c", "kbrown3@uwaterloo.ca"],
+        ["D", "D", "d", "mlee4@uwaterloo.ca"],
+        ["E", "E", "e", "mlee4@uwaterloo.ca"],
+        ["F", "F", "f", "mlee4@uwaterloo.ca"]
     ]
 
     data_conflicts = [
-        ["jsmith1", "jdoe2"],
-        ["kbrown3", "mlee4"],
-        ["kbrown3", "jsmith1"],
-        ["kbrown3", "jdoe2"],
-        ["jdoe2", "jsmith1"],
-        ["jdoe2", "kbrown3"],
-        ["jdoe2", "mlee4"]
+        ["a", "b"],
+        ["b", "a"],
+        ["c", "a"],
+        ["d", "a"],
+        ["e", "a"],
+        ["f", "a"]
     ]
 
-    team_size = 2
+    team_size = 4
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
 
@@ -203,7 +205,8 @@ def testWithGeneratedData(num_students, team_size, num_conflicts):
 # testWithData()
 
 try:
-    getTeams()
+    print("hi")
+    # getTeams()
 except Exception as e:
     print("python_error")
     print(e)
