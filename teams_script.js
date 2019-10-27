@@ -1,12 +1,16 @@
 // Script file for HTML page: view_group.html
 
-$.getJSON("data/output.json", function(json) {
-  data = json;
-  console.log(data);
-  getContent();
-});
+// $.getJSON("data/output.json", function(json) {
+//   data = json;
+//   console.log(data);
+//   getContent();
+// });
 
-function getContent() {
+window.onload = function() {
+  this.getContent(sessionStorage.getItem('output'))
+}
+
+function getContent(data) {
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
     var team = data["teams"][i];
     createTeam(i, team);

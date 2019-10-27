@@ -42,7 +42,6 @@ function generateTeams() {
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
 
   window.location.href = "generate_teams.html";
-  
 }
 
 function uploadStudentData() {
