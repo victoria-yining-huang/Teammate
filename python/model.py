@@ -202,4 +202,5 @@ def testWithGeneratedData(num_students, team_size, num_conflicts):
 try:
     getTeams()
 except Exception as e:
+    print("error")
     print(e)

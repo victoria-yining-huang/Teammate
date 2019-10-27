@@ -19,7 +19,7 @@
                 $team_size = escapeshellarg($args["team_size"]);
                 $command = escapeshellcmd('python3 python/model.py ' . $students .' '. $conflicts .' '. $team_size);
                 exec($command, $out, $status);
-                $aResult['result'] = $out[2];
+                $aResult['result'] = $out;
                 break;
 
             default:

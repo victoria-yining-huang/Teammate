@@ -19,10 +19,10 @@ window.onload = function generateTeams() {
     success: function(obj, textstatus) {
       if (!("error" in obj) && !(obj == null)) {
         console.log(obj.result)
-        data = JSON.parse(obj.result);
+        data = JSON.parse(obj.result[2]);
         
         sessionStorage.setItem('output', data);
-        window.location.href = "teams.html";
+        //window.location.href = "teams.html";
       } else {
         console.log(obj.error);
       }
