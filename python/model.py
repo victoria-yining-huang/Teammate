@@ -120,7 +120,8 @@ def getTeams():
     output = generateTeams(data_ids, data_conflicts,
                            num_teams, team_size, num_students)
 
-    print(json.dumps(output, indent=4))
+    print("json_result_output")
+    print(json.dumps(output))
 
 
 def testWithData():
