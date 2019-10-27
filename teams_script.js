@@ -7,7 +7,8 @@
 // });
 
 window.onload = function() {
-  this.getContent(sessionStorage.getItem('output'))
+  data = JSON.parse(sessionStorage.getItem('output'));
+  this.getContent(data)
 }
 
 function getContent(data) {

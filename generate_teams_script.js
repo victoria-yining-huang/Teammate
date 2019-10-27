@@ -21,9 +21,8 @@ window.onload = function generateTeams() {
         console.log(obj.result)
 
         var index = obj.result.indexOf("json_result_output");
-        data = JSON.parse(obj.result[index + 1]);
         
-        sessionStorage.setItem('output', data);
+        sessionStorage.setItem('output', obj.result[index + 1]);
         window.location.href = "teams.html";
       } else {
         console.log(obj.error);
