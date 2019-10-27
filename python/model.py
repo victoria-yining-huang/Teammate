@@ -109,8 +109,10 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
 def getTeams():
 
-    data_ids = json.loads(sys.argv[1].replace('\\', ''), strict=False)
-    data_conflicts = json.loads(sys.argv[2].replace('\\', ''), strict=False)
+    data_ids = json.loads(sys.argv[1].replace(
+        '\\', '').replace('\r', ''), strict=False)
+    data_conflicts = json.loads(sys.argv[2].replace(
+        '\\', '').replace('\r', ''), strict=False)
     team_size = int(sys.argv[3])
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
