@@ -31,9 +31,10 @@ def runModel(num_teams, team_size, num_students, conflicts):
                   for j in range(num_students)) + y[i] == team_size
 
     # Constraint: for each conflict, both people cannot be in the same team
+    print(len(xs))
     for i, c in enumerate(conflicts):
         for j in range(num_teams):
-            m += x[team_size*c[0]+j] + x[team_size*c[1]+j] - xs[i+j] <= 1
+            m += x[num_teams*c[0]+j] + x[num_teams*c[1]+j] - xs[i+j] <= 1
 
     # Constraint: the highest slack value is used in min objective
     for i in range(num_teams):
@@ -56,8 +57,6 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
                             ids.index(data_conflicts[i][0])]
         if inverse_conflict not in conflicts:
             conflicts.append(conflict)
-
-    print(conflicts)
 
     d_vars = runModel(num_teams, team_size, num_students, conflicts)
 
@@ -83,8 +82,6 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
         output['teams'][team + 1] = {
             'members': []
         }
-
-    print(output['teams'][1])
 
     # Fill teams with assignments
     for i in range(num_students * num_teams):
@@ -113,37 +110,41 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
 def getTeams():
 
-    data_ids = json.loads(sys.argv[2])
-    data_conflicts = json.loads(sys.argv[2])
-    team_size = sys.argv[3]
+    data_ids = json.loads(sys.argv[1].replace(
+        '\\', '').replace('\r', ''), strict=False)
+    data_conflicts = json.loads(sys.argv[2].replace(
+        '\\', '').replace('\r', ''), strict=False)
+    team_size = int(sys.argv[3])
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
 
     output = generateTeams(data_ids, data_conflicts,
                            num_teams, team_size, num_students)
 
-    print(json.dumps(output, indent=4))
+    print("json_result_output")
+    print(json.dumps(output))
 
 
 def testWithData():
     data_ids = [
-        ["John", "Smith", "jsmith1", "jsmith1@uwaterloo.ca"],
-        ["Jane", "Doe", "jdoe2", "jdoe2@uwaterloo.ca"],
-        ["Kelly", "Brown", "kbrown3", "kbrown3@uwaterloo.ca"],
-        ["Mike", "Lee", "mlee4", "mlee4@uwaterloo.ca"]
+        ["A", "A", "a", "jsmith1@uwaterloo.ca"],
+        ["B", "B", "b", "jdoe2@uwaterloo.ca"],
+        ["C", "C", "c", "kbrown3@uwaterloo.ca"],
+        ["D", "D", "d", "mlee4@uwaterloo.ca"],
+        ["E", "E", "e", "mlee4@uwaterloo.ca"],
+        ["F", "F", "f", "mlee4@uwaterloo.ca"]
     ]
 
     data_conflicts = [
-        ["jsmith1", "jdoe2"],
-        ["kbrown3", "mlee4"],
-        ["kbrown3", "jsmith1"],
-        ["kbrown3", "jdoe2"],
-        ["jdoe2", "jsmith1"],
-        ["jdoe2", "kbrown3"],
-        ["jdoe2", "mlee4"]
+        ["a", "b"],
+        ["b", "a"],
+        ["c", "a"],
+        ["d", "a"],
+        ["e", "a"],
+        ["f", "a"]
     ]
 
-    team_size = 2
+    team_size = 4
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
 
@@ -201,5 +202,10 @@ def testWithGeneratedData(num_students, team_size, num_conflicts):
 
 
 # testWithGeneratedData(num_students=74, team_size=7, num_conflicts=10)
+# testWithData()
 
-testWithData()
+try:
+    getTeams()
+except Exception as e:
+    print("python_error")
+    print(e)

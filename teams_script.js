@@ -1,12 +1,22 @@
 // Script file for HTML page: view_group.html
 
-$.getJSON("data/output.json", function(json) {
-  data = json;
-  console.log(data);
-  getContent();
-});
+// $.getJSON("data/output.json", function(json) {
+//   data = json;
+//   console.log(data);
+//   getContent();
+// });
 
-function getContent() {
+window.onload = function() {
+  data = JSON.parse(sessionStorage.getItem('output'));
+  this.getContent(data)
+}
+
+function getContent(data) {
+
+  if (data["model"]["hasConflicts"]) {
+    document.getElementById("warning").classList.remove("w3-hide");
+  }
+
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
     var team = data["teams"][i];
     createTeam(i, team);

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
   <!-- Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript" src="teams_script.js"></script>
+  <script type="text/javascript" src="generate_teams_script.js"></script>
 
   <body>
     <!-- Navbar -->
@@ -21,15 +21,12 @@
 
     <!-- Page Content -->
     <div class="page-content">
-      <div class="w3-container w3-blue w3-center">
-        <h1>Teams</h1>
-      </div>
-      <div id="warning" class="w3-container w3-hide">
-        <div class="w3-card w3-red w3-padding-large w3-margin">
-          The model could not satisfy all student conflicts. This solution is sub-optimal.
+      <div id="tabs" class="w3-container">
+        <div class="w3-display-middle w3-center">
+          <img width="100px" src="https://www.rosta.ch/wGlobal/wGlobal/layout/images/transparent-google-loader-gif-4.gif" />
+          <h3 class="w3-margin-top">Generating Teams...</h3>
         </div>
       </div>
-      <div id="teams-container" class="w3-container"></div>
     </div>
   </body>
 </html>
