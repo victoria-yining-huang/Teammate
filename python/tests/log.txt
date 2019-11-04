@@ -1,0 +1,42 @@
+teammate Model Tests
+
+### Test ###
+
+## INPUT ##
+Number of students: 16
+Genders: 56.2% men (9), 31.2% women (5), 12.5% other (2)
+Average gpa: 73.7
+Bottom tier gpas: [50, 55, 60, 65, 70, 70]
+Top tier gpas: [75, 75, 75, 90, 95, 99]
+Input team size: 3
+Expected number of teams: 6
+Expected team sizes: [3, 3, 3, 3, 2, 2]
+Input number of conflicts: 6
+
+## OUTPUT ##
+
+team 	size 	conflicts 	members
+1		3		0			['a', 'i', 'p']
+2		3		0			['b', 'd', 'o']
+3		2		0			['c', 'n']
+4		3		0			['g', 'l', 'm']
+5		2		0			['h', 'j']
+6		3		0			['e', 'f', 'k']
+Number of teams and team sizes are correct.
+No conflicts within teams.
+
+team 	avg gpa 	bottom tier 	top tier 	gpas
+1		73.3		True			True		[55, 75, 90]
+2		73.3		True			True		[60, 65, 95]
+3		74.5		True			True		[50, 99]
+4		73.3		True			True		[70, 75, 75]
+5		75.0		False			True		[75, 75]
+6		73.3		True			True		[70, 75, 75]
+
+team 	% men 	% women 	% other 	genders
+1		67		33			0			['m', 'm', 'w']
+2		33		33			33			['m', 'w', 'x']
+3		50		0			50			['m', 'x']
+4		33		67			0			['m', 'w', 'w']
+5		50		50			0			['m', 'w']
+6		100		0			0			['m', 'm', 'm']
