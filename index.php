@@ -92,7 +92,6 @@
               <div id="file-upload-filename"></div>
             <!--</form>-->
             <p id="error"></p>
-
             <br />
             <h5>See a sample table for the student conflict file.</h5>
             <a href="data\conflicts.csv" target="_blank" class="w3-margin-top">

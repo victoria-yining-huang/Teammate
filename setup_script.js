@@ -82,7 +82,6 @@ function readConflicts() {
   }
 }
 
-
 function getNumStudents(array) {
   numStudents = array.length;
   document.getElementById("insertNumStudents").innerHTML = numStudents;
@@ -98,6 +97,7 @@ function getNumTeams(num_students) {
 function calculateNumTeams(num_students, team_size) {
   return Math.floor(num_students / team_size) + Math.min(1, num_students % team_size);
 }
+
 
 function uploadConflict() {
   document.getElementById('buttonid').addEventListener('click', openDialog);
@@ -150,3 +150,4 @@ function uploadConflict() {
     }
   }
 }
+

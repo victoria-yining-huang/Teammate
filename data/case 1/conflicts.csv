@@ -1,4 +1,4 @@
 student_id,conflict_student_id
 jsmith1,jdoe2
-jsmith1,mlee4
-jsmith1,kbrown3
+jdoe2,kbrown3
+kbrown3,mlee4
