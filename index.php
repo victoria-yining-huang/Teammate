@@ -90,7 +90,7 @@
               <input id="conflict_data" type="file" name="my_file" hidden/>
               <input id="buttonid" type="button" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" value="Upload Conflict File" onclick="readConflicts()"/> 
               <div id="file-upload-filename"></div>
-            </form> 
+            <!--</form>-->
             <p id="error"></p>
 
             <br />

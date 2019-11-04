@@ -125,10 +125,9 @@ function uploadConflict() {
     var ext = splitFile.pop(); // Get last element 
     // getting the file
     const fi = document.getElementById('conflict_data'); 
-    readConflicts(fi)
 
     if (ext != "csv") { // checking the file extention to make sure that it is a CSV
-      document.getElementById("error").innerHTML = "Error: Incorrect file type. Please click the Upload Conflict File button to try again.";
+      document.getElementById("error").innerHTML = "Error: Incorrect file type. Ensure file type is CSV and click the Upload Conflict File button to try again.";
       document.getElementById("generate").style.display = 'none';
     } else if (fi.files.length > 0) { 
         for (i = 0; i <= fi.files.length - 1; i++) { 
@@ -138,11 +137,12 @@ function uploadConflict() {
           document.getElementById("error").innerHTML = "";
           document.getElementById("generate").style.display="inline-block";
 
+
           // The size of the file. 
-          if (file >= 4000000) { // check for large files
-              document.getElementById("error").innerHTML = "Error: File is too large. Max: 4MB. Please click the Upload Conflict File button to try again.";
+          if (file >= 3000000) { // check for large files
+              document.getElementById("error").innerHTML = "Error: File is too large. Please click the Upload Conflict File button to try again";
               document.getElementById("generate").style.display="none"; // hiding upload button
-          } else if (file <= 27000) { // check for empty files
+          } else if (file <= 30000) { // check for empty files
               document.getElementById("error").innerHTML = "Error: File is empty. Please click the Upload Conflict File button to try again";
               document.getElementById("generate").style.display="none"; // hiding upload button
           } 
