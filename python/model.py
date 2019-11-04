@@ -1,30 +1,25 @@
 import random
-import statistics
 import json
 import sys
-from mip import Model, xsum, minimize, BINARY, INTEGER, CONTINUOUS
+from mip import Model, xsum, minimize, BINARY, INTEGER
 # Includes COIN-OR Linear Programming Solver - CLP
 
 
-def runModel(num_teams, team_size, num_students, conflicts, gpas):
+def runModel(num_teams, team_size, num_students, conflicts):
 
     #### MIP MODEL ####
+
     n = num_students * num_teams
-    class_avg = int(round(statistics.mean(gpas), 0))
     m = Model()
 
     # Decision variables
-    x = [m.add_var(var_type=BINARY) for i in range(n)]  # Student i on team j
-    xs = [m.add_var(var_type=BINARY) for c in range(
-        len(conflicts)*num_teams)]  # Slack var for conflicts
-    y = [m.add_var(var_type=INTEGER)
-         for i in range(num_teams)]  # Slack var for team size
-    # Slack var for total team gpa
-    ygpa = [m.add_var(var_type=INTEGER) for i in range(num_teams * 2)]
-    z = m.add_var(var_type=INTEGER)  # Sum of team size slack vars
+    x = [m.add_var(var_type=BINARY) for i in range(n)]
+    xs = [m.add_var(var_type=BINARY) for c in range(len(conflicts)*num_teams)]
+    y = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
+    z = m.add_var(var_type=INTEGER)
 
     # Objective function
-    m.objective = minimize(z + 1000*xsum(xs) + xsum(ygpa))
+    m.objective = minimize(z + 1000*xsum(xs))
 
     # Constraint: student can only be selected once
     for i in range(num_students):
@@ -36,23 +31,12 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas):
                   for j in range(num_students)) + y[i] == team_size
 
     # Constraint: for each conflict, both people cannot be in the same team
+    print(len(xs))
     for i, c in enumerate(conflicts):
         for j in range(num_teams):
             m += x[num_teams*c[0]+j] + x[num_teams*c[1]+j] - xs[i+j] <= 1
 
     # Constraint: the highest slack value is used in min objective
-    for i in range(num_teams):
-        m += xsum(x[i + j*num_teams]
-                  for j in range(num_students)) + y[i] == team_size
-
-    # Constraint: balance total team gpa to class average
-    for i in range(num_teams):
-        m += xsum((gpas[j] - class_avg) * x[i + j*num_teams]
-                  for j in range(num_students)) + ygpa[i] - ygpa[i + num_teams] == 0
-
-    # Constraint: minimize individual deviation from class average
-
-    # Constraint:
     for i in range(num_teams):
         m += z >= y[i]
 
@@ -74,10 +58,7 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
         if inverse_conflict not in conflicts:
             conflicts.append(conflict)
 
-    gpas = [row[4] for row in data_ids]
-
-    d_vars = runModel(num_teams, team_size, num_students,
-                      conflicts, gpas)
+    d_vars = runModel(num_teams, team_size, num_students, conflicts)
 
     output = {}
 
@@ -117,8 +98,6 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
             'firstName': data_ids[i][0],
             'lastName': data_ids[i][1],
             'email': data_ids[i][3],
-            'gpa': data_ids[i][4],
-            'gender': data_ids[i][5],
             'conflicts': []
         }
         for j in range(len(data_conflicts)):
@@ -148,22 +127,12 @@ def getTeams():
 
 def testWithData():
     data_ids = [
-        ["A", "A", "a", "email", 55],
-        ["B", "B", "b", "email", 60],
-        ["C", "C", "c", "email", 50],
-        ["D", "D", "d", "email", 70],
-        ["E", "E", "e", "email", 70],
-        ["F", "F", "f", "email", 75],
-        ["G", "G", "g", "email", 75],
-        ["H", "H", "h", "email", 75],
-        ["I", "I", "i", "email", 75],
-        ["J", "J", "j", "email", 75],
-        ["K", "K", "k", "email", 75],
-        ["L", "L", "l", "email", 75],
-        ["M", "M", "m", "email", 70],
-        ["N", "N", "n", "email", 100],
-        ["O", "O", "o", "email", 90],
-        ["P", "P", "p", "email", 90]
+        ["A", "A", "a", "jsmith1@uwaterloo.ca"],
+        ["B", "B", "b", "jdoe2@uwaterloo.ca"],
+        ["C", "C", "c", "kbrown3@uwaterloo.ca"],
+        ["D", "D", "d", "mlee4@uwaterloo.ca"],
+        ["E", "E", "e", "mlee4@uwaterloo.ca"],
+        ["F", "F", "f", "mlee4@uwaterloo.ca"]
     ]
 
     data_conflicts = [
@@ -182,7 +151,7 @@ def testWithData():
     output = generateTeams(data_ids, data_conflicts,
                            num_teams, team_size, num_students)
 
-    #print(json.dumps(output, indent=4))
+    print(json.dumps(output, indent=4))
 
 
 def testWithGeneratedData(num_students, team_size, num_conflicts):
@@ -236,8 +205,7 @@ def testWithGeneratedData(num_students, team_size, num_conflicts):
 # testWithData()
 
 try:
-    # getTeams()
-    testWithData()
+    getTeams()
 except Exception as e:
     print("python_error")
     print(e)
