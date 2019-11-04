@@ -142,7 +142,7 @@ function uploadConflict() {
           if (file >= 3000000) { // check for large files
               document.getElementById("error").innerHTML = "Error: File is too large. Please click the Upload Conflict File button to try again";
               document.getElementById("generate").style.display="none"; // hiding upload button
-          } else if (file <= 30000) { // check for empty files
+          } else if (file <= 0) { // check for empty files
               document.getElementById("error").innerHTML = "Error: File is empty. Please click the Upload Conflict File button to try again";
               document.getElementById("generate").style.display="none"; // hiding upload button
           } 
