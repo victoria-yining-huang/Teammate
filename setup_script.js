@@ -100,6 +100,7 @@ function calculateNumTeams(num_students, team_size) {
 
 
 function uploadConflict() {
+  document.getElementById("generate").style.display = 'none';
   document.getElementById('buttonid').addEventListener('click', openDialog);
   function openDialog() {
       document.getElementById('conflict_data').click();
@@ -125,7 +126,7 @@ function uploadConflict() {
     var ext = splitFile.pop(); // Get last element 
     // getting the file
     const fi = document.getElementById('conflict_data'); 
-
+    readConflicts(fi);
     if (ext != "csv") { // checking the file extention to make sure that it is a CSV
       document.getElementById("error").innerHTML = "Error: Incorrect file type. Ensure file type is CSV and click the Upload Conflict File button to try again.";
       document.getElementById("generate").style.display = 'none';
