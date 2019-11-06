@@ -10,23 +10,38 @@ $.getJSON("data/output.json", function(json) {
  });
 
 
+// VIc
+// window.onload = function() {
+//   //data = JSON.parse(sessionStorage.getItem('output'));
+//   //this.getContent();
+// }
 
-window.onload = function() {
-  //data = JSON.parse(sessionStorage.getItem('output'));
-  //this.getContent();
-}
+// // Get the size of an object
+// Object.size = function(obj) {
+//     var size = 0, key;
+//     for (key in obj) {
+//         if (obj.hasOwnProperty(key)) size++;
+//     }
+//     return size;
+// };
 
-// Get the size of an object
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
+// function getContent() {
+//    var data = JSON.parse(sessionStorage.dataStr);
+//Vic
+$.getJSON("data/output.json", function(json) {
+ sessionStorage.setItem("data", JSON.stringify(json));
+ getContent();
+});
+
+// window.onload = function() {
+//   data = JSON.parse(sessionStorage.getItem('output'));
+//   this.getContent(data)
+// }
 
 function getContent() {
-   var data = JSON.parse(sessionStorage.dataStr);
+
+  var data = JSON.parse(sessionStorage.getItem("data"));
+ 
   if (data["model"]["hasConflicts"]) {
     document.getElementById("warning").classList.remove("w3-hide");
   }
@@ -65,6 +80,9 @@ function getIssues() {
 
 function createTeam(team_num, team) {
 
+//vic
+  // var data = JSON.parse(sessionStorage.getItem("data"));
+//vic
   var row = document.createElement("div");
   row.setAttribute("class", "w3-cell-row row-team");
   var cell_team_members = document.createElement("div");
@@ -91,7 +109,7 @@ function createTeam(team_num, team) {
   table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
   
-  for (const header_text of ["ID", "Name", "Acad", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"]) {
+  for (const header_text of ["ID", "Name", "GPA", "Gender", "Conflicts", "Move"]) {
     var header_cell = document.createElement("th");
     header_cell.innerHTML = header_text;
     header.appendChild(header_cell);
@@ -102,13 +120,36 @@ function createTeam(team_num, team) {
   for (const member of team["members"]) {
     var memberRow = document.createElement("tr");
     const member_data = data["people"][member]
+//vic
+      // for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
+      // //create cell for each header and populate each
+//vic
 
-      for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
-      //create cell for each header and populate each
+      for (const memberCellIndex of ["id", "firstName", "gpa", "gender", "conflicts", ""]) {
+      //create cell for each header and populate each 
         var memberCell = document.createElement("td");
 
         if (memberCellIndex != "") {
             memberCell.innerHTML = member_data[memberCellIndex];
+
+        }
+
+// to display the first and last name in the conflict column rather their userid
+
+        var member_conflicts = ""
+
+        if(memberCellIndex == "conflicts") {
+          for (const member_conflict of member_data["conflicts"]){
+            var member_conflict_data = data["people"][member_conflict];
+
+            var firstName = member_conflict_data["firstName"];
+            var lastName = member_conflict_data["lastName"];
+            var conflictFullName = firstName + " " + lastName + "<br>";    
+            member_conflicts = member_conflicts.concat(conflictFullName);
+          }
+
+        memberCell.innerHTML = member_conflicts;
+
         }
       memberRow.appendChild(memberCell);
      }
@@ -136,6 +177,12 @@ function createTeam(team_num, team) {
   var container = document.getElementById("teams-container");
   container.appendChild(row);
 }
+
+
+
+
+// TEAM 5 CODE BELOW //
+
 
 function temp() {
   //create row for each team
@@ -196,6 +243,13 @@ function temp() {
       var conflictsBody = document.createElement("div");
       conflictsBody.setAttribute("class", "card-body");
       var conflicts = showIssues(teamNamesArray[i]);
+
+
+      var conlictFirstLast = teamNamesArray.find(item => item.firstName == teamNamesArray[i]);
+
+      alert(teamNamesArray.firstName); // John
+     
+
       conflictsBody.appendChild(conflicts);
       conflictsCard.appendChild(conflictsBody);
     }
@@ -239,8 +293,6 @@ function populate(team) {
     //get student info
     var student = students[studentID]["name"];
     var gender = students[studentID]["gender"];
-    var prog = students[studentID]["prog"];
-    var proj = students[studentID]["proj"];
     var acad = students[studentID]["acad"];
     var conflict = students[studentID]["conflict"];
 
@@ -279,115 +331,4 @@ function populate(team) {
   }
   table.appendChild(body);
   element.appendChild(table);
-}
-
-function addToTeam(teamID, studentID) {
-    var teams = getTeams();
-    teams[teamID].push(parseInt(studentID));
-    sessionStorage.teams = JSON.stringify(teams);
-}
-
-function removeFromTeam(teamID, studentID) {
-    var teams = getTeams();
-    teams[teamID].remove(parseInt(studentID));
-    sessionStorage.teams = JSON.stringify(teams);
-}
-
-function moveMember(studentID, currentTeamID, targetTeamID) {
-    removeFromTeam(currentTeamID, studentID);
-    addToTeam(targetTeamID, studentID);
-    sortTeam(targetTeamID);
-    location.reload();
-}
-
-// Show move bar
-function showMoveBar(studentTeamID) {
-    // show move bar
-    var bar = document.getElementById("move-bar");
-    bar.style.display = "block";
-    bar.style.position = "fixed";
-
-    disableMoveBtns(); // prevent moving more than 1 member
-
-    // get data
-    var teams = getTeams();
-    var students = getStudents();
-
-    // extract student id and team id from parameter
-    var studentID = studentTeamID.split("-")[0];
-    var currentTeamID = studentTeamID.split("-")[1];
-
-    // generate text
-    var studentName = students[studentID]["name"];
-    var text = "Where would you like to move " + studentName + "?";
-    var tnode = document.createTextNode(text);
-    document.getElementById("move-text").appendChild(tnode);
-
-    // assign function to submit btn
-    var dropdown = document.getElementById("teams-dropdown");
-    var submitBtn = document.getElementById("submit-move-btn");
-    submitBtn.onclick = function () {
-        var targetTeam = dropdown.value;
-        targetTeam = targetTeam.replace(/\s/g, '').toLowerCase();
-        moveMember(studentID, currentTeamID, targetTeam);
-    };
-
-    //assign function to cancel btn
-    var cancelBtn = document.getElementById("cancel-move-btn");
-    cancelBtn.onclick = function () {
-        enableMoveBtns();
-        hideMoveBar();
-    };
-
-}
-
-function hideMoveBar() {
-    var bar = document.getElementById("move-bar");
-    bar.style.display = "none";
-    bar.style.position = "fixed";
-    // remove previous text from label
-    var text = document.getElementById("move-text");
-    text.removeChild(text.childNodes[0]);
-}
-
-function disableMoveBtns() {
-    var btns = document.getElementsByClassName("move-button");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].disabled = true;
-    }
-}
-
-function enableMoveBtns() {
-    var btns = document.getElementsByClassName("move-button");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].disabled = false;
-    }
-}
-
-function sortTeam(teamId) {
-    teams = getTeams();
-    students = getStudents();
-
-    //put team members into array
-    team = teams[teamId];
-    studentAcad = []; // data structure in the form of [{2019384: A} ]
-    for (var i = 0; i < team.length; i++) {
-        studentAcad.push({
-            id: team[i],
-            acad: students[team[i]].acad
-        })
-    }
-
-    // sort array
-    var sorted = studentAcad.sort(function (a,b) {
-        return (a.acad > b.acad) ? 1 : ((b.acad > a.acad) ? -1 : 0)
-    })
-
-    // write sorted student ids to array
-    var sortedTeam = sorted.map(function (student) {
-        return student.id;
-    })
-    // save sorted team to session data
-    teams[teamId] = sortedTeam;
-    sessionStorage.teams = JSON.stringify(teams);
 }
