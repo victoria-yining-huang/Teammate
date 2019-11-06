@@ -1,18 +1,32 @@
 // Script file for HTML page: view_group.html
+var dataStr;
+var data;
 
-// $.getJSON("data/output.json", function(json) {
-//   data = json;
-//   console.log(data);
-//   getContent();
-// });
+$.getJSON("data/output.json", function(json) {
+   data = json;
+   console.log(data);
+   sessionStorage.setItem('dataStr', JSON.stringify(data));
+   getContent();
+ });
+
+
 
 window.onload = function() {
-  data = JSON.parse(sessionStorage.getItem('output'));
-  this.getContent(data)
+  //data = JSON.parse(sessionStorage.getItem('output'));
+  //this.getContent();
 }
 
-function getContent(data) {
+// Get the size of an object
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
 
+function getContent() {
+   var data = JSON.parse(sessionStorage.dataStr);
   if (data["model"]["hasConflicts"]) {
     document.getElementById("warning").classList.remove("w3-hide");
   }
@@ -21,9 +35,36 @@ function getContent(data) {
     var team = data["teams"][i];
     createTeam(i, team);
   }
+
+
+}
+
+function generateDropDown(){
+    var data = JSON.parse(sessionStorage.dataStr);
+    var x = document.getElementById("generateTeams");
+    var size = Object.size(data["teams"]);
+
+    for (var i = 1; i <= size; i++) {
+        var option = document.createElement("option");
+        option.text = i;
+        x.add(option);
+    }
+}
+
+function getTeams() {
+    return JSON.parse(sessionStorage.teams);
+}
+
+function getStudents(){
+    return JSON.parse(sessionStorage.students);
+}
+
+function getIssues() {
+    return JSON.parse(sessionStorage.issues);
 }
 
 function createTeam(team_num, team) {
+
   var row = document.createElement("div");
   row.setAttribute("class", "w3-cell-row row-team");
   var cell_team_members = document.createElement("div");
@@ -63,11 +104,27 @@ function createTeam(team_num, team) {
     const member_data = data["people"][member]
 
       for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
-      //create cell for each header and populate each 
+      //create cell for each header and populate each
         var memberCell = document.createElement("td");
-        
+
         if (memberCellIndex != "") {
             memberCell.innerHTML = member_data[memberCellIndex];
+        }
+      memberRow.appendChild(memberCell);
+     }
+     for (const memberCellIndex of ["move"]) {
+      //create cell for each header and populate each
+        var memberCell = document.createElement("td");
+
+        if (memberCellIndex != "") {
+
+            var btn = document.createElement('input');
+            btn.type = "button";
+            btn.className = "btn btn-primary mb-2 mr-sm-2";
+            btn.value = "move";
+            //btn.onclick = (function(entry) {return function() {chooseUser(entry);}})(entry);
+            memberRow.appendChild(btn);
+
         }
       memberRow.appendChild(memberCell);
      }
@@ -222,4 +279,115 @@ function populate(team) {
   }
   table.appendChild(body);
   element.appendChild(table);
+}
+
+function addToTeam(teamID, studentID) {
+    var teams = getTeams();
+    teams[teamID].push(parseInt(studentID));
+    sessionStorage.teams = JSON.stringify(teams);
+}
+
+function removeFromTeam(teamID, studentID) {
+    var teams = getTeams();
+    teams[teamID].remove(parseInt(studentID));
+    sessionStorage.teams = JSON.stringify(teams);
+}
+
+function moveMember(studentID, currentTeamID, targetTeamID) {
+    removeFromTeam(currentTeamID, studentID);
+    addToTeam(targetTeamID, studentID);
+    sortTeam(targetTeamID);
+    location.reload();
+}
+
+// Show move bar
+function showMoveBar(studentTeamID) {
+    // show move bar
+    var bar = document.getElementById("move-bar");
+    bar.style.display = "block";
+    bar.style.position = "fixed";
+
+    disableMoveBtns(); // prevent moving more than 1 member
+
+    // get data
+    var teams = getTeams();
+    var students = getStudents();
+
+    // extract student id and team id from parameter
+    var studentID = studentTeamID.split("-")[0];
+    var currentTeamID = studentTeamID.split("-")[1];
+
+    // generate text
+    var studentName = students[studentID]["name"];
+    var text = "Where would you like to move " + studentName + "?";
+    var tnode = document.createTextNode(text);
+    document.getElementById("move-text").appendChild(tnode);
+
+    // assign function to submit btn
+    var dropdown = document.getElementById("teams-dropdown");
+    var submitBtn = document.getElementById("submit-move-btn");
+    submitBtn.onclick = function () {
+        var targetTeam = dropdown.value;
+        targetTeam = targetTeam.replace(/\s/g, '').toLowerCase();
+        moveMember(studentID, currentTeamID, targetTeam);
+    };
+
+    //assign function to cancel btn
+    var cancelBtn = document.getElementById("cancel-move-btn");
+    cancelBtn.onclick = function () {
+        enableMoveBtns();
+        hideMoveBar();
+    };
+
+}
+
+function hideMoveBar() {
+    var bar = document.getElementById("move-bar");
+    bar.style.display = "none";
+    bar.style.position = "fixed";
+    // remove previous text from label
+    var text = document.getElementById("move-text");
+    text.removeChild(text.childNodes[0]);
+}
+
+function disableMoveBtns() {
+    var btns = document.getElementsByClassName("move-button");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].disabled = true;
+    }
+}
+
+function enableMoveBtns() {
+    var btns = document.getElementsByClassName("move-button");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].disabled = false;
+    }
+}
+
+function sortTeam(teamId) {
+    teams = getTeams();
+    students = getStudents();
+
+    //put team members into array
+    team = teams[teamId];
+    studentAcad = []; // data structure in the form of [{2019384: A} ]
+    for (var i = 0; i < team.length; i++) {
+        studentAcad.push({
+            id: team[i],
+            acad: students[team[i]].acad
+        })
+    }
+
+    // sort array
+    var sorted = studentAcad.sort(function (a,b) {
+        return (a.acad > b.acad) ? 1 : ((b.acad > a.acad) ? -1 : 0)
+    })
+
+    // write sorted student ids to array
+    var sortedTeam = sorted.map(function (student) {
+        return student.id;
+    })
+    // save sorted team to session data
+    teams[teamId] = sortedTeam;
+    sessionStorage.teams = JSON.stringify(teams);
 }
