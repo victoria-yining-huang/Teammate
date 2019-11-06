@@ -91,7 +91,8 @@
               <input id="buttonid" type="button" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" value="Upload Conflict File" onclick="readConflicts()"/> 
               <div id="file-upload-filename"></div>
             <!--</form>-->
-            <p id="error"></p>
+            <p id="error" style="color:red; font-weight: bold;"p>
+            <p id="successful" style="color:green; font-weight: bold;" p>
             <br />
             <h5>See a sample table for the student conflict file.</h5>
             <a href="data\conflicts.csv" target="_blank" class="w3-margin-top">
