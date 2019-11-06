@@ -127,7 +127,7 @@ function uploadStudentFile() {
     const fi = document.getElementById('student_data'); 
     readConflicts(fi);
     if (ext != "csv") { // checking the file extention to make sure that it is a CSV
-      document.getElementById("student-error").innerHTML = "Error: Incorrect file type. Ensure file type is CSV and click the Upload Conflict File button to try again.";
+      document.getElementById("student-error").innerHTML = "Error: Incorrect file type. Ensure file type is CSV and click the Upload Student Data button to try again.";
       document.getElementById("nextstep").style.display = 'none';
       document.getElementById("student-successful").innerHTML = "";
     } else if (fi.files.length > 0) { 
@@ -141,11 +141,11 @@ function uploadStudentFile() {
 
           // The size of the file. 
           if (file >= 3000000) { // check for large files
-              document.getElementById("student-error").innerHTML = "Error: File is too large. Please click the Upload Conflict File button to try again.";
+              document.getElementById("student-error").innerHTML = "Error: File is too large. Please click the Upload Student Data button to try again.";
               document.getElementById("nextstep").style.display="none"; // hiding upload button
               document.getElementById("student-successful").innerHTML = "";
           } else if (file <= 0) { // check for empty files
-              document.getElementById("student-error").innerHTML = "Error: File is empty. Please click the Upload Conflict File button to try again.";
+              document.getElementById("student-error").innerHTML = "Error: File is empty. Please click the Upload Student Data button to try again.";
               document.getElementById("nextstep").style.display="none"; // hiding upload button
               document.getElementById("student-successful").innerHTML = "";
           }
