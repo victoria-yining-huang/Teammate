@@ -90,8 +90,13 @@ function getNumStudents(array) {
 // Get number of teams, calculated from number of students and team size
 function getNumTeams(num_students) {
   team_size = document.getElementById("teamSize").value;
-  numTeams = calculateNumTeams(num_students, team_size);
-  document.getElementById("insertNumTeams").innerHTML = numTeams;
+  console.log(team_size)
+  if (team_size != ""){
+    numTeams = calculateNumTeams(num_students, team_size);
+    document.getElementById("insertNumTeams").innerHTML = numTeams;
+  } else {
+    document.getElementById("insertNumTeams").innerHTML = "";
+  }
 }
 
 function calculateNumTeams(num_students, team_size) {

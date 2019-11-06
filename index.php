@@ -63,8 +63,8 @@
               </div>
               <p class="w3-xlarge"><u>Configure: </u></p>
               <p class="w3-xlarge">Please enter the number of members per team</p>
-              <p class="w3-xlarge">Team Size: <input type="number" min="1" id="teamSize" step="1" required="required" /></p>
-              <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" onclick="getNumTeams(numStudents)">Calculate Number of Teams</button>
+              <p class="w3-xlarge">Team Size: <input type="number" min="1" id="teamSize" step="1" required="required" oninput="getNumTeams(numStudents)" /></p>
+              
               <div class="w3-margin-top">
                 <span class="w3-xlarge">Number of Teams: </span>
                 <span class="w3-xlarge" id="insertNumTeams"></span>
