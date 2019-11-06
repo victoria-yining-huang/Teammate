@@ -10,7 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="setup_script.js"></script>
 
-  <body onload="uploadConflict()">
+  <body onload="uploadConflict();uploadStudentFile();">
     <!-- Navbar -->
     <div class="w3-top">
       <div class="w3-bar w3-blue w3-card w3-left-align w3-large">
@@ -32,8 +32,14 @@
           <div class="w3-container tab-content">
             <h3>Start the team generating process by:</h3>
             <h5>Upload the exported student data from 'Team 7 output' as a CSV file.</h5>
-            <input type="file" id="student_data" />
-            <button onclick="uploadStudentData()" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload Student Data</button>
+           <!-- <input type="file" id="student_data" />
+            <button onclick="uploadStudentData()" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload Student Data</button>-->
+            <input id="student_data" type="file" onchange="parseStudentData()"hidden/>
+            <input id="student-buttonid" type="button" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" value="Upload Student Data"/> 
+            <div id="student-file-upload-filename"></div>
+            <!--</form>-->
+            <p id="student-error" style="color:red; font-weight: bold;"p>
+            <p id="student-successful" style="color:green; font-weight: bold;" p>
             <br />
             <h5>See a sample table for the student data file.</h5>
             <a href="data\students.csv" target="_blank" class="w3-margin-top">
@@ -46,7 +52,7 @@
             -->
           </div>
           <div class="w3-container w3-blue tab-footer page-footer">
-            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="getNumStudents(student_data);nextTab('tab-1', 'tab-2')">
+            <button id="nextstep" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="getNumStudents(student_data);nextTab('tab-1', 'tab-2')">
               Next Step
             </button>
           </div>
