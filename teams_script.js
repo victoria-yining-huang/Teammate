@@ -1,18 +1,19 @@
 // Script file for HTML page: view_group.html
 
-// $.getJSON("data/output.json", function(json) {
-//   data = json;
-//   console.log(data);
-//   getContent();
-// });
+$.getJSON("data/output.json", function(json) {
+ sessionStorage.setItem("data", JSON.stringify(json));
+ getContent();
+});
 
-window.onload = function() {
-  data = JSON.parse(sessionStorage.getItem('output'));
-  this.getContent(data)
-}
+// window.onload = function() {
+//   data = JSON.parse(sessionStorage.getItem('output'));
+//   this.getContent(data)
+// }
 
-function getContent(data) {
+function getContent() {
 
+  var data = JSON.parse(sessionStorage.getItem("data"));
+ 
   if (data["model"]["hasConflicts"]) {
     document.getElementById("warning").classList.remove("w3-hide");
   }
@@ -24,6 +25,9 @@ function getContent(data) {
 }
 
 function createTeam(team_num, team) {
+
+  var data = JSON.parse(sessionStorage.getItem("data"));
+
   var row = document.createElement("div");
   row.setAttribute("class", "w3-cell-row row-team");
   var cell_team_members = document.createElement("div");
@@ -50,7 +54,7 @@ function createTeam(team_num, team) {
   table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
   
-  for (const header_text of ["ID", "Name", "Acad", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"]) {
+  for (const header_text of ["ID", "Name", "GPA", "Gender", "Conflicts", "Move"]) {
     var header_cell = document.createElement("th");
     header_cell.innerHTML = header_text;
     header.appendChild(header_cell);
@@ -62,12 +66,33 @@ function createTeam(team_num, team) {
     var memberRow = document.createElement("tr");
     const member_data = data["people"][member]
 
-      for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
+
+
+      for (const memberCellIndex of ["id", "firstName", "gpa", "gender", "conflicts", ""]) {
       //create cell for each header and populate each 
         var memberCell = document.createElement("td");
         
         if (memberCellIndex != "") {
             memberCell.innerHTML = member_data[memberCellIndex];
+
+        }
+
+// to display the first and last name in the conflict column rather their userid
+
+        var member_conflicts = ""
+
+        if(memberCellIndex == "conflicts") {
+          for (const member_conflict of member_data["conflicts"]){
+            var member_conflict_data = data["people"][member_conflict];
+
+            var firstName = member_conflict_data["firstName"];
+            var lastName = member_conflict_data["lastName"];
+            var conflictFullName = firstName + " " + lastName + "<br>";    
+            member_conflicts = member_conflicts.concat(conflictFullName);
+          }
+
+        memberCell.innerHTML = member_conflicts;
+
         }
       memberRow.appendChild(memberCell);
      }
@@ -79,6 +104,12 @@ function createTeam(team_num, team) {
   var container = document.getElementById("teams-container");
   container.appendChild(row);
 }
+
+
+
+
+// TEAM 5 CODE BELOW //
+
 
 function temp() {
   //create row for each team
@@ -139,6 +170,13 @@ function temp() {
       var conflictsBody = document.createElement("div");
       conflictsBody.setAttribute("class", "card-body");
       var conflicts = showIssues(teamNamesArray[i]);
+
+
+      var conlictFirstLast = teamNamesArray.find(item => item.firstName == teamNamesArray[i]);
+
+      alert(teamNamesArray.firstName); // John
+     
+
       conflictsBody.appendChild(conflicts);
       conflictsCard.appendChild(conflictsBody);
     }
@@ -182,8 +220,6 @@ function populate(team) {
     //get student info
     var student = students[studentID]["name"];
     var gender = students[studentID]["gender"];
-    var prog = students[studentID]["prog"];
-    var proj = students[studentID]["proj"];
     var acad = students[studentID]["acad"];
     var conflict = students[studentID]["conflict"];
 
