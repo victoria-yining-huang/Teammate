@@ -71,10 +71,10 @@ a:hover {
             <h4><a href="data\students.csv" target="_blank" class="w3-margin-top"><b>
               Download Sample File</b></h4>
             </a>
-            <!--	<br> <h5>2) Uploading an existing team file as a .xlsx file</h5> -->
-            <!--	
-            	<input type="file" id="student_data"/>
-            	<button onclick="upload()"class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload</button>
+            <!--  <br> <h5>2) Uploading an existing team file as a .xlsx file</h5> -->
+            <!--  
+              <input type="file" id="student_data"/>
+              <button onclick="upload()"class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload</button>
 
             -->
             </div> 
@@ -88,13 +88,8 @@ a:hover {
             <h5>4) Click on the upload button and select the Team-7 file.</h5>
             <h5>5) A Next Step button will appear, click on it.</h5>
           </div>
-
-            
-  
           </div>
           </div>
-
-         
           <div class="w3-container w3-blue tab-footer page-footer">
             <button id="nextstep" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="getNumStudents(student_data);nextTab('tab-1', 'tab-2')">
               Next Step
@@ -116,7 +111,8 @@ a:hover {
 
               <p class="w3-xlarge"><b>Configure:</b></p>
               <p class="w3-xlarge">Please enter the number of members per team</p>
-              <p class="w3-xlarge">Team Size: <input type="number" min="1" id="teamSize" step="1" required="required" oninput="getNumTeams(numStudents)" /></p>
+              <p class="w3-xlarge">Team Size: <input type="number" min="0" id="teamSize" step="1" required="required" oninput="getNumTeams(numStudents)" 
+             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"/></p>
               
               <div class="w3-margin-top">
                 <span class="w3-xlarge">Number of Teams: </span>
