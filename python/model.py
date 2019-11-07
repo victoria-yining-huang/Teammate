@@ -31,7 +31,8 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
     zgpa = m.add_var(var_type=INTEGER)
 
     # Objective function
-    m.objective = minimize(100*z + 10000*xsum(xs))
+    m.objective = minimize(100*z + 10000*xsum(xs) +
+                           xsum(ygpa) + zgpa)
 
     # Constraint: student can only be selected once
     for i in range(num_students):
@@ -52,6 +53,20 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
     for i in range(num_teams):
         m += xsum(x[i + j*num_teams]
                   for j in range(num_students)) + y[i] == team_size
+
+    # Constraint: balance total team gpa to class average
+    for i in range(num_teams):
+        m += xsum((gpas[j] - class_avg) * x[i + j*num_teams]
+                  for j in range(num_students)) + ygpa[i] - ygpa[i + num_teams] == 0
+
+    # Constraint: minimize individual deviation from class average
+    for j in range(num_teams):
+        m += xsum(gpa_devs[i] * x[j + i*num_teams]
+                  for i in range(num_students)) == ygpad[j]
+
+    # Constraint: select largest deviation from average gpa
+    for j in range(num_teams):
+        m += zgpa >= ygpad[j]
 
     # Constraint: select largest deviation from team size
     for j in range(num_teams):
