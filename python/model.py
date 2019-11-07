@@ -85,6 +85,11 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
     for j in range(num_teams):
         m += z >= y[j]
 
+    # Constraint: if less than half women, punish
+    for j in range(num_teams):
+        m += team_size_half - xsum(genders_w[i] * x[j + i*num_teams]
+                                   for i in range(num_students)) <= 100 * xwid[j]
+
     # Run the model
     m.optimize(max_seconds=60)
 
