@@ -44,7 +44,7 @@ function generateTeams() {
   window.location.href = "generate_teams.html";
 }
 
-function uploadStudentData() {
+function parseStudentData() {
   let input = document.getElementById("student_data");
   if (input.files && input.files[0]) {
     var myFile = input.files[0];
@@ -63,7 +63,7 @@ function uploadStudentData() {
   }
 }
 
-function uploadConflicts() {
+function readConflicts() {
   let input = document.getElementById("conflict_data");
   if (input.files && input.files[0]) {
     var myFile = input.files[0];
@@ -102,3 +102,118 @@ function getNumTeams(num_students) {
 function calculateNumTeams(num_students, team_size) {
   return Math.floor(num_students / team_size) + Math.min(1, num_students % team_size);
 }
+
+function uploadStudentFile() {
+  document.getElementById("nextstep").style.display = 'none';
+  document.getElementById('student-buttonid').addEventListener('click', openDialog);
+  function openDialog() {
+      document.getElementById('student_data').click();
+  }
+
+  var input = document.getElementById('student_data' );
+  var infoArea = document.getElementById( 'student-file-upload-filename' );
+
+  input.addEventListener( 'change', showFileName )
+
+  function showFileName( event ) {
+    // the change event gives us the input it occurred in 
+    var input = event.srcElement;
+
+    // getting the name of the inputted file
+    var fileName = input.files[0].name;
+
+    // displaying the file name when a file is selected
+    infoArea.textContent = 'File Name: ' + fileName;
+    
+    // error checking when a file is selected
+    var splitFile = fileName.split("."); // Split the string using dot as separator
+    var ext = splitFile.pop(); // Get last element 
+    // getting the file
+    const fi = document.getElementById('student_data'); 
+    readConflicts(fi);
+    if (ext != "csv") { // checking the file extention to make sure that it is a CSV
+      document.getElementById("student-error").innerHTML = "Error: Incorrect file type. Ensure file type is CSV and click the Upload Student Data button to try again.";
+      document.getElementById("nextstep").style.display = 'none';
+      document.getElementById("student-successful").innerHTML = "";
+    } else if (fi.files.length > 0) { 
+        for (i = 0; i <= fi.files.length - 1; i++) { 
+          const fsize = fi.files.item(i).size; 
+          const file = Math.round((fsize / 1024)*1000000); // calculating the file size in bytes
+
+          document.getElementById("student-error").innerHTML = "";
+          document.getElementById("nextstep").style.display="inline-block";
+          document.getElementById("student-successful").innerHTML = "Successful upload!";
+
+          // The size of the file. 
+          if (file >= 3000000) { // check for large files
+              document.getElementById("student-error").innerHTML = "Error: File is too large. Please click the Upload Student Data button to try again.";
+              document.getElementById("nextstep").style.display="none"; // hiding upload button
+              document.getElementById("student-successful").innerHTML = "";
+          } else if (file <= 0) { // check for empty files
+              document.getElementById("student-error").innerHTML = "Error: File is empty. Please click the Upload Student Data button to try again.";
+              document.getElementById("nextstep").style.display="none"; // hiding upload button
+              document.getElementById("student-successful").innerHTML = "";
+          }
+      }
+    }
+  }
+}
+
+
+
+function uploadConflict() {
+  document.getElementById("generate").style.display = 'none';
+  document.getElementById('buttonid').addEventListener('click', openDialog);
+  function openDialog() {
+      document.getElementById('conflict_data').click();
+  }
+
+  var input = document.getElementById('conflict_data' );
+  var infoArea = document.getElementById( 'file-upload-filename' );
+
+  input.addEventListener( 'change', showFileName )
+
+  function showFileName( event ) {
+    // the change event gives us the input it occurred in 
+    var input = event.srcElement;
+
+    // getting the name of the inputted file
+    var fileName = input.files[0].name;
+
+    // displaying the file name when a file is selected
+    infoArea.textContent = 'File Name: ' + fileName;
+    
+    // error checking when a file is selected
+    var splitFile = fileName.split("."); // Split the string using dot as separator
+    var ext = splitFile.pop(); // Get last element 
+    // getting the file
+    const fi = document.getElementById('conflict_data'); 
+    readConflicts(fi);
+    if (ext != "csv") { // checking the file extention to make sure that it is a CSV
+      document.getElementById("error").innerHTML = "Error: Incorrect file type. Ensure file type is CSV and click the Upload Conflict File button to try again.";
+      document.getElementById("generate").style.display = 'none';
+      document.getElementById("successful").innerHTML = "";
+    } else if (fi.files.length > 0) { 
+        for (i = 0; i <= fi.files.length - 1; i++) { 
+          const fsize = fi.files.item(i).size; 
+          const file = Math.round((fsize / 1024)*1000000); // calculating the file size in bytes
+
+          document.getElementById("error").innerHTML = "";
+          document.getElementById("generate").style.display="inline-block";
+          document.getElementById("successful").innerHTML = "Successful upload!";
+
+          // The size of the file. 
+          if (file >= 3000000) { // check for large files
+              document.getElementById("error").innerHTML = "Error: File is too large. Please click the Upload Conflict File button to try again.";
+              document.getElementById("generate").style.display="none"; // hiding upload button
+              document.getElementById("successful").innerHTML = "";
+          } else if (file <= 0) { // check for empty files
+              document.getElementById("error").innerHTML = "Error: File is empty. Please click the Upload Conflict File button to try again.";
+              document.getElementById("generate").style.display="none"; // hiding upload button
+              document.getElementById("successful").innerHTML = "";
+          }
+      }
+    }
+  }
+}
+

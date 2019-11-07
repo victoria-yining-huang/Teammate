@@ -3,7 +3,9 @@
 window.onload = function generateTeams() {
   console.log("RUNNING")
   console.log(sessionStorage.getItem('students'))
-
+  console.log(sessionStorage.getItem('conflicts'))
+  console.log(sessionStorage.getItem('team_size'))
+  
   jQuery.ajax({
     type: "POST",
     url: "server.php",
