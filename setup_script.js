@@ -96,6 +96,11 @@ function number_test(teamSize)
      return 'teamSize';
   }
 
+function teamsize() {
+  document.getElementById("size-nextstep").style.display = 'none';
+}
+
+
 // Get number of teams, calculated from number of students and team size
 function getNumTeams(num_students) {
   team_size = document.getElementById("teamSize").value;
@@ -103,9 +108,13 @@ function getNumTeams(num_students) {
   if (team_size != ""&&team_size<=num_students){
     numTeams = calculateNumTeams(num_students, team_size);
     document.getElementById("insertNumTeams").innerHTML = numTeams;
+    document.getElementById("size-nextstep").style.display = 'inline-block';
   } else {
     document.getElementById("insertNumTeams").innerHTML = "";
+    document.getElementById("size-nextstep").style.display = 'none';
   }
+
+
 }
 
 function calculateNumTeams(num_students, team_size) {

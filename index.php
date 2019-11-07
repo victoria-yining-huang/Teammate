@@ -35,7 +35,7 @@ a:hover {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="setup_script.js"></script>
 
-  <body onload="uploadConflict();uploadStudentFile();">
+  <body onload="uploadConflict();teamsize();uploadStudentFile();">
     <!-- Navbar -->
     <div class="w3-top">
       <div class="w3-bar w3-blue w3-card w3-left-align w3-large">
@@ -134,7 +134,7 @@ a:hover {
             <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-2', 'tab-1')">
               Previous Step
             </button>
-            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-2', 'tab-3')">
+            <button id = "size-nextstep" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-2', 'tab-3')">
               Next Step
             </button>
           </div>
