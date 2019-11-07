@@ -100,7 +100,7 @@ function number_test(teamSize)
 function getNumTeams(num_students) {
   team_size = document.getElementById("teamSize").value;
   console.log(team_size)
-  if (team_size != ""&&team_size<num_students){
+  if (team_size != ""&&team_size<=num_students){
     numTeams = calculateNumTeams(num_students, team_size);
     document.getElementById("insertNumTeams").innerHTML = numTeams;
   } else {
