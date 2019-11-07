@@ -1,37 +1,22 @@
 // Script file for HTML page: view_group.html
 var dataStr;
 var data;
+var clickedID;
+var teamNum;
 
-$.getJSON("data/output.json", function(json) {
-   data = json;
-   console.log(data);
-   sessionStorage.setItem('dataStr', JSON.stringify(data));
-   getContent();
- });
-
-
-// VIc
-// window.onload = function() {
-//   //data = JSON.parse(sessionStorage.getItem('output'));
-//   //this.getContent();
-// }
-
-// // Get the size of an object
-// Object.size = function(obj) {
-//     var size = 0, key;
-//     for (key in obj) {
-//         if (obj.hasOwnProperty(key)) size++;
-//     }
-//     return size;
-// };
-
-// function getContent() {
-//    var data = JSON.parse(sessionStorage.dataStr);
-//Vic
 $.getJSON("data/output.json", function(json) {
  sessionStorage.setItem("data", JSON.stringify(json));
  getContent();
 });
+
+ // Get the size of an object
+ Object.size = function(obj) {
+     var size = 0, key;
+     for (key in obj) {
+         if (obj.hasOwnProperty(key)) size++;
+     }
+     return size;
+ };
 
 // window.onload = function() {
 //   data = JSON.parse(sessionStorage.getItem('output'));
@@ -48,14 +33,31 @@ function getContent() {
 
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
     var team = data["teams"][i];
-    createTeam(i, team);
+    teamNum = i
+    createTeam(teamNum, team);
   }
 
 
 }
 
+function showMoveBanner(){
+    $('#move-banner').show();
+}
+
+function hideMoveBanner(){
+    $('#move-banner').hide();
+}
+
+
 function generateDropDown(){
-    var data = JSON.parse(sessionStorage.dataStr);
+    //document.getElementById('generateTeams').innerHTML = "";
+    //$('#move-banner').show();
+    $('#generateTeams')
+    .find('option')
+    .remove()
+    .end();
+
+    var data = JSON.parse(sessionStorage.data);
     var x = document.getElementById("generateTeams");
     var size = Object.size(data["teams"]);
 
@@ -64,6 +66,34 @@ function generateDropDown(){
         option.text = i;
         x.add(option);
     }
+}
+
+function moveMember() {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    var selectBox = document.getElementById("generateTeams");
+    var newTeam = selectBox.options[selectBox.selectedIndex].value;
+    console.log("move to new team: " + newTeam);
+    var oldRow = document.getElementById("row-" + clickedID);
+    oldRow.parentNode.removeChild(oldRow);
+//    console.log(data["teams"])
+//    console.log(data[""])
+
+    var newTeam = document.getElementById("table-" + newTeam);
+    console.log(newTeam);
+    newTeam.appendChild(oldRow);
+
+
+}
+
+function findMovedMemberInfo(clicked) {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+
+    var sel = document.getElementById("generateTeams");
+
+    clickedID = clicked;
+
+    console.log("student to move:"+ clicked);
+
 }
 
 function getTeams() {
@@ -80,9 +110,8 @@ function getIssues() {
 
 function createTeam(team_num, team) {
 
-//vic
-  // var data = JSON.parse(sessionStorage.getItem("data"));
-//vic
+  var data = JSON.parse(sessionStorage.getItem("data"));
+
   var row = document.createElement("div");
   row.setAttribute("class", "w3-cell-row row-team");
   var cell_team_members = document.createElement("div");
@@ -105,7 +134,12 @@ function createTeam(team_num, team) {
   issueName.innerHTML = "Issues";
   cell_team_issues.appendChild(issueName);
 
+
+
   var table_members = document.createElement("table");
+
+  table_members.setAttribute("id", "table-" + teamNum);
+  console.log(table_members.id);
   table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
   
@@ -118,12 +152,10 @@ function createTeam(team_num, team) {
   table_members.appendChild(header);
 
   for (const member of team["members"]) {
+
     var memberRow = document.createElement("tr");
+    memberRow.setAttribute("id", "row-" + member);
     const member_data = data["people"][member]
-//vic
-      // for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
-      // //create cell for each header and populate each
-//vic
 
       for (const memberCellIndex of ["id", "firstName", "gpa", "gender", "conflicts", ""]) {
       //create cell for each header and populate each 
@@ -153,23 +185,26 @@ function createTeam(team_num, team) {
         }
       memberRow.appendChild(memberCell);
      }
-     for (const memberCellIndex of ["move"]) {
-      //create cell for each header and populate each
-        var memberCell = document.createElement("td");
+     for (const memberCellIndex of ["Move"]) {
 
         if (memberCellIndex != "") {
+
 
             var btn = document.createElement('input');
             btn.type = "button";
             btn.className = "btn btn-primary mb-2 mr-sm-2";
+            btn.setAttribute("id", member);
+            btn.setAttribute("onClick", "generateDropDown();showMoveBanner();findMovedMemberInfo(this.id);");
             btn.value = "move";
-            //btn.onclick = (function(entry) {return function() {chooseUser(entry);}})(entry);
-            memberRow.appendChild(btn);
+            memberCell.appendChild(btn);
 
         }
       memberRow.appendChild(memberCell);
+
      }
   table_members.appendChild(memberRow);
+
+
 }
 
   cell_team_members.appendChild(table_members);
@@ -181,80 +216,6 @@ function createTeam(team_num, team) {
 
 
 
-// TEAM 5 CODE BELOW //
-
-
-function temp() {
-  //create row for each team
-  for (i = 0; i < teamNamesArray.length; i++) {
-    if (teamNamesArray[i] !== "teamCount") {
-      var testElement = document.getElementById("test");
-      var row = document.createElement("div");
-      row.setAttribute("class", "row");
-      row.style.marginTop = "1%";
-      row.style.marginBottom = "1%";
-      testElement.appendChild(row);
-
-      //column for team data
-      var teamColumn = document.createElement("div");
-      teamColumn.setAttribute("class", "col-sm-8");
-      row.appendChild(teamColumn);
-
-      //create team card and populate it
-      var teamCard = document.createElement("div");
-      teamCard.setAttribute("class", "card");
-      teamCard.style.boxShadow = "0 10px 6px -6px #BBBBBB";
-      teamColumn.appendChild(teamCard);
-
-      var teamCardHeader = document.createElement("div");
-      teamCardHeader.setAttribute("class", "card-header");
-      var teamName = document.createTextNode("Team " + i);
-      teamCardHeader.appendChild(teamName);
-      teamCard.appendChild(teamCardHeader);
-
-      var teamTable = document.createElement("div");
-      teamTable.setAttribute("class", "container");
-      teamCard.appendChild(teamTable);
-
-      var teamMembers = document.createElement("ul");
-      teamMembers.setAttribute("id", teamNamesArray[i]);
-      teamMembers.setAttribute("class", "list-group list-group-flush");
-      teamTable.appendChild(teamMembers);
-      populate(teamNamesArray[i]);
-
-      //column for conflict data
-      var conflictsColumn = document.createElement("div");
-      conflictsColumn.setAttribute("class", "col-sm-4");
-      row.appendChild(conflictsColumn);
-
-      //create conflict card and populate it
-      var conflictsCard = document.createElement("div");
-      conflictsCard.setAttribute("class", "card");
-      conflictsCard.style.boxShadow = "0 10px 6px -6px white";
-      conflictsCard.style.height = "100%";
-      conflictsColumn.appendChild(conflictsCard);
-
-      var conflictsHeader = document.createElement("div");
-      conflictsHeader.setAttribute("class", "card-header");
-      var conflictName = document.createTextNode("Conflicts");
-      conflictsHeader.appendChild(conflictName);
-      conflictsCard.appendChild(conflictsHeader);
-
-      var conflictsBody = document.createElement("div");
-      conflictsBody.setAttribute("class", "card-body");
-      var conflicts = showIssues(teamNamesArray[i]);
-
-
-      var conlictFirstLast = teamNamesArray.find(item => item.firstName == teamNamesArray[i]);
-
-      alert(teamNamesArray.firstName); // John
-     
-
-      conflictsBody.appendChild(conflicts);
-      conflictsCard.appendChild(conflictsBody);
-    }
-  }
-}
 
 function populate(team) {
   //make header row
@@ -306,7 +267,7 @@ function populate(team) {
     var btnBorder = document.createElement("TD");
     btnBorder.appendChild(btn);
 
-    var studentAttributes = [studentID, student, acad, prog, proj, gender, conflict];
+    var studentAttributes = [studentID, student, gpa, gender, conflict];
 
     //create new TR element for this row
     var tr = document.createElement("TR");
