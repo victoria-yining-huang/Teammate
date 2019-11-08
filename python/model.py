@@ -187,6 +187,10 @@ def getTeams():
         '\\', '').replace('\r', ''), strict=False)
     data_conflicts = json.loads(sys.argv[2].replace(
         '\\', '').replace('\r', ''), strict=False)
+
+    print(data_ids)
+    print(data_conflicts)
+
     team_size = int(sys.argv[3])
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
