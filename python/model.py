@@ -105,7 +105,7 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
     # Deduplicate conflicts
     conflicts = []
-    ids = [row[2] for row in data_ids]
+    ids = [row[0] for row in data_ids]
     for i in range(len(data_conflicts)):
         conflict = [ids.index(data_conflicts[i][0]),
                     ids.index(data_conflicts[i][3])]
@@ -158,25 +158,25 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
     for i in range(num_students * num_teams):
         if d_vars['students'][i].x >= 0.99:
             team_number = i - (i//num_teams)*num_teams
-            member_id = data_ids[i//num_teams][2]
+            member_id = data_ids[i//num_teams][0]
             output['teams'][team_number + 1]['members'].append(member_id)
 
     #
     output['people'] = {}
     for i in range(len(data_ids)):
-        output['people'][data_ids[i][2]] = {
-            'id': data_ids[i][2],
-            'firstName': data_ids[i][0],
-            'lastName': data_ids[i][1],
+        output['people'][data_ids[i][0]] = {
+            'id': data_ids[i][0],
+            'firstName': data_ids[i][1],
+            'lastName': data_ids[i][2],
             'email': data_ids[i][3],
             'gpa': round(float(data_ids[i][4])),
             'gender': data_ids[i][5],
             'conflicts': []
         }
         for j in range(len(data_conflicts)):
-            if data_conflicts[j][0] == data_ids[i][2]:
-                output['people'][data_ids[i][2]]['conflicts'].append(
-                    data_conflicts[j][1])
+            if data_conflicts[j][0] == data_ids[i][0]:
+                output['people'][data_ids[i][0]]['conflicts'].append(
+                    data_conflicts[j][3])
 
     return output
 
