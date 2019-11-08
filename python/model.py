@@ -183,6 +183,9 @@ def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
 def getTeams():
 
+    print(sys.argv[1])
+    print(sys.argv[2])
+
     data_ids = json.loads(sys.argv[1].replace(
         '\\', '').replace('\r', ''), strict=False)
     data_conflicts = json.loads(sys.argv[2].replace(

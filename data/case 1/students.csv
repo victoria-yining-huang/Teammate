@@ -1,5 +1,5 @@
-student_id,first_name,last_name,email,gpa,gender,race
-jsmith1,John,Smith,jsmith1@uwaterloo.ca,75,m,a
-jdoe2,Jane,Doe,jdoe2@uwaterloo.ca,100,m,b
-kbrown3,Kelly,Brown,kbrown3@uwaterloo.ca,50,f,c
-mlee4,Mike,Lee,mlee4@uwaterloo.ca,60,m,d
+user_id,first_name,last_name,email,gpa,gender,race
+jsmith1,John,Smith,jsmith1@uwaterloo.ca,75,M,a
+jdoe2,Jane,Doe,jdoe2@uwaterloo.ca,100,M,b
+kbrown3,Kelly,Brown,kbrown3@uwaterloo.ca,50,F,c
+mlee4,Mike,Lee,mlee4@uwaterloo.ca,60,M,d
