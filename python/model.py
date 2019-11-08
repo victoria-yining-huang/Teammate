@@ -190,8 +190,7 @@ def getTeams():
 
 
 try:
-    # getTeams()
-    print("START")
+    getTeams()
 except Exception as e:
     print("python_error")
     print(e)
