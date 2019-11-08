@@ -4,10 +4,10 @@ var data;
 var clickedID;
 var teamNum;
 
-$.getJSON("data/output.json", function (json) {
-  sessionStorage.setItem("data", JSON.stringify(json));
-  getContent();
-});
+// $.getJSON("data/output.json", function (json) {
+//   sessionStorage.setItem("data", JSON.stringify(json));
+//   getContent();
+// });
 
 // Get the size of an object
 Object.size = function (obj) {
@@ -18,10 +18,11 @@ Object.size = function (obj) {
   return size;
 };
 
-// window.onload = function() {
-//   data = JSON.parse(sessionStorage.getItem('output'));
-//   this.getContent(data)
-// }
+window.onload = function () {
+  data = JSON.parse(sessionStorage.getItem('output'));
+  this.sessionStorage.setItem("data", JSON.stringify(data))
+  this.getContent()
+}
 
 function getContent() {
 
