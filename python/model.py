@@ -27,8 +27,6 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
 
     m = Model()
 
-    m.threads = -1
-
     # Decision variables
     x = [m.add_var(var_type=BINARY) for i in range(n)]  # Student i on team j
     xs = [m.add_var(var_type=BINARY) for c in range(
@@ -94,9 +92,7 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
                                    for i in range(num_students)) <= 100 * xwid[j]
 
     # Run the model
-    m.optimize(max_solutions=10)
-
-    print("THREADS ", m.threads)
+    m.optimize()
 
     return({'students': x, 'conflicts': xs})
 
