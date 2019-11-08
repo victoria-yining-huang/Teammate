@@ -4,19 +4,19 @@ var data;
 var clickedID;
 var teamNum;
 
-$.getJSON("data/output.json", function(json) {
- sessionStorage.setItem("data", JSON.stringify(json));
- getContent();
+$.getJSON("data/output.json", function (json) {
+  sessionStorage.setItem("data", JSON.stringify(json));
+  getContent();
 });
 
- // Get the size of an object
- Object.size = function(obj) {
-     var size = 0, key;
-     for (key in obj) {
-         if (obj.hasOwnProperty(key)) size++;
-     }
-     return size;
- };
+// Get the size of an object
+Object.size = function (obj) {
+  var size = 0, key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
 
 // window.onload = function() {
 //   data = JSON.parse(sessionStorage.getItem('output'));
@@ -26,7 +26,7 @@ $.getJSON("data/output.json", function(json) {
 function getContent() {
 
   var data = JSON.parse(sessionStorage.getItem("data"));
- 
+
   if (data["model"]["hasConflicts"]) {
     document.getElementById("warning").classList.remove("w3-hide");
   }
@@ -40,72 +40,80 @@ function getContent() {
 
 }
 
-function showMoveBanner(){
-    $('#move-banner').show();
+function showMoveBanner(fullName, team_num) {
+  $('#move-banner').show();
+  document.getElementById("move-banner-message").innerHTML = `Move ${fullName} from team ${team_num} to team:`
 }
 
-function hideMoveBanner(){
-    $('#move-banner').hide();
+function hideMoveBanner() {
+  $('#move-banner').hide();
 }
 
+function generateDropDown(team_num) {
 
-function generateDropDown(){
-    //document.getElementById('generateTeams').innerHTML = "";
-    //$('#move-banner').show();
-    $('#generateTeams')
+  $('#generateTeams')
     .find('option')
     .remove()
     .end();
 
-    var data = JSON.parse(sessionStorage.data);
-    var x = document.getElementById("generateTeams");
-    var size = Object.size(data["teams"]);
+  var data = JSON.parse(sessionStorage.data);
+  var x = document.getElementById("generateTeams");
+  var size = Object.size(data["teams"]);
 
-    for (var i = 1; i <= size; i++) {
-        var option = document.createElement("option");
-        option.text = i;
-        x.add(option);
+  for (var i = 1; i <= size; i++) {
+    if (i != team_num) {
+      var option = document.createElement("option");
+      option.text = i;
+      x.add(option);
     }
+  }
 }
 
 function moveMember() {
-    var data = JSON.parse(sessionStorage.getItem("data"));
-    var selectBox = document.getElementById("generateTeams");
-    var newTeam = selectBox.options[selectBox.selectedIndex].value;
-    console.log("move to new team: " + newTeam);
-    var oldRow = document.getElementById("row-" + clickedID);
-    oldRow.parentNode.removeChild(oldRow);
-//    console.log(data["teams"])
-//    console.log(data[""])
+  var selectBox = document.getElementById("generateTeams");
+  var newTeam = selectBox.options[selectBox.selectedIndex].value;
+  var oldRow = document.getElementById("row-" + clickedID);
+  var oldTeam = parseInt(oldRow.parentNode.id.replace("table-", ""));
+  oldRow.parentNode.removeChild(oldRow);
 
-    var newTeam = document.getElementById("table-" + newTeam);
-    console.log(newTeam);
-    newTeam.appendChild(oldRow);
+  var newTeamTable = document.getElementById("table-" + newTeam);
+  newTeamTable.appendChild(oldRow);
 
+  var data = JSON.parse(sessionStorage.getItem("data"));
 
+  var index = data["teams"][oldTeam]["members"].indexOf(clickedID);
+
+  if (index != -1) {
+    data["teams"][oldTeam]["members"].splice(index, 1);
+    data["teams"][newTeam]["members"].push(clickedID);
+  }
+
+  sessionStorage.setItem("data", JSON.stringify(data))
+
+  hideMoveBanner()
 }
 
 function findMovedMemberInfo(clicked) {
-    var data = JSON.parse(sessionStorage.getItem("data"));
+  var data = JSON.parse(sessionStorage.getItem("data"));
 
-    var sel = document.getElementById("generateTeams");
+  var sel = document.getElementById("generateTeams");
 
-    clickedID = clicked;
+  clickedID = clicked;
 
-    console.log("student to move:"+ clicked);
+  console.log("student to move:" + clicked);
 
 }
 
 function getTeams() {
-    return JSON.parse(sessionStorage.teams);
+  return JSON.parse(sessionStorage.teams);
 }
 
-function getStudents(){
-    return JSON.parse(sessionStorage.students);
+function getStudents() {
+  return JSON.parse(sessionStorage.students);
 }
 
 function getIssues() {
-    return JSON.parse(sessionStorage.issues);
+  return JSON.parse(sessionStorage.issues);
 }
 
 function createTeam(team_num, team) {
@@ -142,7 +150,7 @@ function createTeam(team_num, team) {
   console.log(table_members.id);
   table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
-  
+
   for (const header_text of ["ID", "Name", "GPA", "Gender", "Conflicts", "Move"]) {
     var header_cell = document.createElement("th");
     header_cell.innerHTML = header_text;
@@ -157,55 +165,60 @@ function createTeam(team_num, team) {
     memberRow.setAttribute("id", "row-" + member);
     const member_data = data["people"][member]
 
-      for (const memberCellIndex of ["id", "firstName", "gpa", "gender", "conflicts", ""]) {
+    for (const memberCellIndex of ["id", "fullName", "gpa", "gender", "conflicts", ""]) {
       //create cell for each header and populate each 
-        var memberCell = document.createElement("td");
+      var memberCell = document.createElement("td");
 
-        if (memberCellIndex != "") {
-            memberCell.innerHTML = member_data[memberCellIndex];
+      var firstName = member_data["firstName"];
+      var lastName = member_data["lastName"];
+      var fullName = firstName + " " + lastName;
 
+      if (memberCellIndex != "" && memberCellIndex != "fullName") {
+        memberCell.innerHTML = member_data[memberCellIndex];
+
+      } else if (memberCellIndex == "fullName") {
+        memberCell.innerHTML = fullName;
+      }
+
+      // to display the first and last name in the conflict column rather their userid
+
+      var member_conflicts = ""
+
+      if (memberCellIndex == "conflicts") {
+        for (const member_conflict of member_data["conflicts"]) {
+          var member_conflict_data = data["people"][member_conflict];
+
+          var firstName = member_conflict_data["firstName"];
+          var lastName = member_conflict_data["lastName"];
+          var conflictFullName = firstName + " " + lastName + "<br>";
+          member_conflicts = member_conflicts.concat(conflictFullName);
         }
-
-// to display the first and last name in the conflict column rather their userid
-
-        var member_conflicts = ""
-
-        if(memberCellIndex == "conflicts") {
-          for (const member_conflict of member_data["conflicts"]){
-            var member_conflict_data = data["people"][member_conflict];
-
-            var firstName = member_conflict_data["firstName"];
-            var lastName = member_conflict_data["lastName"];
-            var conflictFullName = firstName + " " + lastName + "<br>";    
-            member_conflicts = member_conflicts.concat(conflictFullName);
-          }
 
         memberCell.innerHTML = member_conflicts;
 
-        }
+      }
       memberRow.appendChild(memberCell);
-     }
-     for (const memberCellIndex of ["Move"]) {
+    }
+    for (const memberCellIndex of ["Move"]) {
 
-        if (memberCellIndex != "") {
+      if (memberCellIndex != "") {
 
+        var btn = document.createElement('input');
+        btn.type = "button";
+        btn.className = "btn btn-primary mb-2 mr-sm-2";
+        btn.setAttribute("id", member);
+        btn.setAttribute("onClick", `generateDropDown(${team_num}); showMoveBanner("${fullName}", ${team_num}); findMovedMemberInfo(this.id);`);
+        btn.value = "move";
+        memberCell.appendChild(btn);
 
-            var btn = document.createElement('input');
-            btn.type = "button";
-            btn.className = "btn btn-primary mb-2 mr-sm-2";
-            btn.setAttribute("id", member);
-            btn.setAttribute("onClick", "generateDropDown();showMoveBanner();findMovedMemberInfo(this.id);");
-            btn.value = "move";
-            memberCell.appendChild(btn);
-
-        }
+      }
       memberRow.appendChild(memberCell);
 
-     }
-  table_members.appendChild(memberRow);
+    }
+    table_members.appendChild(memberRow);
 
 
-}
+  }
 
   cell_team_members.appendChild(table_members);
 
