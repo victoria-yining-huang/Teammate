@@ -22,10 +22,6 @@
 <!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="teams_script.js"></script>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
 
 <body>
 <!-- Navbar -->
@@ -57,9 +53,9 @@
   <div id="move-banner" style="display: none;">
         <div class="alert alert-primary alert-dismissible fade show">
             <div id="move-form" class="form-inline">
-                <p>Please select the new team you would like to move this member to:</p>
-                <select id="generateTeams"></select>
-                <button id="submit-move-btn" class="btn btn-primary mb-2 mr-sm-2" onclick="moveMember()">Submit</button>
+                <span id="move-banner-message"></span>
+                <select id="generateTeams" class="w3-margin-left"></select>
+                <button id="submit-move-btn" class="btn btn-primary mb-2 mr-sm-2 w3-margin-left" onclick="moveMember()">Submit</button>
                 <button id="cancel-btn" class="btn btn-primary mb-2 mr-sm-2" onclick="hideMoveBanner()">Cancel</button>
             </div>
         </div>
