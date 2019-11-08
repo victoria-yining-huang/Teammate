@@ -308,44 +308,44 @@ function populate(team) {
   element.appendChild(table);
 }
 
-function exportData(){
+function exportData() {
 
-	var data = JSON.parse(sessionStorage.getItem("data"));
-	console.log(data);
+  var data = JSON.parse(sessionStorage.getItem("data"));
+  console.log(data);
 
-	var teamString=""
+  var teamString = ""
 
-	for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
+  for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
 
-	  var team = data["teams"][i];
+    var team = data["teams"][i];
 
-	  teamString=teamString+"Team "+ i + "\n";
+    teamString = teamString + "Team " + i + "\n";
 
-	  console.log("Team ".concat(i));
+    console.log("Team ".concat(i));
 
-	  for (const member of team["members"]) {
-	  	var person = data["people"][member]
-	  	console.log(member.concat(", ", person["firstName"], " ", person["lastName"]));
+    for (const member of team["members"]) {
+      var person = data["people"][member]
+      console.log(member.concat(", ", person["firstName"], " ", person["lastName"]));
 
-	  	teamString=teamString +person["id"]+ "\t" + person["firstName"]+" " +person["lastName"] + "\n";
-	  }
-	  teamString=teamString+"\n"
-	}
+      teamString = teamString + person["id"] + "\t" + person["firstName"] + " " + person["lastName"] + "\n";
+    }
+    teamString = teamString + "\n"
+  }
 
-console.log(teamString)
-console.log("works")
- return teamString;
+  console.log(teamString)
+  console.log("works")
+  return teamString;
 
 }
 
-function downloadTeams(){
-		// //export teams to file when export button is clicked - group 5's way
+function downloadTeams() {
+  // //export teams to file when export button is clicked - group 5's way
 
-    download("teams.txt", exportData())
+  download("teams.txt", exportData())
 
-    window.location.href = "export.html";
+  window.location.href = "export.html";
 
-     //<a href="data:application/octet-stream;charset=utf-16le;base64,//5mAG8AbwAgAGIAYQByAAoA">text file</a>
+  //<a href="data:application/octet-stream;charset=utf-16le;base64,//5mAG8AbwAgAGIAYQByAAoA">text file</a>
 
 
 }

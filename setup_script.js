@@ -58,7 +58,6 @@ function parseStudentData() {
       }
       parsedata.splice(0, 1);
       student_data = parsedata;
-      console.log(student_data)
     });
     reader.readAsBinaryString(myFile);
   }
