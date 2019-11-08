@@ -130,14 +130,57 @@ function getNumTeams(num_students) {
   console.log(team_size)
   if (team_size != "" && team_size <= num_students) {
     numTeams = calculateNumTeams(num_students, team_size);
-    document.getElementById("insertNumTeams").innerHTML = numTeams;
+    mix = getTeamMix(num_students, numTeams)
+    document.getElementById("insertNumTeams").innerHTML = mix;
     document.getElementById("size-nextstep").style.display = 'inline-block';
+
   } else {
     document.getElementById("insertNumTeams").innerHTML = "";
     document.getElementById("size-nextstep").style.display = 'none';
   }
+}
 
+function getTeamMix(num_students, num_teams) {
+  var s = 0
+  var i = 0
+  teams = new Array(num_teams);
+  while (s < num_students) {
+    for (var i = 0; i < num_teams; i++) {
+      if (s != num_students) {
+        if (isNaN(teams[i])) {
+          teams[i] = 1
+        } else {
+          teams[i] = teams[i] + 1
+        }
+        s = s + 1
+      }
+    }
+  }
+  teams_count = new Map();
+  for (var i = 0; i < teams.length; i++) {
+    count = teams[i];
+    if (!teams_count.has(count)) {
+      console.log("EMPTY")
+      teams_count.set(count, 1);
+    } else {
+      console.log("ADD")
+      teams_count.set(count, teams_count.get(count) + 1);
+    }
+  }
+  var string = "";
+  var x = 1;
+  console.log(teams_count.length)
+  teams_count.forEach(function (value, key) {
+    if (x < teams_count.size) {
+      string = string.concat(`${value} team(s) of ${key}, &nbsp;`);
+      x = x + 1
+    } else {
+      string = string.concat(`${value} team(s) of ${key}`);
+    }
 
+  });
+  console.log(string)
+  return (string)
 }
 
 function calculateNumTeams(num_students, team_size) {
