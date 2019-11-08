@@ -124,7 +124,7 @@ a:hover {
             <h3>Instructions</h3>
             
             <h5>1) Check if the number of students in the uploaded file is same as the one displayed on the top of the page.</h5>
-            <h5>2) Enter the desired team size. The value that you enter is the minimum number of students that would be placed within a team. If the number of students cannot be divided evenly within the entered team size, then some teams may have <b>team size +1</b> students. </h5>
+            <h5>2) Enter the desired team size. The value that you enter is the maximum number of students that would be placed within a team. If the number of students cannot be divided evenly within the entered team size, then some teams may have less than the specified amount. </h5>
             <h5>3) The number of teams for the model will be calculated and displayed below the text field! </h5>
           </div>
           </div>

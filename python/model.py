@@ -2,6 +2,7 @@ import random
 import statistics
 import json
 import sys
+import string
 from mip import Model, xsum, minimize, BINARY, INTEGER, CONTINUOUS
 # Includes COIN-OR Linear Programming Solver - CLP
 
@@ -16,7 +17,7 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
 
     genders_w = [0 for i in range(num_students)]
     for i, gender in enumerate(genders):
-        if gender == "w":
+        if gender.lower() == "w":
             genders_w[i] = 1
 
     if team_size % 2 != 0:
