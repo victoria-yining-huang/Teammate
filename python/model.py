@@ -17,7 +17,7 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
 
     genders_w = [0 for i in range(num_students)]
     for i, gender in enumerate(genders):
-        if gender.lower() == "w":
+        if gender.lower() == "w" or gender.lower() == "x":
             genders_w[i] = 1
 
     if team_size % 2 != 0:
@@ -26,6 +26,8 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
         team_size_half = team_size // 2
 
     m = Model()
+
+    m.threads = -1
 
     # Decision variables
     x = [m.add_var(var_type=BINARY) for i in range(n)]  # Student i on team j
@@ -92,7 +94,9 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
                                    for i in range(num_students)) <= 100 * xwid[j]
 
     # Run the model
-    m.optimize(max_seconds=60)
+    m.optimize(max_solutions=10)
+
+    print("THREADS ", m.threads)
 
     return({'students': x, 'conflicts': xs})
 

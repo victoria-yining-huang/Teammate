@@ -265,23 +265,23 @@ def buildDataIds(num_students, gpa_avg, gpa_stdev, prob_m, prob_w, prob_x):
     gpas = np.around(np.random.normal(
         gpa_avg, gpa_stdev, size=num_students), 1)
 
-    return(np.column_stack((first_names, last_names, ids,
+    return(np.column_stack((ids, first_names, last_names,
                             emails, gpas, genders)))
 
 
 def buildDataConflicts(data_ids, num_conflicts):
 
-    ids = [row[2] for row in data_ids]
+    ids = [row[0] for row in data_ids]
     all_possible_conflicts = []
     dedup_all_possible_conflicts = []
 
     for i in ids:
         for j in ids:
             if i != j:
-                all_possible_conflicts.append([i, j])
+                all_possible_conflicts.append([i, "", "", j, "", ""])
 
     for c in all_possible_conflicts:
-        if [c[1], c[0]] not in dedup_all_possible_conflicts:
+        if [c[3], c[0]] not in dedup_all_possible_conflicts:
             dedup_all_possible_conflicts.append(c)
 
     conflict_i = np.random.choice(len(dedup_all_possible_conflicts),

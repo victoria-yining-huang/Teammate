@@ -1,15 +1,15 @@
 teammate Model Tests
-Date: 2019-11-07 20:27:34.562925
+Date: 2019-11-08 13:24:52.658996
 
 
 ### Average Class, no Conflicts ###
 
 ## INPUT ##
 Number of students: 75
-Genders: 46.7% men (35), 48.0% women (36), 5.3% other (4)
-Average gpa: 74
-Bottom tier gpas: [46, 52, 54, 59, 59, 59, 60, 62, 63, 64, 64]
-Top tier gpas: [84, 84, 85, 85, 86, 88, 88, 90, 90, 92, 106]
+Genders: 34.7% men (26), 61.3% women (46), 4.0% other (3)
+Average gpa: 75
+Bottom tier gpas: [51, 53, 55, 57, 60, 62, 62, 63, 64, 65, 66]
+Top tier gpas: [85, 85, 85, 86, 86, 87, 87, 87, 90, 92, 93]
 Input team size: 7
 Expected number of teams: 11
 Expected team sizes: [7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6]
@@ -20,193 +20,193 @@ Input number of conflicts: 0
 Teams contain conflicts: False
 
 team 	size 	conflicts 	members
-1	7	0		['id1', 'id15', 'id24', 'id28', 'id34', 'id71', 'id75']
-2	6	0		['id13', 'id18', 'id21', 'id23', 'id38', 'id53']
-3	7	0		['id20', 'id25', 'id27', 'id48', 'id49', 'id56', 'id63']
-4	7	0		['id31', 'id40', 'id43', 'id46', 'id47', 'id61', 'id64']
-5	7	0		['id19', 'id32', 'id50', 'id55', 'id59', 'id70', 'id73']
-6	7	0		['id4', 'id5', 'id9', 'id17', 'id35', 'id42', 'id69']
-7	7	0		['id8', 'id11', 'id16', 'id36', 'id37', 'id41', 'id65']
-8	7	0		['id2', 'id10', 'id22', 'id44', 'id51', 'id52', 'id68']
-9	6	0		['id6', 'id12', 'id30', 'id39', 'id54', 'id74']
-10	7	0		['id7', 'id29', 'id33', 'id45', 'id58', 'id62', 'id66']
-11	7	0		['id3', 'id14', 'id26', 'id57', 'id60', 'id67', 'id72']
+1	7	0		['id1', 'id15', 'id24', 'id31', 'id38', 'id58', 'id68']
+2	7	0		['id21', 'id26', 'id30', 'id37', 'id52', 'id53', 'id56']
+3	7	0		['id3', 'id9', 'id16', 'id42', 'id45', 'id64', 'id70']
+4	7	0		['id4', 'id13', 'id28', 'id33', 'id49', 'id55', 'id69']
+5	7	0		['id2', 'id50', 'id51', 'id54', 'id57', 'id62', 'id73']
+6	7	0		['id11', 'id18', 'id27', 'id29', 'id34', 'id35', 'id74']
+7	7	0		['id5', 'id6', 'id14', 'id19', 'id43', 'id44', 'id46']
+8	6	0		['id8', 'id36', 'id39', 'id60', 'id66', 'id67']
+9	7	0		['id22', 'id23', 'id25', 'id32', 'id61', 'id63', 'id75']
+10	7	0		['id10', 'id12', 'id40', 'id41', 'id48', 'id71', 'id72']
+11	6	0		['id7', 'id17', 'id20', 'id47', 'id59', 'id65']
 Number of teams and team sizes are correct.
 No conflicts within teams.
 
 team 	avg gpa total dev 	bottom tier 	top tier 	gpas
-1	74.0	13.0		True		True		[46, 74, 75, 76, 81, 81, 85]
-2	74.0	10.0		True		True		[59, 66, 73, 79, 79, 88]
-3	74.0	9.0		True		True		[64, 66, 68, 73, 76, 82, 90]
-4	74.0	11.0		True		True		[52, 72, 72, 79, 80, 80, 84]
-5	74.0	11.0		True		True		[54, 70, 73, 73, 78, 80, 92]
-6	74.0	9.0		True		True		[60, 66, 73, 74, 80, 80, 85]
-7	74.0	9.0		True		True		[66, 66, 67, 72, 76, 84, 90]
-8	74.0	10.0		True		True		[59, 67, 70, 75, 79, 84, 86]
-9	76.0	15.0		True		True		[64, 69, 69, 72, 73, 106]
-10	75.0	9.0		True		True		[62, 66, 70, 72, 84, 84, 84]
-11	74.0	10.0		True		True		[59, 63, 76, 78, 78, 78, 88]
+1	75.0	11.0		True		True		[51, 76, 78, 80, 80, 80, 81]
+2	75.0	9.0		True		True		[62, 68, 70, 76, 79, 84, 86]
+3	75.0	10.0		True		True		[55, 70, 76, 79, 80, 82, 83]
+4	75.0	9.0		True		True		[62, 70, 70, 73, 81, 82, 87]
+5	75.0	9.0		True		True		[60, 67, 74, 75, 80, 85, 86]
+6	75.0	10.0		True		True		[65, 66, 71, 74, 77, 80, 93]
+7	75.0	8.0		True		True		[64, 69, 70, 74, 81, 83, 84]
+8	75.0	10.0		True		True		[63, 66, 72, 81, 83, 87]
+9	76.0	8.0		True		True		[66, 67, 71, 73, 80, 85, 87]
+10	76.0	10.0		True		True		[57, 71, 76, 76, 77, 80, 92]
+11	75.0	13.0		True		True		[53, 73, 74, 75, 85, 90]
 
 team 	% men 	% women % other genders
-1	28	56	14	['m', 'm', 'w', 'w', 'w', 'w', 'x']
-2	33	67	0	['m', 'm', 'w', 'w', 'w', 'w']
-3	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-4	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-5	86	0	14	['m', 'm', 'm', 'm', 'm', 'm', 'x']
-6	28	56	14	['m', 'm', 'w', 'w', 'w', 'w', 'x']
+1	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
+2	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
+3	28	71	0	['m', 'm', 'w', 'w', 'w', 'w', 'w']
+4	28	71	0	['m', 'm', 'w', 'w', 'w', 'w', 'w']
+5	43	43	14	['m', 'm', 'm', 'w', 'w', 'w', 'x']
+6	28	71	0	['m', 'm', 'w', 'w', 'w', 'w', 'w']
 7	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-8	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-9	100	0	0	['m', 'm', 'm', 'm', 'm', 'm']
-10	28	56	14	['m', 'm', 'w', 'w', 'w', 'w', 'x']
-11	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
+8	0	83	17	['w', 'w', 'w', 'w', 'w', 'x']
+9	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
+10	43	43	14	['m', 'm', 'm', 'w', 'w', 'w', 'x']
+11	33	67	0	['m', 'm', 'w', 'w', 'w', 'w']
 
 ### Average Class, several Conflicts ###
 
 ## INPUT ##
 Number of students: 75
-Genders: 41.3% men (31), 50.7% women (38), 8.0% other (6)
-Average gpa: 74
-Bottom tier gpas: [50, 53, 57, 59, 60, 62, 62, 63, 63, 63, 63]
-Top tier gpas: [84, 84, 84, 84, 85, 89, 90, 90, 90, 93, 103]
+Genders: 46.7% men (35), 49.3% women (37), 4.0% other (3)
+Average gpa: 76
+Bottom tier gpas: [55, 55, 58, 58, 58, 59, 59, 60, 60, 62, 65]
+Top tier gpas: [87, 88, 88, 89, 90, 91, 92, 93, 94, 95, 102]
 Input team size: 7
 Expected number of teams: 11
 Expected team sizes: [7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6]
 Input number of conflicts: 15
 Conflicts:
-id26 in conflict with id47
-id9 in conflict with id70
-id19 in conflict with id41
-id30 in conflict with id62
-id43 in conflict with id56
-id43 in conflict with id60
-id45 in conflict with id70
-id53 in conflict with id75
-id26 in conflict with id74
-id28 in conflict with id39
-id8 in conflict with id65
-id73 in conflict with id74
-id12 in conflict with id23
-id16 in conflict with id68
-id12 in conflict with id59
+id34 in conflict with 
+id55 in conflict with 
+id35 in conflict with 
+id20 in conflict with 
+id63 in conflict with 
+id5 in conflict with 
+id39 in conflict with 
+id57 in conflict with 
+id40 in conflict with 
+id12 in conflict with 
+id71 in conflict with 
+id65 in conflict with 
+id53 in conflict with 
+id54 in conflict with 
+id62 in conflict with 
 
 ## OUTPUT ##
 
 Teams contain conflicts: False
 
 team 	size 	conflicts 	members
-1	7	0		['id3', 'id15', 'id19', 'id28', 'id31', 'id45', 'id46']
-2	7	0		['id13', 'id38', 'id39', 'id41', 'id67', 'id68', 'id71']
-3	7	0		['id14', 'id47', 'id49', 'id53', 'id55', 'id69', 'id73']
-4	7	0		['id2', 'id6', 'id12', 'id36', 'id43', 'id61', 'id62']
-5	7	0		['id17', 'id20', 'id24', 'id29', 'id34', 'id54', 'id56']
-6	7	0		['id4', 'id21', 'id22', 'id23', 'id44', 'id74', 'id75']
-7	6	0		['id1', 'id16', 'id35', 'id58', 'id59', 'id65']
-8	7	0		['id5', 'id8', 'id25', 'id42', 'id51', 'id52', 'id70']
-9	7	0		['id9', 'id32', 'id33', 'id37', 'id57', 'id60', 'id72']
-10	6	0		['id10', 'id11', 'id26', 'id40', 'id50', 'id63']
-11	7	0		['id7', 'id18', 'id27', 'id30', 'id48', 'id64', 'id66']
+1	7	0		['id7', 'id12', 'id17', 'id38', 'id42', 'id51', 'id59']
+2	7	0		['id2', 'id13', 'id48', 'id57', 'id58', 'id60', 'id73']
+3	7	0		['id18', 'id19', 'id36', 'id46', 'id61', 'id64', 'id69']
+4	7	0		['id4', 'id8', 'id9', 'id10', 'id25', 'id32', 'id65']
+5	6	0		['id20', 'id27', 'id31', 'id33', 'id35', 'id55']
+6	6	0		['id16', 'id40', 'id41', 'id43', 'id68', 'id71']
+7	7	0		['id1', 'id14', 'id22', 'id29', 'id53', 'id63', 'id67']
+8	7	0		['id5', 'id21', 'id23', 'id30', 'id37', 'id44', 'id49']
+9	7	0		['id3', 'id15', 'id24', 'id26', 'id50', 'id52', 'id66']
+10	7	0		['id34', 'id39', 'id45', 'id54', 'id62', 'id74', 'id75']
+11	7	0		['id6', 'id11', 'id28', 'id47', 'id56', 'id70', 'id72']
 Number of teams and team sizes are correct.
 No conflicts within teams.
 
 team 	avg gpa total dev 	bottom tier 	top tier 	gpas
-1	74.0	8.0		True		True		[65, 67, 67, 72, 80, 83, 84]
-2	74.0	10.0		True		True		[62, 62, 69, 74, 76, 83, 90]
-3	74.0	11.0		True		True		[59, 68, 69, 70, 76, 80, 93]
-4	74.0	10.0		True		True		[63, 63, 70, 70, 74, 85, 90]
-5	73.0	10.0		True		True		[63, 65, 66, 71, 76, 83, 90]
-6	74.0	9.0		True		True		[60, 64, 76, 77, 77, 80, 84]
-7	74.0	15.0		True		True		[57, 68, 70, 72, 74, 103]
-8	74.0	12.0		True		True		[50, 69, 76, 76, 81, 82, 84]
-9	73.0	10.0		True		True		[63, 65, 65, 73, 78, 80, 89]
-10	73.0	6.0		True		True		[66, 67, 73, 75, 78, 81]
-11	73.0	10.0		True		True		[53, 68, 75, 76, 76, 79, 84]
+1	76.0	12.0		True		True		[55, 73, 73, 74, 77, 86, 94]
+2	76.0	12.0		True		True		[55, 70, 74, 75, 77, 90, 91]
+3	76.0	11.0		True		True		[59, 69, 70, 76, 83, 87, 88]
+4	76.0	10.0		True		True		[65, 67, 69, 71, 83, 83, 92]
+5	76.0	10.0		True		True		[62, 67, 76, 81, 82, 88]
+6	76.0	14.0		True		True		[60, 71, 71, 74, 78, 102]
+7	76.0	10.0		True		True		[60, 70, 77, 77, 77, 78, 93]
+8	76.0	10.0		True		True		[59, 71, 71, 76, 82, 85, 89]
+9	76.0	11.0		True		True		[58, 67, 77, 78, 78, 79, 95]
+10	76.0	10.0		True		True		[58, 66, 74, 82, 83, 84, 84]
+11	76.0	10.0		True		True		[58, 66, 77, 79, 83, 83, 86]
 
 team 	% men 	% women % other genders
-1	43	28	28	['m', 'm', 'm', 'w', 'w', 'x', 'x']
+1	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
 2	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
 3	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-4	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-5	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-6	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-7	17	67	17	['m', 'w', 'w', 'w', 'w', 'x']
-8	28	56	14	['m', 'm', 'w', 'w', 'w', 'w', 'x']
+4	43	28	28	['m', 'm', 'm', 'w', 'w', 'x', 'x']
+5	33	67	0	['m', 'm', 'w', 'w', 'w', 'w']
+6	100	0	0	['m', 'm', 'm', 'm', 'm', 'm']
+7	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
+8	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
 9	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
-10	83	0	17	['m', 'm', 'm', 'm', 'm', 'x']
-11	28	56	14	['m', 'm', 'w', 'w', 'w', 'w', 'x']
+10	43	56	0	['m', 'm', 'm', 'w', 'w', 'w', 'w']
+11	43	43	14	['m', 'm', 'm', 'w', 'w', 'w', 'x']
 
 ### Mostly Female Class, several Conflicts ###
 
 ## INPUT ##
 Number of students: 75
-Genders: 14.7% men (11), 81.3% women (61), 4.0% other (3)
-Average gpa: 76
-Bottom tier gpas: [47, 50, 59, 63, 63, 63, 64, 65]
-Top tier gpas: [87, 88, 89, 89, 90, 90, 96, 97]
+Genders: 24.0% men (18), 76.0% women (57), 0.0% other (0)
+Average gpa: 75
+Bottom tier gpas: [57, 58, 59, 61, 61, 62, 62, 62]
+Top tier gpas: [86, 87, 88, 88, 88, 89, 92, 96]
 Input team size: 10
 Expected number of teams: 8
 Expected team sizes: [10, 10, 10, 9, 9, 9, 9, 9]
 Input number of conflicts: 15
 Conflicts:
-id47 in conflict with id67
-id1 in conflict with id71
-id14 in conflict with id60
-id18 in conflict with id43
-id11 in conflict with id49
-id60 in conflict with id69
-id22 in conflict with id25
-id15 in conflict with id42
-id1 in conflict with id4
-id63 in conflict with id65
-id4 in conflict with id10
-id28 in conflict with id73
-id34 in conflict with id71
-id48 in conflict with id55
-id1 in conflict with id38
+id7 in conflict with 
+id32 in conflict with 
+id35 in conflict with 
+id55 in conflict with 
+id56 in conflict with 
+id61 in conflict with 
+id4 in conflict with 
+id34 in conflict with 
+id18 in conflict with 
+id30 in conflict with 
+id69 in conflict with 
+id17 in conflict with 
+id25 in conflict with 
+id4 in conflict with 
+id64 in conflict with 
 
 ## OUTPUT ##
 
 Teams contain conflicts: False
 
 team 	size 	conflicts 	members
-1	9	0		['id10', 'id13', 'id31', 'id33', 'id51', 'id55', 'id60', 'id63', 'id66']
-2	10	0		['id12', 'id19', 'id21', 'id28', 'id29', 'id32', 'id39', 'id48', 'id57', 'id71']
-3	10	0		['id2', 'id18', 'id34', 'id35', 'id37', 'id46', 'id53', 'id61', 'id69', 'id73']
-4	10	0		['id11', 'id15', 'id27', 'id30', 'id47', 'id54', 'id58', 'id64', 'id65', 'id75']
-5	9	0		['id17', 'id20', 'id23', 'id26', 'id52', 'id56', 'id59', 'id62', 'id74']
-6	9	0		['id3', 'id6', 'id25', 'id38', 'id40', 'id41', 'id49', 'id50', 'id67']
-7	9	0		['id4', 'id8', 'id9', 'id16', 'id22', 'id36', 'id68', 'id70', 'id72']
-8	9	0		['id1', 'id5', 'id7', 'id14', 'id24', 'id42', 'id43', 'id44', 'id45']
+1	9	0		['id6', 'id15', 'id18', 'id31', 'id41', 'id46', 'id54', 'id56', 'id71']
+2	10	0		['id12', 'id19', 'id30', 'id37', 'id39', 'id44', 'id53', 'id64', 'id70', 'id74']
+3	9	0		['id24', 'id25', 'id26', 'id38', 'id48', 'id49', 'id52', 'id55', 'id62']
+4	9	0		['id3', 'id9', 'id10', 'id11', 'id17', 'id28', 'id47', 'id58', 'id72']
+5	9	0		['id16', 'id21', 'id22', 'id29', 'id33', 'id57', 'id65', 'id67', 'id69']
+6	10	0		['id2', 'id5', 'id8', 'id23', 'id32', 'id34', 'id36', 'id59', 'id60', 'id68']
+7	9	0		['id7', 'id14', 'id20', 'id27', 'id42', 'id45', 'id50', 'id73', 'id75']
+8	10	0		['id1', 'id4', 'id13', 'id35', 'id40', 'id43', 'id51', 'id61', 'id63', 'id66']
 Number of teams and team sizes are correct.
 No conflicts within teams.
 
 team 	avg gpa total dev 	bottom tier 	top tier 	gpas
-1	76.0	12.0		True		True		[47, 69, 76, 76, 78, 81, 84, 84, 85]
-2	76.0	8.0		True		True		[64, 66, 69, 73, 74, 78, 80, 81, 87, 88]
-3	76.0	8.0		True		True		[63, 66, 70, 70, 76, 78, 81, 82, 85, 87]
-4	76.0	8.0		True		True		[66, 66, 70, 72, 73, 75, 81, 82, 85, 90]
-5	75.0	10.0		True		True		[63, 67, 67, 71, 74, 77, 79, 80, 97]
-6	76.0	10.0		True		True		[63, 65, 71, 71, 77, 78, 80, 89, 90]
-7	74.0	9.0		True		True		[59, 66, 69, 71, 73, 76, 81, 84, 89]
-8	76.0	12.0		True		True		[50, 72, 72, 74, 77, 77, 80, 82, 96]
+1	76.0	9.0		True		True		[62, 69, 71, 72, 72, 80, 81, 84, 92]
+2	75.0	8.0		True		True		[61, 65, 70, 73, 78, 78, 78, 79, 84, 86]
+3	75.0	9.0		True		True		[58, 71, 71, 71, 72, 79, 82, 85, 86]
+4	75.0	9.0		True		True		[61, 66, 69, 71, 76, 80, 82, 84, 86]
+5	75.0	10.0		True		True		[59, 67, 71, 72, 73, 76, 81, 87, 89]
+6	75.0	8.0		True		True		[62, 63, 70, 72, 76, 77, 78, 79, 85, 88]
+7	75.0	10.0		True		True		[66, 69, 69, 70, 73, 73, 73, 88, 96]
+8	75.0	9.0		True		True		[57, 62, 74, 75, 76, 77, 78, 80, 85, 88]
 
 team 	% men 	% women % other genders
 1	22	78	0	['m', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
 2	30	70	0	['m', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-3	20	80	0	['m', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-4	10	90	0	['m', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+3	44	56	0	['m', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w']
+4	0	100	0	['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
 5	22	78	0	['m', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-6	0	78	22	['w', 'w', 'w', 'w', 'w', 'w', 'w', 'x', 'x']
-7	0	100	0	['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-8	11	78	11	['m', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'x']
+6	20	80	0	['m', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+7	33	67	0	['m', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w']
+8	20	80	0	['m', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
 
 ### Large Teams ###
 
 ## INPUT ##
 Number of students: 75
-Genders: 45.3% men (34), 53.3% women (40), 1.3% other (1)
-Average gpa: 74
-Bottom tier gpas: [46, 54, 55, 56]
-Top tier gpas: [93, 94, 98, 109]
+Genders: 52.0% men (39), 44.0% women (33), 4.0% other (3)
+Average gpa: 76
+Bottom tier gpas: [53, 55, 56, 57]
+Top tier gpas: [92, 93, 98, 100]
 Input team size: 20
 Expected number of teams: 4
 Expected team sizes: [19, 19, 19, 18]
@@ -217,424 +217,424 @@ Input number of conflicts: 0
 Teams contain conflicts: False
 
 team 	size 	conflicts 	members
-1	19	0		['id1', 'id2', 'id3', 'id8', 'id17', 'id20', 'id22', 'id24', 'id29', 'id30', 'id36', 'id43', 'id47', 'id48', 'id51', 'id53', 'id57', 'id60', 'id70']
-2	18	0		['id4', 'id6', 'id12', 'id13', 'id15', 'id27', 'id28', 'id31', 'id33', 'id34', 'id37', 'id56', 'id58', 'id61', 'id63', 'id69', 'id73', 'id74']
-3	19	0		['id5', 'id10', 'id11', 'id14', 'id16', 'id21', 'id23', 'id25', 'id26', 'id35', 'id39', 'id40', 'id44', 'id45', 'id50', 'id52', 'id55', 'id67', 'id68']
-4	19	0		['id7', 'id9', 'id18', 'id19', 'id32', 'id38', 'id41', 'id42', 'id46', 'id49', 'id54', 'id59', 'id62', 'id64', 'id65', 'id66', 'id71', 'id72', 'id75']
-Number of teams and team sizes are correct.
+1	19	0		['id1', 'id2', 'id10', 'id16', 'id18', 'id19', 'id23', 'id25', 'id26', 'id27', 'id30', 'id35', 'id38', 'id42', 'id43', 'id45', 'id48', 'id60', 'id70']
+2	18	0		['id5', 'id6', 'id14', 'id15', 'id21', 'id28', 'id34', 'id36', 'id37', 'id41', 'id44', 'id46', 'id50', 'id51', 'id56', 'id61', 'id73', 'id75']
+3	18	0		['id3', 'id4', 'id7', 'id8', 'id9', 'id12', 'id13', 'id17', 'id20', 'id22', 'id31', 'id33', 'id40', 'id49', 'id57', 'id64', 'id65', 'id67']
+4	20	0		['id11', 'id24', 'id29', 'id32', 'id39', 'id47', 'id52', 'id53', 'id54', 'id55', 'id58', 'id59', 'id62', 'id63', 'id66', 'id68', 'id69', 'id71', 'id72', 'id74']
+Expected team sizes: [18, 19, 19, 19]. Produced team sizes: [18, 18, 19, 20].
 No conflicts within teams.
 
 team 	avg gpa total dev 	bottom tier 	top tier 	gpas
-1	74.0	13.0		True		True		[46, 57, 61, 66, 68, 68, 71, 75, 75, 76, 76, 77, 77, 78, 79, 80, 85, 86, 109]
-2	74.0	12.0		True		True		[54, 60, 62, 62, 65, 67, 70, 70, 73, 74, 76, 76, 76, 86, 86, 89, 93, 94]
-3	74.0	10.0		True		True		[55, 60, 61, 62, 67, 70, 70, 70, 71, 73, 79, 79, 80, 80, 85, 85, 86, 88, 90]
-4	74.0	11.0		True		True		[56, 63, 64, 66, 66, 67, 67, 68, 70, 72, 72, 74, 79, 79, 84, 85, 87, 89, 98]
+1	76.0	11.0		True		True		[53, 63, 64, 67, 69, 70, 71, 73, 75, 77, 78, 80, 81, 84, 84, 86, 86, 92, 98]
+2	76.0	11.0		True		True		[58, 59, 61, 67, 67, 70, 71, 73, 77, 77, 80, 80, 81, 84, 86, 92, 92, 93]
+3	76.0	12.0		True		True		[56, 61, 63, 65, 65, 71, 72, 74, 75, 77, 78, 78, 84, 85, 88, 88, 89, 100]
+4	76.0	10.0		True		True		[55, 57, 60, 64, 70, 72, 73, 75, 76, 79, 79, 80, 81, 81, 82, 83, 85, 88, 90, 91]
 
 team 	% men 	% women % other genders
-1	47	53	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+1	47	42	11	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'x', 'x']
 2	44	56	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-3	47	53	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-4	42	53	5	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'x']
+3	67	33	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w']
+4	50	45	5	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'x']
 
 ### Large Teams with Many Conflicts ###
 
 ## INPUT ##
 Number of students: 75
-Genders: 56.0% men (42), 37.3% women (28), 6.7% other (5)
-Average gpa: 76
-Bottom tier gpas: [52, 53, 54, 54]
-Top tier gpas: [95, 100, 101, 103]
+Genders: 56.0% men (42), 41.3% women (31), 2.7% other (2)
+Average gpa: 75
+Bottom tier gpas: [42, 55, 58, 58]
+Top tier gpas: [89, 91, 92, 103]
 Input team size: 20
 Expected number of teams: 4
 Expected team sizes: [19, 19, 19, 18]
 Input number of conflicts: 300
 Conflicts:
-id46 in conflict with id72
-id9 in conflict with id46
-id14 in conflict with id72
-id47 in conflict with id51
-id44 in conflict with id58
-id13 in conflict with id52
-id11 in conflict with id59
-id48 in conflict with id51
-id36 in conflict with id58
-id29 in conflict with id62
-id9 in conflict with id18
-id5 in conflict with id54
-id41 in conflict with id57
-id2 in conflict with id40
-id11 in conflict with id24
-id15 in conflict with id51
-id41 in conflict with id54
-id9 in conflict with id54
-id29 in conflict with id61
-id4 in conflict with id16
-id34 in conflict with id50
-id19 in conflict with id72
-id54 in conflict with id69
-id31 in conflict with id60
-id34 in conflict with id54
-id18 in conflict with id24
-id1 in conflict with id15
-id21 in conflict with id31
-id18 in conflict with id42
-id20 in conflict with id31
-id27 in conflict with id33
-id17 in conflict with id74
-id8 in conflict with id17
-id2 in conflict with id57
-id33 in conflict with id36
-id60 in conflict with id64
-id26 in conflict with id53
-id26 in conflict with id65
-id12 in conflict with id44
-id20 in conflict with id25
-id37 in conflict with id60
-id50 in conflict with id54
-id8 in conflict with id24
-id2 in conflict with id63
-id3 in conflict with id58
-id60 in conflict with id71
-id48 in conflict with id59
-id3 in conflict with id7
-id7 in conflict with id56
-id14 in conflict with id55
-id38 in conflict with id69
-id17 in conflict with id29
-id10 in conflict with id60
-id25 in conflict with id61
-id60 in conflict with id62
-id20 in conflict with id36
-id6 in conflict with id43
-id1 in conflict with id10
-id20 in conflict with id49
-id20 in conflict with id75
-id18 in conflict with id55
-id17 in conflict with id30
-id53 in conflict with id73
-id3 in conflict with id35
-id25 in conflict with id49
-id46 in conflict with id71
-id14 in conflict with id75
-id4 in conflict with id56
-id15 in conflict with id57
-id35 in conflict with id39
-id29 in conflict with id63
-id65 in conflict with id75
-id35 in conflict with id45
-id17 in conflict with id70
-id15 in conflict with id31
-id51 in conflict with id54
-id21 in conflict with id40
-id3 in conflict with id52
-id25 in conflict with id56
-id22 in conflict with id59
-id10 in conflict with id46
-id38 in conflict with id58
-id7 in conflict with id22
-id46 in conflict with id60
-id28 in conflict with id71
-id48 in conflict with id70
-id4 in conflict with id40
-id21 in conflict with id58
-id17 in conflict with id50
-id55 in conflict with id64
-id45 in conflict with id46
-id7 in conflict with id73
-id1 in conflict with id69
-id35 in conflict with id53
-id44 in conflict with id65
-id2 in conflict with id23
-id50 in conflict with id51
-id15 in conflict with id35
-id3 in conflict with id55
-id4 in conflict with id34
-id4 in conflict with id51
-id4 in conflict with id28
-id14 in conflict with id18
-id71 in conflict with id75
-id38 in conflict with id50
-id6 in conflict with id59
-id41 in conflict with id52
-id18 in conflict with id22
-id25 in conflict with id33
-id24 in conflict with id74
-id39 in conflict with id49
-id13 in conflict with id43
-id18 in conflict with id44
-id56 in conflict with id75
-id27 in conflict with id42
-id42 in conflict with id44
-id57 in conflict with id62
-id14 in conflict with id68
-id17 in conflict with id67
-id35 in conflict with id68
-id4 in conflict with id68
-id14 in conflict with id40
-id9 in conflict with id42
-id39 in conflict with id61
-id45 in conflict with id60
-id10 in conflict with id19
-id30 in conflict with id75
-id27 in conflict with id65
-id12 in conflict with id35
-id13 in conflict with id71
-id21 in conflict with id47
-id7 in conflict with id10
-id21 in conflict with id39
-id38 in conflict with id62
-id1 in conflict with id60
-id58 in conflict with id69
-id38 in conflict with id65
-id37 in conflict with id74
-id1 in conflict with id35
-id5 in conflict with id16
-id23 in conflict with id75
-id36 in conflict with id45
-id60 in conflict with id63
-id39 in conflict with id68
-id14 in conflict with id28
-id32 in conflict with id61
-id19 in conflict with id34
-id42 in conflict with id72
-id33 in conflict with id51
-id12 in conflict with id39
-id1 in conflict with id19
-id31 in conflict with id50
-id19 in conflict with id59
-id14 in conflict with id69
-id38 in conflict with id42
-id27 in conflict with id73
-id29 in conflict with id51
-id9 in conflict with id45
-id12 in conflict with id14
-id6 in conflict with id22
-id14 in conflict with id50
-id24 in conflict with id34
-id30 in conflict with id53
-id6 in conflict with id33
-id35 in conflict with id49
-id31 in conflict with id74
-id32 in conflict with id68
-id10 in conflict with id15
-id43 in conflict with id55
-id19 in conflict with id38
-id2 in conflict with id61
-id30 in conflict with id38
-id15 in conflict with id19
-id50 in conflict with id59
-id19 in conflict with id56
-id19 in conflict with id23
-id6 in conflict with id50
-id45 in conflict with id74
-id27 in conflict with id62
-id1 in conflict with id59
-id17 in conflict with id31
-id40 in conflict with id71
-id5 in conflict with id20
-id52 in conflict with id58
-id38 in conflict with id48
-id13 in conflict with id27
-id19 in conflict with id55
-id11 in conflict with id22
-id14 in conflict with id57
-id3 in conflict with id42
-id1 in conflict with id51
-id21 in conflict with id34
-id26 in conflict with id52
-id24 in conflict with id58
-id1 in conflict with id33
-id1 in conflict with id68
-id4 in conflict with id69
-id23 in conflict with id46
-id24 in conflict with id70
-id14 in conflict with id31
-id11 in conflict with id42
-id42 in conflict with id68
-id26 in conflict with id64
-id40 in conflict with id41
-id51 in conflict with id59
-id20 in conflict with id28
-id1 in conflict with id4
-id6 in conflict with id48
-id9 in conflict with id27
-id15 in conflict with id71
-id30 in conflict with id41
-id38 in conflict with id57
-id23 in conflict with id66
-id16 in conflict with id46
-id16 in conflict with id19
-id44 in conflict with id61
-id16 in conflict with id33
-id37 in conflict with id48
-id21 in conflict with id30
-id33 in conflict with id64
-id16 in conflict with id17
-id1 in conflict with id48
-id26 in conflict with id39
-id41 in conflict with id43
-id36 in conflict with id69
-id6 in conflict with id24
-id30 in conflict with id40
-id15 in conflict with id34
-id5 in conflict with id15
-id26 in conflict with id68
-id10 in conflict with id59
-id34 in conflict with id57
-id27 in conflict with id59
-id3 in conflict with id65
-id44 in conflict with id73
-id47 in conflict with id64
-id47 in conflict with id72
-id40 in conflict with id42
-id27 in conflict with id66
-id38 in conflict with id56
-id30 in conflict with id54
-id41 in conflict with id65
-id37 in conflict with id49
-id24 in conflict with id25
-id15 in conflict with id49
-id3 in conflict with id31
-id48 in conflict with id58
-id44 in conflict with id67
-id61 in conflict with id72
-id52 in conflict with id75
-id20 in conflict with id63
-id39 in conflict with id50
-id12 in conflict with id37
-id15 in conflict with id72
-id41 in conflict with id74
-id37 in conflict with id46
-id31 in conflict with id72
-id7 in conflict with id31
-id10 in conflict with id53
-id3 in conflict with id49
-id39 in conflict with id41
-id35 in conflict with id38
-id17 in conflict with id21
-id13 in conflict with id34
-id9 in conflict with id62
-id34 in conflict with id58
-id51 in conflict with id62
-id37 in conflict with id64
-id60 in conflict with id72
-id25 in conflict with id72
-id22 in conflict with id60
-id31 in conflict with id75
-id9 in conflict with id49
-id39 in conflict with id53
-id37 in conflict with id65
-id33 in conflict with id56
-id3 in conflict with id66
-id66 in conflict with id71
-id10 in conflict with id36
-id48 in conflict with id71
-id14 in conflict with id64
-id57 in conflict with id65
-id33 in conflict with id44
-id22 in conflict with id32
-id9 in conflict with id75
-id6 in conflict with id29
-id20 in conflict with id66
-id8 in conflict with id64
-id6 in conflict with id72
-id9 in conflict with id70
-id21 in conflict with id55
-id3 in conflict with id34
-id7 in conflict with id65
-id15 in conflict with id59
-id51 in conflict with id52
-id18 in conflict with id61
-id9 in conflict with id40
-id33 in conflict with id71
-id67 in conflict with id68
-id19 in conflict with id50
+id11 in conflict with 
+id10 in conflict with 
+id20 in conflict with 
+id10 in conflict with 
+id15 in conflict with 
+id20 in conflict with 
+id16 in conflict with 
+id16 in conflict with 
+id29 in conflict with 
+id20 in conflict with 
+id65 in conflict with 
+id68 in conflict with 
+id29 in conflict with 
+id46 in conflict with 
+id25 in conflict with 
+id66 in conflict with 
+id67 in conflict with 
+id24 in conflict with 
+id40 in conflict with 
+id24 in conflict with 
+id51 in conflict with 
+id58 in conflict with 
+id57 in conflict with 
+id15 in conflict with 
+id30 in conflict with 
+id67 in conflict with 
+id60 in conflict with 
+id59 in conflict with 
+id46 in conflict with 
+id66 in conflict with 
+id5 in conflict with 
+id38 in conflict with 
+id44 in conflict with 
+id48 in conflict with 
+id50 in conflict with 
+id48 in conflict with 
+id34 in conflict with 
+id29 in conflict with 
+id32 in conflict with 
+id56 in conflict with 
+id53 in conflict with 
+id59 in conflict with 
+id12 in conflict with 
+id28 in conflict with 
+id8 in conflict with 
+id69 in conflict with 
+id46 in conflict with 
+id69 in conflict with 
+id41 in conflict with 
+id74 in conflict with 
+id25 in conflict with 
+id15 in conflict with 
+id57 in conflict with 
+id2 in conflict with 
+id23 in conflict with 
+id1 in conflict with 
+id49 in conflict with 
+id14 in conflict with 
+id6 in conflict with 
+id20 in conflict with 
+id17 in conflict with 
+id73 in conflict with 
+id57 in conflict with 
+id13 in conflict with 
+id20 in conflict with 
+id67 in conflict with 
+id21 in conflict with 
+id28 in conflict with 
+id65 in conflict with 
+id74 in conflict with 
+id14 in conflict with 
+id62 in conflict with 
+id37 in conflict with 
+id75 in conflict with 
+id20 in conflict with 
+id7 in conflict with 
+id23 in conflict with 
+id73 in conflict with 
+id58 in conflict with 
+id75 in conflict with 
+id35 in conflict with 
+id69 in conflict with 
+id63 in conflict with 
+id53 in conflict with 
+id11 in conflict with 
+id22 in conflict with 
+id1 in conflict with 
+id39 in conflict with 
+id29 in conflict with 
+id12 in conflict with 
+id34 in conflict with 
+id68 in conflict with 
+id10 in conflict with 
+id61 in conflict with 
+id24 in conflict with 
+id5 in conflict with 
+id69 in conflict with 
+id48 in conflict with 
+id12 in conflict with 
+id10 in conflict with 
+id4 in conflict with 
+id47 in conflict with 
+id42 in conflict with 
+id75 in conflict with 
+id44 in conflict with 
+id48 in conflict with 
+id19 in conflict with 
+id11 in conflict with 
+id17 in conflict with 
+id27 in conflict with 
+id63 in conflict with 
+id34 in conflict with 
+id11 in conflict with 
+id1 in conflict with 
+id12 in conflict with 
+id30 in conflict with 
+id13 in conflict with 
+id73 in conflict with 
+id23 in conflict with 
+id14 in conflict with 
+id53 in conflict with 
+id54 in conflict with 
+id64 in conflict with 
+id54 in conflict with 
+id50 in conflict with 
+id47 in conflict with 
+id61 in conflict with 
+id14 in conflict with 
+id48 in conflict with 
+id23 in conflict with 
+id47 in conflict with 
+id6 in conflict with 
+id35 in conflict with 
+id27 in conflict with 
+id62 in conflict with 
+id68 in conflict with 
+id59 in conflict with 
+id10 in conflict with 
+id55 in conflict with 
+id13 in conflict with 
+id34 in conflict with 
+id9 in conflict with 
+id39 in conflict with 
+id75 in conflict with 
+id31 in conflict with 
+id47 in conflict with 
+id54 in conflict with 
+id64 in conflict with 
+id63 in conflict with 
+id16 in conflict with 
+id75 in conflict with 
+id6 in conflict with 
+id28 in conflict with 
+id74 in conflict with 
+id30 in conflict with 
+id5 in conflict with 
+id35 in conflict with 
+id45 in conflict with 
+id69 in conflict with 
+id26 in conflict with 
+id63 in conflict with 
+id20 in conflict with 
+id3 in conflict with 
+id19 in conflict with 
+id14 in conflict with 
+id21 in conflict with 
+id3 in conflict with 
+id30 in conflict with 
+id19 in conflict with 
+id35 in conflict with 
+id3 in conflict with 
+id16 in conflict with 
+id71 in conflict with 
+id39 in conflict with 
+id6 in conflict with 
+id50 in conflict with 
+id21 in conflict with 
+id14 in conflict with 
+id47 in conflict with 
+id44 in conflict with 
+id6 in conflict with 
+id68 in conflict with 
+id67 in conflict with 
+id50 in conflict with 
+id58 in conflict with 
+id21 in conflict with 
+id17 in conflict with 
+id25 in conflict with 
+id21 in conflict with 
+id15 in conflict with 
+id8 in conflict with 
+id72 in conflict with 
+id20 in conflict with 
+id50 in conflict with 
+id19 in conflict with 
+id71 in conflict with 
+id68 in conflict with 
+id26 in conflict with 
+id65 in conflict with 
+id38 in conflict with 
+id43 in conflict with 
+id6 in conflict with 
+id31 in conflict with 
+id16 in conflict with 
+id14 in conflict with 
+id58 in conflict with 
+id41 in conflict with 
+id45 in conflict with 
+id5 in conflict with 
+id20 in conflict with 
+id71 in conflict with 
+id7 in conflict with 
+id1 in conflict with 
+id15 in conflict with 
+id26 in conflict with 
+id71 in conflict with 
+id40 in conflict with 
+id49 in conflict with 
+id12 in conflict with 
+id46 in conflict with 
+id8 in conflict with 
+id73 in conflict with 
+id40 in conflict with 
+id58 in conflict with 
+id66 in conflict with 
+id37 in conflict with 
+id65 in conflict with 
+id8 in conflict with 
+id12 in conflict with 
+id65 in conflict with 
+id73 in conflict with 
+id2 in conflict with 
+id64 in conflict with 
+id7 in conflict with 
+id52 in conflict with 
+id31 in conflict with 
+id21 in conflict with 
+id50 in conflict with 
+id23 in conflict with 
+id60 in conflict with 
+id37 in conflict with 
+id17 in conflict with 
+id18 in conflict with 
+id14 in conflict with 
+id52 in conflict with 
+id60 in conflict with 
+id66 in conflict with 
+id34 in conflict with 
+id27 in conflict with 
+id29 in conflict with 
+id28 in conflict with 
+id11 in conflict with 
+id17 in conflict with 
+id71 in conflict with 
+id25 in conflict with 
+id39 in conflict with 
+id49 in conflict with 
+id26 in conflict with 
+id37 in conflict with 
+id54 in conflict with 
+id57 in conflict with 
+id34 in conflict with 
+id26 in conflict with 
+id53 in conflict with 
+id71 in conflict with 
+id30 in conflict with 
+id32 in conflict with 
+id13 in conflict with 
+id17 in conflict with 
+id13 in conflict with 
+id28 in conflict with 
+id57 in conflict with 
+id62 in conflict with 
+id18 in conflict with 
+id74 in conflict with 
+id44 in conflict with 
+id27 in conflict with 
+id13 in conflict with 
+id45 in conflict with 
+id29 in conflict with 
+id45 in conflict with 
+id71 in conflict with 
+id27 in conflict with 
+id40 in conflict with 
+id66 in conflict with 
+id9 in conflict with 
+id35 in conflict with 
+id35 in conflict with 
+id68 in conflict with 
+id4 in conflict with 
+id55 in conflict with 
+id21 in conflict with 
+id38 in conflict with 
+id66 in conflict with 
+id44 in conflict with 
+id44 in conflict with 
+id59 in conflict with 
+id36 in conflict with 
+id1 in conflict with 
+id36 in conflict with 
 
 ## OUTPUT ##
 
 Teams contain conflicts: True
 
 team 	size 	conflicts 	members
-1	19	0		['id10', 'id16', 'id23', 'id24', 'id27', 'id40', 'id43', 'id44', 'id45', 'id48', 'id49', 'id50', 'id56', 'id57', 'id63', 'id64', 'id68', 'id69', 'id72']
-2	20	0		['id1', 'id5', 'id22', 'id25', 'id28', 'id30', 'id31', 'id34', 'id36', 'id39', 'id42', 'id46', 'id47', 'id52', 'id55', 'id62', 'id65', 'id66', 'id67', 'id73']
-3	16	0		['id6', 'id7', 'id9', 'id11', 'id14', 'id17', 'id19', 'id20', 'id26', 'id35', 'id37', 'id41', 'id51', 'id58', 'id61', 'id71']
-4	20	1		['id2', 'id3', 'id4', 'id8', 'id12', 'id13', 'id15', 'id18', 'id21', 'id29', 'id32', 'id33', 'id38', 'id53', 'id54', 'id59', 'id60', 'id70', 'id74', 'id75']
-Expected team sizes: [18, 19, 19, 19]. Produced team sizes: [16, 19, 20, 20].
-Teams contain 1 conflicts.
+1	18	2		['id4', 'id7', 'id8', 'id12', 'id13', 'id16', 'id30', 'id41', 'id50', 'id54', 'id58', 'id60', 'id62', 'id65', 'id66', 'id68', 'id69', 'id73']
+2	20	0		['id3', 'id5', 'id10', 'id15', 'id18', 'id22', 'id27', 'id31', 'id34', 'id39', 'id45', 'id47', 'id48', 'id49', 'id52', 'id55', 'id57', 'id59', 'id64', 'id75']
+3	19	2		['id2', 'id20', 'id23', 'id24', 'id25', 'id26', 'id29', 'id32', 'id33', 'id35', 'id36', 'id37', 'id38', 'id40', 'id44', 'id46', 'id56', 'id63', 'id70']
+4	18	1		['id1', 'id6', 'id9', 'id11', 'id14', 'id17', 'id19', 'id21', 'id28', 'id42', 'id43', 'id51', 'id53', 'id61', 'id67', 'id71', 'id72', 'id74']
+Expected team sizes: [18, 19, 19, 19]. Produced team sizes: [18, 18, 19, 20].
+Teams contain 5 conflicts.
 
 team 	avg gpa total dev 	bottom tier 	top tier 	gpas
-1	76.0	11.0		True		True		[53, 62, 65, 66, 67, 68, 68, 71, 75, 78, 80, 80, 81, 81, 84, 85, 88, 90, 95]
-2	78.0	11.0		True		True		[52, 66, 68, 68, 69, 70, 74, 75, 75, 77, 78, 79, 79, 79, 84, 85, 86, 87, 100, 101]
-3	74.0	12.0		True		True		[54, 54, 63, 67, 67, 68, 71, 71, 72, 78, 83, 85, 86, 89, 89, 93]
-4	76.0	10.0		True		True		[64, 65, 65, 67, 69, 70, 71, 72, 74, 74, 76, 76, 76, 77, 78, 79, 88, 91, 94, 103]
+1	74.0	9.0		True		True		[58, 62, 63, 66, 68, 68, 70, 72, 74, 76, 78, 78, 78, 81, 81, 83, 86, 91]
+2	75.0	11.0		True		True		[42, 55, 64, 67, 69, 70, 72, 75, 77, 78, 79, 81, 81, 81, 81, 81, 83, 84, 87, 89]
+3	75.0	11.0		True		True		[58, 63, 66, 66, 66, 68, 68, 68, 71, 75, 76, 77, 78, 82, 82, 83, 84, 89, 103]
+4	75.0	10.0		True		True		[61, 61, 64, 67, 68, 68, 72, 72, 73, 74, 75, 78, 80, 81, 87, 88, 88, 92]
 
 team 	% men 	% women % other genders
-1	53	37	11	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'x', 'x']
-2	50	50	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-3	62	31	6	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'x']
-4	60	30	10	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'x', 'x']
+1	61	33	6	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'x']
+2	65	35	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+3	47	53	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+4	50	44	6	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'x']
 
 ### Mostly Male Class, several Conflicts ###
 
 ## INPUT ##
 Number of students: 75
-Genders: 92.0% men (69), 6.7% women (5), 1.3% other (1)
+Genders: 82.7% men (62), 16.0% women (12), 1.3% other (1)
 Average gpa: 75
-Bottom tier gpas: [54, 55, 57, 57, 59, 59, 59, 61]
-Top tier gpas: [88, 88, 88, 90, 92, 96, 102, 106]
+Bottom tier gpas: [52, 52, 54, 57, 58, 60, 60, 61]
+Top tier gpas: [88, 88, 89, 91, 91, 94, 94, 97]
 Input team size: 10
 Expected number of teams: 8
 Expected team sizes: [10, 10, 10, 9, 9, 9, 9, 9]
 Input number of conflicts: 15
 Conflicts:
-id11 in conflict with id36
-id27 in conflict with id65
-id9 in conflict with id71
-id18 in conflict with id52
-id9 in conflict with id44
-id52 in conflict with id67
-id38 in conflict with id56
-id4 in conflict with id14
-id11 in conflict with id70
-id1 in conflict with id16
-id11 in conflict with id18
-id18 in conflict with id70
-id10 in conflict with id60
-id20 in conflict with id75
-id6 in conflict with id35
+id29 in conflict with 
+id11 in conflict with 
+id48 in conflict with 
+id7 in conflict with 
+id20 in conflict with 
+id16 in conflict with 
+id27 in conflict with 
+id60 in conflict with 
+id41 in conflict with 
+id28 in conflict with 
+id70 in conflict with 
+id43 in conflict with 
+id32 in conflict with 
+id64 in conflict with 
+id31 in conflict with 
 
 ## OUTPUT ##
 
 Teams contain conflicts: False
 
 team 	size 	conflicts 	members
-1	10	0		['id4', 'id13', 'id15', 'id33', 'id35', 'id37', 'id38', 'id40', 'id52', 'id60']
-2	9	0		['id1', 'id9', 'id14', 'id20', 'id22', 'id27', 'id55', 'id62', 'id69']
-3	9	0		['id3', 'id5', 'id18', 'id29', 'id42', 'id43', 'id47', 'id59', 'id73']
-4	9	0		['id6', 'id7', 'id16', 'id25', 'id30', 'id34', 'id36', 'id46', 'id71']
-5	10	0		['id10', 'id23', 'id39', 'id44', 'id48', 'id49', 'id58', 'id68', 'id70', 'id75']
-6	10	0		['id8', 'id11', 'id12', 'id28', 'id41', 'id45', 'id50', 'id57', 'id67', 'id74']
-7	9	0		['id19', 'id21', 'id24', 'id26', 'id51', 'id54', 'id65', 'id66', 'id72']
-8	9	0		['id2', 'id17', 'id31', 'id32', 'id53', 'id56', 'id61', 'id63', 'id64']
+1	9	0		['id2', 'id3', 'id13', 'id47', 'id51', 'id53', 'id55', 'id59', 'id66']
+2	10	0		['id16', 'id17', 'id20', 'id27', 'id37', 'id38', 'id39', 'id56', 'id69', 'id74']
+3	9	0		['id1', 'id8', 'id12', 'id21', 'id30', 'id57', 'id62', 'id70', 'id72']
+4	9	0		['id10', 'id14', 'id22', 'id29', 'id33', 'id40', 'id45', 'id60', 'id63']
+5	10	0		['id11', 'id26', 'id28', 'id43', 'id44', 'id46', 'id54', 'id64', 'id71', 'id73']
+6	10	0		['id6', 'id7', 'id18', 'id23', 'id25', 'id35', 'id41', 'id50', 'id58', 'id75']
+7	9	0		['id4', 'id5', 'id31', 'id32', 'id34', 'id36', 'id48', 'id61', 'id67']
+8	9	0		['id9', 'id15', 'id19', 'id24', 'id42', 'id49', 'id52', 'id65', 'id68']
 Number of teams and team sizes are correct.
 No conflicts within teams.
 
 team 	avg gpa total dev 	bottom tier 	top tier 	gpas
-1	75.0	10.0		True		True		[54, 67, 70, 70, 76, 77, 82, 82, 84, 88]
-2	75.0	11.0		True		True		[57, 64, 65, 75, 76, 79, 79, 88, 92]
-3	75.0	11.0		True		True		[55, 69, 71, 71, 72, 74, 85, 88, 90]
-4	75.0	14.0		True		True		[57, 59, 72, 74, 74, 74, 74, 85, 106]
-5	75.0	9.0		True		True		[63, 63, 64, 71, 77, 79, 81, 82, 84, 86]
-6	75.0	11.0		True		True		[59, 67, 68, 69, 71, 76, 77, 80, 87, 96]
-7	74.0	11.0		True		True		[59, 64, 64, 67, 76, 79, 84, 88, 88]
-8	75.0	12.0		True		True		[61, 67, 70, 71, 72, 72, 79, 81, 102]
+1	76.0	11.0		True		True		[58, 60, 74, 75, 75, 76, 84, 87, 91]
+2	75.0	9.0		True		True		[62, 68, 70, 71, 72, 73, 76, 81, 86, 94]
+3	75.0	12.0		True		True		[52, 71, 71, 72, 75, 77, 81, 82, 97]
+4	76.0	11.0		True		True		[54, 66, 73, 75, 77, 82, 82, 85, 88]
+5	75.0	10.0		True		True		[52, 70, 72, 73, 76, 77, 80, 80, 82, 91]
+6	76.0	10.0		True		True		[60, 61, 73, 73, 76, 77, 77, 82, 88, 88]
+7	75.0	11.0		True		True		[57, 67, 68, 74, 74, 77, 77, 88, 94]
+8	75.0	9.0		True		True		[64, 66, 68, 70, 72, 78, 83, 86, 89]
 
 team 	% men 	% women % other genders
-1	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
-2	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
-3	89	0	11	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'x']
-4	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
+1	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
+2	90	10	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w']
+3	44	56	0	['m', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w']
+4	89	11	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w']
 5	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
-6	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
-7	44	56	0	['m', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'w']
-8	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
+6	50	40	10	['m', 'm', 'm', 'm', 'm', 'w', 'w', 'w', 'w', 'x']
+7	100	0	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm']
+8	89	11	0	['m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'w']
