@@ -92,7 +92,7 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
                                    for i in range(num_students)) <= 100 * xwid[j]
 
     # Run the model
-    m.optimize()
+    m.optimize(max_seconds=25)
 
     return({'students': x, 'conflicts': xs})
 
