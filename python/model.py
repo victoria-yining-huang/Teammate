@@ -99,28 +99,37 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
 
 def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
-    print(data_ids)
-    print(data_conflicts)
+    print("Generating output")
+
+    print("Deduplicate conflicts")
 
     # Deduplicate conflicts
     conflicts = []
     ids = [row[2] for row in data_ids]
     for i in range(len(data_conflicts)):
         conflict = [ids.index(data_conflicts[i][0]),
-                    ids.index(data_conflicts[i][1])]
-        inverse_conflict = [ids.index(data_conflicts[i][1]),
+                    ids.index(data_conflicts[i][3])]
+        inverse_conflict = [ids.index(data_conflicts[i][3]),
                             ids.index(data_conflicts[i][0])]
         if inverse_conflict not in conflicts:
             conflicts.append(conflict)
 
+    print("Create gpa vector")
+
     # Get gpa vector
     gpas = [int(round(float(row[4]))) for row in data_ids]
+
+    print("Create gender vector")
 
     # Get gender vector
     genders = [row[5] for row in data_ids]
 
+    print("RUN MODEL")
+
     d_vars = runModel(num_teams, team_size, num_students,
                       conflicts, gpas, genders)
+
+    print("CREATE OUTPUT")
 
     output = {}
 
