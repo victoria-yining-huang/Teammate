@@ -223,6 +223,7 @@ function uploadStudentFile() {
       for (i = 0; i <= fi.files.length - 1; i++) {
         const fsize = fi.files.item(i).size;
         const file = Math.round((fsize / 1024) * 1000000); // calculating the file size in bytes
+        console.log(file);
 
         document.getElementById("student-error").innerHTML = "";
         document.getElementById("nextstep").style.display = "inline-block";
@@ -281,6 +282,7 @@ function uploadConflict() {
       for (i = 0; i <= fi.files.length - 1; i++) {
         const fsize = fi.files.item(i).size;
         const file = Math.round((fsize / 1024) * 1000000); // calculating the file size in bytes
+        console.log(file);
 
         document.getElementById("error").innerHTML = "";
         document.getElementById("generate").style.display = "inline-block";
