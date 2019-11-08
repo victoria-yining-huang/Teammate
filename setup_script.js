@@ -57,6 +57,18 @@ function parseStudentData() {
         parsedata.push(newLinebrk[i].split(","));
       }
       parsedata.splice(0, 1);
+      for (var i = 0; i < parsedata.length; i++) {
+        console.log(i)
+        for (var j = 0; j < parsedata[i].length; j++) {
+          parsedata[i][j] = parsedata[i][j].replace(/(['"])/g, "");
+        }
+        if (i == parsedata.length - 1) {
+          if (parsedata[i][0] == "") {
+            console.log("EMPTY ROW")
+            parsedata.splice(i, 1)
+          }
+        }
+      }
       student_data = parsedata;
     });
     reader.readAsBinaryString(myFile);
@@ -74,6 +86,18 @@ function readConflicts() {
       let newLinebrk = csvdata.split("\n");
       for (let i = 0; i < newLinebrk.length; i++) {
         parsedata.push(newLinebrk[i].split(","));
+      }
+      for (var i = 0; i < parsedata.length; i++) {
+        console.log(i)
+        for (var j = 0; j < parsedata[i].length; j++) {
+          parsedata[i][j] = parsedata[i][j].replace(/(['"])/g, "");
+        }
+        if (i == parsedata.length - 1) {
+          if (parsedata[i][0] == "") {
+            console.log("EMPTY ROW")
+            parsedata.splice(i, 1)
+          }
+        }
       }
       parsedata.splice(0, 1);
       conflict_data = parsedata;

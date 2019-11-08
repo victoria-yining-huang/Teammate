@@ -6,25 +6,6 @@ window.onload = function generateTeams() {
   console.log(sessionStorage.getItem('conflicts'))
   console.log(sessionStorage.getItem('team_size'))
 
-  var students = sessionStorage.getItem('students');
-  var conflicts = sessionStorage.getItem('conflicts');
-
-  for (var row of students) {
-    for (var cell of row) {
-      cell.replace(/\s/g, '');
-    }
-  }
-
-  for (var row of conflicts) {
-    for (var cell of row) {
-      cell.replace(/\s/g, '');
-    }
-  }
-
-  console.log(students)
-  console.log(conflicts)
-
-
   jQuery.ajax({
     type: "POST",
     url: "server.php",
@@ -32,8 +13,8 @@ window.onload = function generateTeams() {
     data: {
       functionname: "generate",
       arguments: {
-        students: students,
-        conflicts: conflicts,
+        students: sessionStorage.getItem('students'),
+        conflicts: sessionStorage.getItem('conflicts'),
         team_size: sessionStorage.getItem('team_size')
       }
     },
@@ -44,7 +25,7 @@ window.onload = function generateTeams() {
         if (!obj.result.includes("python_error")) {
           var index = obj.result.indexOf("json_result_output");
           sessionStorage.setItem('output', obj.result[index + 1]);
-          window.location.href = "teams.html";
+          //window.location.href = "teams.html";
         }
       } else {
         console.log(obj.error);
