@@ -287,7 +287,7 @@ function uploadConflict() {
         document.getElementById("successful").innerHTML = "Successful upload!";
 
         // The size of the file. 
-        if (file >= 3000000) { // check for large files
+        if (file >= 30000000000) { // check for large files
           document.getElementById("error").innerHTML = "Error: File is too large. Please click the Upload Conflict File button to try again.";
           document.getElementById("generate").style.display = "none"; // hiding upload button
           document.getElementById("successful").innerHTML = "";
