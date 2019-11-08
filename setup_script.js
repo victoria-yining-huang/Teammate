@@ -229,7 +229,7 @@ function uploadStudentFile() {
         document.getElementById("student-successful").innerHTML = "Successful upload!";
 
         // The size of the file. 
-        if (file >= 3000000) { // check for large files
+        if (file >= 30000000000) { // check for large files
           document.getElementById("student-error").innerHTML = "Error: File is too large. Please click the Upload Student Data button to try again.";
           document.getElementById("nextstep").style.display = "none"; // hiding upload button
           document.getElementById("student-successful").innerHTML = "";
