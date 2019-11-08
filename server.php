@@ -2,6 +2,7 @@
     header('Content-Type: application/json');
     setlocale(LC_CTYPE, "en_US.UTF-8");
     ini_set ( "set_time_limit" , "0" );
+    ini_set('memory_limit','500M');
 
     $aResult = array();
 
