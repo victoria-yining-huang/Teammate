@@ -1,29 +1,117 @@
 // Script file for HTML page: view_group.html
+var dataStr;
+var data;
+var clickedID;
+var teamNum;
 
-// $.getJSON("data/output.json", function(json) {
-//   data = json;
-//   console.log(data);
-//   getContent();
-// });
+$.getJSON("data/output.json", function(json) {
+ sessionStorage.setItem("data", JSON.stringify(json));
+ getContent();
+});
 
-window.onload = function() {
-  data = JSON.parse(sessionStorage.getItem('output'));
-  this.getContent(data)
-}
+ // Get the size of an object
+ Object.size = function(obj) {
+     var size = 0, key;
+     for (key in obj) {
+         if (obj.hasOwnProperty(key)) size++;
+     }
+     return size;
+ };
 
-function getContent(data) {
+// window.onload = function() {
+//   data = JSON.parse(sessionStorage.getItem('output'));
+//   this.getContent(data)
+// }
 
+function getContent() {
+
+  var data = JSON.parse(sessionStorage.getItem("data"));
+ 
   if (data["model"]["hasConflicts"]) {
     document.getElementById("warning").classList.remove("w3-hide");
   }
 
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
     var team = data["teams"][i];
-    createTeam(i, team);
+    teamNum = i
+    createTeam(teamNum, team);
   }
+
+
+}
+
+function showMoveBanner(){
+    $('#move-banner').show();
+}
+
+function hideMoveBanner(){
+    $('#move-banner').hide();
+}
+
+
+function generateDropDown(){
+    //document.getElementById('generateTeams').innerHTML = "";
+    //$('#move-banner').show();
+    $('#generateTeams')
+    .find('option')
+    .remove()
+    .end();
+
+    var data = JSON.parse(sessionStorage.data);
+    var x = document.getElementById("generateTeams");
+    var size = Object.size(data["teams"]);
+
+    for (var i = 1; i <= size; i++) {
+        var option = document.createElement("option");
+        option.text = i;
+        x.add(option);
+    }
+}
+
+function moveMember() {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    var selectBox = document.getElementById("generateTeams");
+    var newTeam = selectBox.options[selectBox.selectedIndex].value;
+    console.log("move to new team: " + newTeam);
+    var oldRow = document.getElementById("row-" + clickedID);
+    oldRow.parentNode.removeChild(oldRow);
+//    console.log(data["teams"])
+//    console.log(data[""])
+
+    var newTeam = document.getElementById("table-" + newTeam);
+    console.log(newTeam);
+    newTeam.appendChild(oldRow);
+
+
+}
+
+function findMovedMemberInfo(clicked) {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+
+    var sel = document.getElementById("generateTeams");
+
+    clickedID = clicked;
+
+    console.log("student to move:"+ clicked);
+
+}
+
+function getTeams() {
+    return JSON.parse(sessionStorage.teams);
+}
+
+function getStudents(){
+    return JSON.parse(sessionStorage.students);
+}
+
+function getIssues() {
+    return JSON.parse(sessionStorage.issues);
 }
 
 function createTeam(team_num, team) {
+
+  var data = JSON.parse(sessionStorage.getItem("data"));
+
   var row = document.createElement("div");
   row.setAttribute("class", "w3-cell-row row-team");
   var cell_team_members = document.createElement("div");
@@ -46,11 +134,16 @@ function createTeam(team_num, team) {
   issueName.innerHTML = "Issues";
   cell_team_issues.appendChild(issueName);
 
+
+
   var table_members = document.createElement("table");
+
+  table_members.setAttribute("id", "table-" + teamNum);
+  console.log(table_members.id);
   table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
   
-  for (const header_text of ["ID", "Name", "Acad", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"]) {
+  for (const header_text of ["ID", "Name", "GPA", "Gender", "Conflicts", "Move"]) {
     var header_cell = document.createElement("th");
     header_cell.innerHTML = header_text;
     header.appendChild(header_cell);
@@ -59,19 +152,59 @@ function createTeam(team_num, team) {
   table_members.appendChild(header);
 
   for (const member of team["members"]) {
+
     var memberRow = document.createElement("tr");
+    memberRow.setAttribute("id", "row-" + member);
     const member_data = data["people"][member]
 
-      for (const memberCellIndex of ["id", "firstName", "", "", "", "", "conflicts", ""]) {
+      for (const memberCellIndex of ["id", "firstName", "gpa", "gender", "conflicts", ""]) {
       //create cell for each header and populate each 
         var memberCell = document.createElement("td");
-        
+
         if (memberCellIndex != "") {
             memberCell.innerHTML = member_data[memberCellIndex];
+
+        }
+
+// to display the first and last name in the conflict column rather their userid
+
+        var member_conflicts = ""
+
+        if(memberCellIndex == "conflicts") {
+          for (const member_conflict of member_data["conflicts"]){
+            var member_conflict_data = data["people"][member_conflict];
+
+            var firstName = member_conflict_data["firstName"];
+            var lastName = member_conflict_data["lastName"];
+            var conflictFullName = firstName + " " + lastName + "<br>";    
+            member_conflicts = member_conflicts.concat(conflictFullName);
+          }
+
+        memberCell.innerHTML = member_conflicts;
+
         }
       memberRow.appendChild(memberCell);
      }
+     for (const memberCellIndex of ["Move"]) {
+
+        if (memberCellIndex != "") {
+
+
+            var btn = document.createElement('input');
+            btn.type = "button";
+            btn.className = "btn btn-primary mb-2 mr-sm-2";
+            btn.setAttribute("id", member);
+            btn.setAttribute("onClick", "generateDropDown();showMoveBanner();findMovedMemberInfo(this.id);");
+            btn.value = "move";
+            memberCell.appendChild(btn);
+
+        }
+      memberRow.appendChild(memberCell);
+
+     }
   table_members.appendChild(memberRow);
+
+
 }
 
   cell_team_members.appendChild(table_members);
@@ -80,70 +213,9 @@ function createTeam(team_num, team) {
   container.appendChild(row);
 }
 
-function temp() {
-  //create row for each team
-  for (i = 0; i < teamNamesArray.length; i++) {
-    if (teamNamesArray[i] !== "teamCount") {
-      var testElement = document.getElementById("test");
-      var row = document.createElement("div");
-      row.setAttribute("class", "row");
-      row.style.marginTop = "1%";
-      row.style.marginBottom = "1%";
-      testElement.appendChild(row);
 
-      //column for team data
-      var teamColumn = document.createElement("div");
-      teamColumn.setAttribute("class", "col-sm-8");
-      row.appendChild(teamColumn);
 
-      //create team card and populate it
-      var teamCard = document.createElement("div");
-      teamCard.setAttribute("class", "card");
-      teamCard.style.boxShadow = "0 10px 6px -6px #BBBBBB";
-      teamColumn.appendChild(teamCard);
 
-      var teamCardHeader = document.createElement("div");
-      teamCardHeader.setAttribute("class", "card-header");
-      var teamName = document.createTextNode("Team " + i);
-      teamCardHeader.appendChild(teamName);
-      teamCard.appendChild(teamCardHeader);
-
-      var teamTable = document.createElement("div");
-      teamTable.setAttribute("class", "container");
-      teamCard.appendChild(teamTable);
-
-      var teamMembers = document.createElement("ul");
-      teamMembers.setAttribute("id", teamNamesArray[i]);
-      teamMembers.setAttribute("class", "list-group list-group-flush");
-      teamTable.appendChild(teamMembers);
-      populate(teamNamesArray[i]);
-
-      //column for conflict data
-      var conflictsColumn = document.createElement("div");
-      conflictsColumn.setAttribute("class", "col-sm-4");
-      row.appendChild(conflictsColumn);
-
-      //create conflict card and populate it
-      var conflictsCard = document.createElement("div");
-      conflictsCard.setAttribute("class", "card");
-      conflictsCard.style.boxShadow = "0 10px 6px -6px white";
-      conflictsCard.style.height = "100%";
-      conflictsColumn.appendChild(conflictsCard);
-
-      var conflictsHeader = document.createElement("div");
-      conflictsHeader.setAttribute("class", "card-header");
-      var conflictName = document.createTextNode("Conflicts");
-      conflictsHeader.appendChild(conflictName);
-      conflictsCard.appendChild(conflictsHeader);
-
-      var conflictsBody = document.createElement("div");
-      conflictsBody.setAttribute("class", "card-body");
-      var conflicts = showIssues(teamNamesArray[i]);
-      conflictsBody.appendChild(conflicts);
-      conflictsCard.appendChild(conflictsBody);
-    }
-  }
-}
 
 function populate(team) {
   //make header row
@@ -182,8 +254,6 @@ function populate(team) {
     //get student info
     var student = students[studentID]["name"];
     var gender = students[studentID]["gender"];
-    var prog = students[studentID]["prog"];
-    var proj = students[studentID]["proj"];
     var acad = students[studentID]["acad"];
     var conflict = students[studentID]["conflict"];
 
@@ -197,7 +267,7 @@ function populate(team) {
     var btnBorder = document.createElement("TD");
     btnBorder.appendChild(btn);
 
-    var studentAttributes = [studentID, student, acad, prog, proj, gender, conflict];
+    var studentAttributes = [studentID, student, gpa, gender, conflict];
 
     //create new TR element for this row
     var tr = document.createElement("TR");
