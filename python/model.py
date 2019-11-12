@@ -96,6 +96,10 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
     return({'students': x, 'conflicts': xs})
 
 
+def ping():
+    print("piiinnnggg")
+
+
 def generateTeams(data_ids, data_conflicts, num_teams, team_size, num_students):
 
     print(data_ids)
