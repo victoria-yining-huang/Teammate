@@ -1,0 +1,5 @@
+student_id,conflict_student_id
+jsmith1,jdoe2
+jsmith1,kbrown3
+jsmith1,mlee4
+kbrown3,jdoe2

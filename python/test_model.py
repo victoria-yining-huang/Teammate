@@ -148,104 +148,104 @@ class AverageClass(unittest.TestCase):
                 test_name="Average Class, no Conflicts")
 
 
-class AverageClassWithConflicts(unittest.TestCase):
-    def test(self):
-        num_students = 75
-        gpa_avg = 75
-        gpa_stdev = 10
-        prob_m = 0.475
-        prob_w = 0.475
-        prob_x = 0.05
-        num_conflicts = 15
-        team_size = 7
+# class AverageClassWithConflicts(unittest.TestCase):
+#     def test(self):
+#         num_students = 75
+#         gpa_avg = 75
+#         gpa_stdev = 10
+#         prob_m = 0.475
+#         prob_w = 0.475
+#         prob_x = 0.05
+#         num_conflicts = 15
+#         team_size = 7
 
-        data_ids = buildDataIds(num_students, gpa_avg,
-                                gpa_stdev, prob_m, prob_w, prob_x).tolist()
+#         data_ids = buildDataIds(num_students, gpa_avg,
+#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
 
-        data_conflicts = buildDataConflicts(data_ids, num_conflicts)
+#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
 
-        runTest(data_ids, data_conflicts, team_size,
-                test_name="Average Class, several Conflicts")
-
-
-class MaleClass(unittest.TestCase):
-    def test(self):
-        num_students = 75
-        gpa_avg = 75
-        gpa_stdev = 10
-        prob_m = 0.8
-        prob_w = 0.175
-        prob_x = 0.025
-        num_conflicts = 15
-        team_size = 10
-
-        data_ids = buildDataIds(num_students, gpa_avg,
-                                gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-        data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-        runTest(data_ids, data_conflicts, team_size,
-                test_name="Mostly Male Class, several Conflicts")
+#         runTest(data_ids, data_conflicts, team_size,
+#                 test_name="Average Class, several Conflicts")
 
 
-class FemaleClass(unittest.TestCase):
-    def test(self):
-        num_students = 75
-        gpa_avg = 75
-        gpa_stdev = 10
-        prob_m = 0.175
-        prob_w = 0.8
-        prob_x = 0.025
-        num_conflicts = 15
-        team_size = 10
+# class MaleClass(unittest.TestCase):
+#     def test(self):
+#         num_students = 75
+#         gpa_avg = 75
+#         gpa_stdev = 10
+#         prob_m = 0.8
+#         prob_w = 0.175
+#         prob_x = 0.025
+#         num_conflicts = 15
+#         team_size = 10
 
-        data_ids = buildDataIds(num_students, gpa_avg,
-                                gpa_stdev, prob_m, prob_w, prob_x).tolist()
+#         data_ids = buildDataIds(num_students, gpa_avg,
+#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
 
-        data_conflicts = buildDataConflicts(data_ids, num_conflicts)
+#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
 
-        runTest(data_ids, data_conflicts, team_size,
-                test_name="Mostly Female Class, several Conflicts")
-
-
-class LargeTeams(unittest.TestCase):
-    def test(self):
-        num_students = 75
-        gpa_avg = 75
-        gpa_stdev = 10
-        prob_m = 0.475
-        prob_w = 0.475
-        prob_x = 0.05
-        num_conflicts = 0
-        team_size = 20
-
-        data_ids = buildDataIds(num_students, gpa_avg,
-                                gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-        data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-        runTest(data_ids, data_conflicts, team_size,
-                test_name="Large Teams")
+#         runTest(data_ids, data_conflicts, team_size,
+#                 test_name="Mostly Male Class, several Conflicts")
 
 
-class LargeTeamsWithConflicts(unittest.TestCase):
-    def test(self):
-        num_students = 75
-        gpa_avg = 75
-        gpa_stdev = 10
-        prob_m = 0.475
-        prob_w = 0.475
-        prob_x = 0.05
-        num_conflicts = 300
-        team_size = 20
+# class FemaleClass(unittest.TestCase):
+#     def test(self):
+#         num_students = 75
+#         gpa_avg = 75
+#         gpa_stdev = 10
+#         prob_m = 0.175
+#         prob_w = 0.8
+#         prob_x = 0.025
+#         num_conflicts = 15
+#         team_size = 10
 
-        data_ids = buildDataIds(num_students, gpa_avg,
-                                gpa_stdev, prob_m, prob_w, prob_x).tolist()
+#         data_ids = buildDataIds(num_students, gpa_avg,
+#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
 
-        data_conflicts = buildDataConflicts(data_ids, num_conflicts)
+#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
 
-        runTest(data_ids, data_conflicts, team_size,
-                test_name="Large Teams with Many Conflicts")
+#         runTest(data_ids, data_conflicts, team_size,
+#                 test_name="Mostly Female Class, several Conflicts")
+
+
+# class LargeTeams(unittest.TestCase):
+#     def test(self):
+#         num_students = 75
+#         gpa_avg = 75
+#         gpa_stdev = 10
+#         prob_m = 0.475
+#         prob_w = 0.475
+#         prob_x = 0.05
+#         num_conflicts = 0
+#         team_size = 20
+
+#         data_ids = buildDataIds(num_students, gpa_avg,
+#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
+
+#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
+
+#         runTest(data_ids, data_conflicts, team_size,
+#                 test_name="Large Teams")
+
+
+# class LargeTeamsWithConflicts(unittest.TestCase):
+#     def test(self):
+#         num_students = 75
+#         gpa_avg = 75
+#         gpa_stdev = 10
+#         prob_m = 0.475
+#         prob_w = 0.475
+#         prob_x = 0.05
+#         num_conflicts = 300
+#         team_size = 20
+
+#         data_ids = buildDataIds(num_students, gpa_avg,
+#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
+
+#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
+
+#         runTest(data_ids, data_conflicts, team_size,
+#                 test_name="Large Teams with Many Conflicts")
 
 
 def buildDataIds(num_students, gpa_avg, gpa_stdev, prob_m, prob_w, prob_x):

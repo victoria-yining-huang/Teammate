@@ -16,8 +16,7 @@ window.onload = function generateTeams() {
         students: sessionStorage.getItem('students'),
         conflicts: sessionStorage.getItem('conflicts'),
         team_size: sessionStorage.getItem('team_size')
-      },
-      timeout: 0
+      }
     },
     success: function (obj, textstatus) {
       if (!("error" in obj) && !(obj == null)) {

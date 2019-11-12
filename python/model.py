@@ -91,8 +91,19 @@ def runModel(num_teams, team_size, num_students, conflicts, gpas, genders):
         m += team_size_half - xsum(genders_w[i] * x[j + i*num_teams]
                                    for i in range(num_students)) <= 100 * xwid[j]
 
+    # xij
+    # yj if going to be all males
+    # yj if team is going to be all males
+    # cannot isolate x in group of m, cannot count as w on team (x can be minority of women team)
+    # if not man, then marginalized
+
+    # sum(marginalized) - if(all men) <= 0 for each team
+    # sum(marginalized) + if(all men) >= allman size / 2
+
     # Run the model
     m.optimize(max_seconds=25)
+
+    m.write('model.lp')
 
     return({'students': x, 'conflicts': xs})
 
