@@ -1,4 +1,5 @@
 <html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <body>
     <h1>
       This is a flask test.
@@ -9,7 +10,9 @@
   </body>
   <script>
     function ping() {
-      console.log("ping");
+      $.post("/ping", function(err, req, resp) {
+        window.location.href = "/results/" + resp["responseJSON"]["uuid"];
+      });
     }
   </script>
 </html>

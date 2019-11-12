@@ -3,7 +3,7 @@ from model import ping
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/ping')
 def hello():
     ping()
     return "Hello World!"
