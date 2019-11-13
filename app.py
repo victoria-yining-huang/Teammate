@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
-from rq import Queue
+from rq import Queue, Job
 from worker import conn
 from test_worker import test
 app = Flask(__name__)
@@ -60,10 +60,34 @@ def ping():
     return("ping!")
 
 
+job_id
+
+
 @app.route('/wait', methods=['GET'])
 def wait():
     q = Queue(connection=conn)
     job = q.enqueue(test(), 'http://heroku.com')
+
+    if job.is_finished:
+        return job.result
+    else:
+        return "Nay!"
+
+
+job_id = 0
+
+
+@app.route('/start', methods=['POST'])
+def start():
+    q = Queue(connection=conn)
+    job = q.enqueue(test(), 'http://heroku.com')
+    job_id = job.get_id()
+
+
+@app.route('/check', methods=['GET'])
+def check():
+    q = Queue(connection=conn)
+    job = q.fetch_job(job_id)
 
     if job.is_finished:
         return job.result
