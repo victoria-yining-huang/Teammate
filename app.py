@@ -84,10 +84,10 @@ def start():
 def check():
     q = Queue(connection=conn)
     job = q.fetch_job("my_job_id")
-    if job.is_finished:
-        return job.result
+    if job.get_status() == "finished":
+        return("done")
     else:
-        return "Nay!"
+        return("not done")
 
 
 if __name__ == '__main__':
