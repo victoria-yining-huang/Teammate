@@ -60,9 +60,6 @@ def ping():
     return("ping!")
 
 
-job_id
-
-
 @app.route('/wait', methods=['GET'])
 def wait():
     q = Queue(connection=conn)
