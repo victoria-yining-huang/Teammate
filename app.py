@@ -72,28 +72,18 @@ def wait():
         return "Nay!"
 
 
-job_id = 0
-
-
 @app.route('/start', methods=['PUT'])
 def start():
-
-    job = Job.create(test(), 'http://heroku.com')
-    print(job.id)
-
-    global job_id
-    job_id = job.id
-
+    job = Job.create(test(), 'http://heroku.com', id='my_job_id')
     q = Queue(connection=conn)
     q.enqueue_job(job)
+    return("test")
 
 
 @app.route('/check', methods=['GET'])
 def check():
-
     q = Queue(connection=conn)
-    job = q.fetch_job(job_id)
-
+    job = q.fetch_job("my_job_id")
     if job.is_finished:
         return job.result
     else:
