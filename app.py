@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 app = Flask(__name__)
 
 
@@ -46,9 +46,9 @@ def post_something():
 # A welcome message to test our server
 
 
-@app.route('/')
-def index():
-    return "<h1>Welcome to our server !!</h1>"
+@app.route('/app/<path:path>')
+def send_js(path):
+    return send_from_directory('pages', path)
 
 
 @app.route('/ping')
