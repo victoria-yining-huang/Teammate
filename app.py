@@ -2,6 +2,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
 from rq import Queue
+from rq.job import Job
 from worker import conn
 from test_worker import test
 app = Flask(__name__)
@@ -76,14 +77,22 @@ job_id = 0
 
 @app.route('/start', methods=['POST'])
 def start():
+
+    job = Job.create(test(), 'http://heroku.com')
+    print(job.id)
+
+    global job_id
+    job_id = job.id
+
     q = Queue(connection=conn)
-    job = q.enqueue(test(), 'http://heroku.com')
+    q.enqueue_job(job)
 
 
 @app.route('/check', methods=['GET'])
 def check():
+
     q = Queue(connection=conn)
-    job = q.fetch_job(12)
+    job = q.fetch_job(job_id)
 
     if job.is_finished:
         return job.result
