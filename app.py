@@ -63,9 +63,12 @@ def ping():
 @app.route('/wait', methods=['GET'])
 def wait():
     q = Queue(connection=conn)
-    result = q.enqueue(test(), 'http://heroku.com')
-    print(result)
-    return("TEST")
+    job = q.enqueue(test(), 'http://heroku.com')
+
+    if job.is_finished:
+        return job.result
+    else:
+        return "Nay!"
 
 
 if __name__ == '__main__':
