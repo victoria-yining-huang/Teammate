@@ -3,6 +3,7 @@ import statistics
 import numpy as np
 import os
 import datetime
+import math
 from model import generateTeams
 
 
@@ -12,6 +13,16 @@ def getTestReport(output, data_ids, data_conflicts, num_teams, team_size, test_n
     gpas = [int(round(float(row[4]))) for row in data_ids]
     class_avg = round(statistics.mean(gpas))
     sorted_gpas = sorted(gpas)
+
+    num_tiers = math.ceil(num_students / num_teams)
+    tier_size = num_teams
+    tiers = []
+    for i in range(num_tiers):
+        tiers.append([])
+        for j in range(tier_size):
+            if (i*tier_size + j) < num_students:
+                tiers[i].append(sorted_gpas[i*tier_size + j])
+
     bottom_tier = sorted_gpas[0:num_teams]
     top_tier = sorted_gpas[(num_students-num_teams):]
 
@@ -36,6 +47,8 @@ def getTestReport(output, data_ids, data_conflicts, num_teams, team_size, test_n
     f.write("Average gpa: {}\n".format(class_avg))
     f.write("Bottom tier gpas: {}\n".format(bottom_tier))
     f.write("Top tier gpas: {}\n".format(top_tier))
+    for i in range(len(tiers)):
+        f.write("Tier {}: {}\n".format(i + 1, tiers[i]))
 
     f.write("Input team size: {}\n".format(team_size))
     s = 0
@@ -97,6 +110,13 @@ def getTestReport(output, data_ids, data_conflicts, num_teams, team_size, test_n
         b = any(elem in gpas for elem in bottom_tier)
         t = any(elem in gpas for elem in top_tier)
 
+        f.write("Team {} GPA Tiers\n".format(i + 1))
+        for j in range(len(tiers)):
+            if (any(elem in gpas_team for elem in tiers[j])):
+                f.write("Contains tier {}\n".format(j + 1))
+            else:
+                f.write("Missing tier {}\n".format(j + 1))
+
         f.write("{}\t{}\t{}\t\t{}\t\t{}\t\t{}\n".format(
             i + 1, "%.1f" % round(statistics.mean(gpas_team)), "%.1f" % round(statistics.stdev(gpas_team)), b, t, sorted(gpas_team)))
 
@@ -130,14 +150,14 @@ def runTest(data_ids, data_conflicts, team_size, test_name="Test"):
 
 class AverageClass(unittest.TestCase):
     def test(self):
-        num_students = 75
+        num_students = 60
         gpa_avg = 75
         gpa_stdev = 10
         prob_m = 0.475
         prob_w = 0.475
         prob_x = 0.05
         num_conflicts = 0
-        team_size = 7
+        team_size = 6
 
         data_ids = buildDataIds(num_students, gpa_avg,
                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
