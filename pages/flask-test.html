@@ -5,20 +5,21 @@
       This is a flask test.
     </h1>
     <button onclick="ping()">
-      Ping the server
+      Start Job
     </button>
     <button onclick="wait()">
-      Long ping the server
+      Check Job
     </button>
   </body>
   <script>
     function ping() {
-      $.get("/ping", function(err, req, resp) {
-        console.log(resp);
+      $.post("/start", function(err, req, resp) {
+        console.log("started");
       });
     }
     function wait() {
-      $.get("/wait", function(err, req, resp) {
+      $.get("/check", function(err, req, resp) {
+        console.log("check: ");
         console.log(resp);
       });
     }
