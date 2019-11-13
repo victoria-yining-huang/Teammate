@@ -61,6 +61,10 @@ def ping():
 
 @app.route('/wait', methods=['GET'])
 def wait():
+    def newWait():
+        sleep(35)
+        return("done")
+
     q = Queue(connection=conn)
     result = q.enqueue(newWait, 'http://heroku.com')
     return(result)
@@ -69,8 +73,3 @@ def wait():
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
     app.run(threaded=True, port=5000)
-
-
-def newWait():
-    sleep(35)
-    return("done")

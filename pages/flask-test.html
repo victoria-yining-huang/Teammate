@@ -4,11 +4,19 @@
     <h1>
       This is a flask test.
     </h1>
+    <button onclick="ping()">
+      Ping the server
+    </button>
     <button onclick="wait()">
       Long ping the server
     </button>
   </body>
   <script>
+    function ping() {
+      $.get("/pinb", function(err, req, resp) {
+        console.log(resp);
+      });
+    }
     function wait() {
       $.get("/wait", function(err, req, resp) {
         console.log(resp);
