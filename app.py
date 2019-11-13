@@ -2,6 +2,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
 from rq import Queue
+from redis import Redis
 from rq.job import Job
 from worker import conn
 from test_worker import test
@@ -82,8 +83,8 @@ def start():
 
 @app.route('/check', methods=['GET'])
 def check():
-    q = Queue(connection=conn)
-    job = q.fetch_job("my_job_id")
+    redis = Redis()
+    job = Job.fetch('my_job_id', connection=redis)
     if job.get_status() == "finished":
         return("done")
     else:
