@@ -10,8 +10,8 @@
   </body>
   <script>
     function ping() {
-      $.post("/ping", function(err, req, resp) {
-        window.location.href = "/results/" + resp["responseJSON"]["uuid"];
+      $.get("/ping", function(err, req, resp) {
+        console.log(resp);
       });
     }
   </script>
