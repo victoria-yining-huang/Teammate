@@ -1,0 +1,18 @@
+<html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <body>
+    <h1>
+      This is a flask test.
+    </h1>
+    <button onclick="wait()">
+      Long ping the server
+    </button>
+  </body>
+  <script>
+    function wait() {
+      $.get("/wait", function(err, req, resp) {
+        console.log(resp);
+      });
+    }
+  </script>
+</html>
