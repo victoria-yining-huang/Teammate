@@ -65,9 +65,12 @@ def wait():
         sleep(35)
         return("done")
 
-    q = Queue(connection=conn)
-    result = q.enqueue(newWait, 'http://heroku.com')
-    return(result)
+    try:
+        q = Queue(connection=conn)
+        result = q.enqueue(newWait, 'http://heroku.com')
+        return(result)
+    except Exception as e:
+        return(e)
 
 
 if __name__ == '__main__':
