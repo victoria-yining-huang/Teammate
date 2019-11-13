@@ -77,6 +77,8 @@ def wait():
 def start():
     job = Job.create(test(), 'http://heroku.com', id='my_job_id')
     q = Queue(connection=conn)
+    print(q.connection)
+    print("jobs", q.get_jobs)
     q.enqueue_job(job)
     return("test")
 
