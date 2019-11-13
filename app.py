@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
 from rq import Queue
 from worker import conn
+from test_worker import test
 app = Flask(__name__)
 
 
@@ -63,7 +64,7 @@ def ping():
 def wait():
     try:
         q = Queue(connection=conn)
-        result = q.enqueue(sleep(35), 'http://heroku.com')
+        result = q.enqueue(test(), 'http://heroku.com')
         return(result)
     except Exception as e:
         return(e)
