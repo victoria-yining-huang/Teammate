@@ -225,3 +225,9 @@ try:
 except Exception as e:
     print("python_error")
     print(e)
+
+from time import sleep
+
+def wait():
+    sleep(35)
+    return("done!")
