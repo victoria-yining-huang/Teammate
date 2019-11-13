@@ -4,23 +4,30 @@
     <h1>
       This is a flask test.
     </h1>
-    <button onclick="ping()">
+    <button onclick="start()">
       Start Job
     </button>
-    <button onclick="wait()">
+    <button onclick="check()">
       Check Job
     </button>
   </body>
   <script>
-    function ping() {
-      $.post("/start", function(err, req, resp) {
-        console.log("started");
+    function start() {
+      $.ajax({
+        url: "/start",
+        type: "PUT",
+        success: function(response) {
+          console.log("start_job");
+        }
       });
     }
-    function wait() {
-      $.get("/check", function(err, req, resp) {
-        console.log("check: ");
-        console.log(resp);
+    function check() {
+      $.ajax({
+        url: "/check",
+        type: "GET",
+        success: function(response) {
+          console.log(response);
+        }
       });
     }
   </script>

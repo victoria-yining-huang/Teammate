@@ -75,7 +75,7 @@ def wait():
 job_id = 0
 
 
-@app.route('/start', methods=['POST'])
+@app.route('/start', methods=['PUT'])
 def start():
 
     job = Job.create(test(), 'http://heroku.com')
