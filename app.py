@@ -57,24 +57,9 @@ def send_js(path):
     return send_from_directory('pages', path)
 
 
-@app.route('/ping', methods=['GET'])
-def ping():
-    return("ping!")
-
-
-@app.route('/wait', methods=['GET'])
-def wait():
-    q = Queue(connection=conn)
-    job = q.enqueue(test(), 'http://heroku.com')
-
-    if job.is_finished:
-        return job.result
-    else:
-        return "Nay!"
-
-
 @app.route('/start', methods=['PUT'])
 def start():
+    print(conn)
     job = Job.create(test(), 'http://heroku.com', id='my_job_id')
     q = Queue(connection=conn)
     print(q.connection)
