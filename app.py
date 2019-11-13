@@ -59,9 +59,8 @@ def ping():
 
 @app.route('/wait', methods=['GET'])
 def wait():
-    return("start!")
     sleep(35)
-    return("stop!")
+    return("done!")
 
 
 if __name__ == '__main__':
