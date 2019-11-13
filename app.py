@@ -61,13 +61,9 @@ def ping():
 
 @app.route('/wait', methods=['GET'])
 def wait():
-    def newWait():
-        sleep(35)
-        return("done")
-
     try:
         q = Queue(connection=conn)
-        result = q.enqueue(newWait, 'http://heroku.com')
+        result = q.enqueue(sleep(35), 'http://heroku.com')
         return(result)
     except Exception as e:
         return(e)
