@@ -1,5 +1,6 @@
 # app.py
 from flask import Flask, request, jsonify, send_from_directory
+from time import sleep
 app = Flask(__name__)
 
 
@@ -51,8 +52,14 @@ def send_js(path):
     return send_from_directory('pages', path)
 
 
-@app.route('/ping')
+@app.route('/ping', methods=['GET'])
 def ping():
+    return("ping!")
+
+
+@app.route('/wait', methods=['GET'])
+def wait():
+    time.sleep(35)
     return("ping!")
 
 
