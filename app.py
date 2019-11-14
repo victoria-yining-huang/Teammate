@@ -15,6 +15,8 @@ def send_js(path):
 def start():
     content = request.get_json()
 
+    print(content)
+
     result = start_model(content)
 
     return(jsonify(result))
@@ -24,12 +26,14 @@ def start():
 def check():
     content = request.get_json()
 
+    print(content)
+
     result = get_model_status(content)
 
     return(jsonify(result))
 
 
-@app.route('/stop', methods=['POST'])
+@app.route('/stop-model', methods=['POST'])
 def stop():
     print("stop!")
 

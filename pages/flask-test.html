@@ -17,6 +17,7 @@
         url: "/start-model",
         type: "POST",
         success: function(resp) {
+          console.log(resp);
           data = JSON.parse(resp);
           console.log(data);
         }
