@@ -16,10 +16,6 @@
       $.ajax({
         url: "/start",
         type: "POST",
-        data: {
-          key: 123
-        },
-        contentType: "application/json; charset=utf-8",
         success: function(resp) {
           console.log(resp);
         }
@@ -30,8 +26,9 @@
         url: "/check",
         type: "GET",
         data: {
-          key: 123
+          key: 1234
         },
+        contentType: "application/json; charset=utf-8",
         success: function(response) {
           console.log(response);
         }
