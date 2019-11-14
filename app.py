@@ -62,6 +62,12 @@ def generateTeams():
     sleep(15)
     print("continue")
     sleep(20)
+    print("continue")
+    sleep(25)
+    print("continue")
+    sleep(30)
+    print("continue")
+    sleep(35)
     print("stop")
 
 
