@@ -5,7 +5,6 @@ import string
 
 manager = mp.Manager()
 model_dict = manager.dict()
-init_model_dict()
 process = mp.Process()
 
 
@@ -18,6 +17,9 @@ def init_model_dict():
     model_dict["key"] = None
     model_dict["status"] = "ready"
     model_dict["output"] = None
+
+
+init_model_dict()
 
 
 def generateTeams(model_input, model_dict):
