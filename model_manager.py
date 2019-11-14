@@ -39,7 +39,7 @@ def start_model(content):
 
     try:
         # if model is inactive
-        if not model_dict["status"] == "running":
+        if not process.is_alive():
             # generate unique key for session
             key = generate_key(30)
 
@@ -78,7 +78,7 @@ def start_model(content):
 
 
 def get_model_status():
-    if model_dict["status"] == "running":
+    if process.is_alive():
         print("running")
     elif model_dict["status"] == "done":
         print("done")
