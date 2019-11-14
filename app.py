@@ -14,16 +14,15 @@ def send_js(path):
 @app.route('/start-model', methods=['POST'])
 def start():
     content = request.get_json()
-    key = content["model_key"]
-    result = start_model(key)
+    result = start_model(content)
     return(jsonify(result))
 
 
 @app.route('/status', methods=['POST'])
 def check():
     data = request.get_json()
-    print(data)
-    result = get_model_status(data["model_key"])
+    key = data["model_key"]
+    result = get_model_status(key)
     return(jsonify(result))
 
 
