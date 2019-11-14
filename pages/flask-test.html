@@ -24,13 +24,15 @@
       });
     }
     function check() {
+      const key = sessionStorage.getItem("model_key");
+      console.log("key ", key);
       $.ajax({
         url: "/status",
         type: "post",
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
-          key: sessionStorage.getItem("model_key")
+          key: key
         }),
         success: function(resp) {
           console.log(resp);

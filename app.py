@@ -21,7 +21,7 @@ def start():
 @app.route('/status', methods=['POST'])
 def check():
     data = request.get_json()
-    key = data["model_key"]
+    key = data["key"]
     result = get_model_status(key)
     return(jsonify(result))
 
