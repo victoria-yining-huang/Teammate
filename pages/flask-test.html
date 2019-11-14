@@ -14,23 +14,24 @@
   <script>
     function start() {
       $.ajax({
-        url: "/start",
+        url: "/start-model",
         type: "POST",
         success: function(resp) {
-          console.log(resp);
+          data = JSON.parse(resp);
+          console.log(data);
         }
       });
     }
     function check() {
       $.ajax({
-        url: "/check",
-        type: "GET",
+        url: "/get-model-status",
+        type: "POST",
         data: {
           key: 1234
         },
         contentType: "application/json; charset=utf-8",
-        success: function(response) {
-          console.log(response);
+        success: function(resp) {
+          console.log(resp);
         }
       });
     }

@@ -11,7 +11,7 @@ def send_js(path):
     return send_from_directory('pages', path)
 
 
-@app.route('/start', methods=['POST'])
+@app.route('/start-model', methods=['POST'])
 def start():
     content = request.get_json()
 
@@ -20,7 +20,7 @@ def start():
     return(jsonify(result))
 
 
-@app.route('/check', methods=['POST'])
+@app.route('/get-model-status', methods=['POST'])
 def check():
     content = request.get_json()
 
