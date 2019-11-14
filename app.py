@@ -75,8 +75,8 @@ def generateTeams():
 def start():
     key = request.form.get('key')
 
-    thread = Process(target=generateTeams)
-    thread.start()
+    process = Process(target=generateTeams)
+    process.start()
 
     return(jsonify({"Message": "Model started", "METHOD": "POST"}))
 
