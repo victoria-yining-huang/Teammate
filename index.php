@@ -5,8 +5,14 @@
  box-shadow: 0 20px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
  
 }
+
+a:link{
+  color: darkblue;
+  text-decoration: none;
+}
 a:hover {
   color: blue;
+  text-decoration: underline;
 }
  #left{ 
         padding: 10px;
@@ -151,11 +157,7 @@ a:hover {
             <p id="error" style="color:red; font-weight: bold;"p>
             <p id="successful" style="color:green; font-weight: bold;" p>
             <br />
-            <h5>See a sample table for the student conflict file.</h5>
-            <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b><h4>
-              Download Sample File</h4></b>
-            </a>
-            <br>
+            
            <!---Constraints-->
            <h4>Would you like to include the following constraints for generating teams? <br>Select ALL that apply.</h4> 
           <div>
@@ -169,17 +171,19 @@ a:hover {
           </div>
 
 
-          <input id="buttonid" type="button" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" value="Submit" onclick="pass_constraints()"/>
+          
           </div>
 
           <div id= "right">
             <h3>Instructions</h3>
             <h5>1) Click the upload conflict button. </h5>
             <h5>2) Find the conflicts file provided to you by Team-7 and click <b>Open</b>.</h5>
-            <h5>2) Make sure it is in <b>.csv</b> format.</h5>
-            <h5>3) If you want to look at an example of a sample file, <br> download the sample file.</h5>
-            <h5>4) Click on the upload button and select the Team-7 file.</h5>
-            <h5>5) A Generate Teams button will appear, click on it.</h5>
+            <h5>3) Make sure it is in <b>.csv</b> format.If you want to look at an example of a sample file, see a sample table for the student conflict file.
+            <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b>
+              Download Sample File</b>
+            </a></h5>
+            <h5>4) Click on the upload button and select the conflict.csv Team-7 file.</h5>
+            <h5>6) A Generate Teams button will appear, click on it.</h5>
           </div>
 
         </div>
