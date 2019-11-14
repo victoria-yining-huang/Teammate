@@ -22,14 +22,11 @@ def start():
     return(jsonify(result))
 
 
-@app.route('/get-model-status', methods=['POST'])
+@app.route('/status', methods=['POST'])
 def check():
-    content = request.get_json()
-
-    print(content)
-
-    result = get_model_status(content)
-
+    data = request.get_json()
+    print(data)
+    result = get_model_status(data["model_key"])
     return(jsonify(result))
 
 

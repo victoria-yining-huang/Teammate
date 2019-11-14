@@ -17,7 +17,7 @@
         url: "/start-model",
         type: "POST",
         success: function(resp) {
-          const key = resp["key"];
+          const key = resp["Key"];
           sessionStorage.setItem("model_key", key);
           console.log("model key " + key);
         }
@@ -25,7 +25,7 @@
     }
     function check() {
       $.ajax({
-        url: "/get-model-status",
+        url: "/status",
         type: "POST",
         data: {
           key: sessionStorage.getItem("model_key")
