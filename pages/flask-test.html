@@ -29,6 +29,9 @@
       $.ajax({
         url: "/check",
         type: "GET",
+        data: {
+          key: 123
+        },
         success: function(response) {
           console.log(response);
         }

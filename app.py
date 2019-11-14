@@ -87,7 +87,9 @@ def check():
     key = request.form.get('key')
     print(key)
 
-    return(jsonify({"ActiveThreads": mp.current_process(), "METHOD": "POST"}))
+    print(mp.current_process())
+
+    return(jsonify({"ActiveThreads": mp.current_process().name, "METHOD": "POST"}))
 
 
 if __name__ == '__main__':
