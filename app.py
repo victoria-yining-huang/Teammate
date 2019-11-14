@@ -14,11 +14,8 @@ def send_js(path):
 @app.route('/start-model', methods=['POST'])
 def start():
     content = request.get_json()
-
-    print(content)
-
-    result = start_model(content)
-
+    key = content["model_key"]
+    result = start_model(key)
     return(jsonify(result))
 
 
