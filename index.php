@@ -157,26 +157,17 @@ a:hover {
             </a>
             <br>
            <!---Constraints-->
-           <h4>Would you like to include the following constraints for generating teams?</h4> 
+           <h4>Would you like to include the following constraints for generating teams? <br>Select ALL that apply.</h4> 
           <div>
-            <input type="radio" id="gender" name="constraints" value="gender" checked>
+            <input type="checkbox" id="gender" name="constraints" value="gender" checked>
             <label for="gender">Gender</label>
           </div>
 
           <div>
-            <input type="radio" id="GPA" name="constraints" value="GPA">
+            <input type="checkbox" id="GPA" name="constraints" value="GPA" checked>
             <label for="GPA">GPA</label>
           </div>
 
-            <div>
-            <input type="radio" id="both" name="constraints" value="both" checked>
-            <label for="both">Both Gender and GPA</label>
-          </div>
-
-            <div>
-            <input type="radio" id="none" name="constraints" value="none">
-            <label for="none">None</label>
-          </div>
 
           <input id="buttonid" type="button" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" value="Submit" onclick="pass_constraints()"/>
           </div>
