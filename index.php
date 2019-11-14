@@ -30,7 +30,30 @@ a:hover {
       padding-left: 20px;
 
 }
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 0.5px dotted black;
+}
 
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px 10px;
+
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 </style>
   <!-- CSS Classes -->
@@ -160,17 +183,22 @@ a:hover {
             
            <!---Constraints-->
            <h4>Would you like to include the following constraints for generating teams? <br>Select ALL that apply.</h4> 
-          <div>
+          <div class="tooltip">
             <input type="checkbox" id="gender" name="constraints" value="gender" checked>
             <label for="gender">Gender</label>
+            <span class="tooltiptext">Gender Constraint will attempt to generate each team will either have majority of women or no women at all.</span>
           </div>
-
-          <div>
+          <br>
+          <br>
+          <div class="tooltip">
             <input type="checkbox" id="GPA" name="constraints" value="GPA" checked>
             <label for="GPA">GPA</label>
+            <span class="tooltiptext">GPA constraint will attempt to generate  each team will have students from top and bottom GPA tiers, i.e. a low GPA & a high GPA student will be on the same team</span>
           </div>
 
-
+           <div>
+            <h5>We are going to give the best possible solution, however, each team may not completely satisfy all the constraints selected. </h5>
+          </div>
           
           </div>
 
