@@ -17,9 +17,9 @@
         url: "/start-model",
         type: "POST",
         success: function(resp) {
-          console.log(resp);
-          data = JSON.parse(resp);
-          console.log(data);
+          const key = resp["key"];
+          sessionStorage.setItem("model_key", key);
+          console.log("model key " + key);
         }
       });
     }
@@ -28,7 +28,7 @@
         url: "/get-model-status",
         type: "POST",
         data: {
-          key: 1234
+          key: sessionStorage.getItem("model_key")
         },
         contentType: "application/json; charset=utf-8",
         success: function(resp) {
