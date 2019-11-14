@@ -28,7 +28,14 @@ def respond():
     return jsonify(response)
 
 
-@app.route('/ping', methods=['POST'])
+@app.route('/', methods=['GET'])
+def welcome():
+    resp = {}
+    resp["message"] = "The model server is active!"
+    return jsonify(resp)
+
+
+@app.route('/ping', methods=['GET'])
 def ping():
     resp = {}
     resp["message"] = "The model server is active!"
