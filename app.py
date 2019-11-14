@@ -82,7 +82,7 @@ def start():
     return(jsonify({"Message": "Model started", "METHOD": "POST"}))
 
 
-@app.route('/check', methods=['POST'])
+@app.route('/check', methods=['GET'])
 def check():
     key = request.form.get('key')
     print(key)
