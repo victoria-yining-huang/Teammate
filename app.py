@@ -17,7 +17,7 @@ def start():
 
     result = start_model(content)
 
-    return(jsonify({result}))
+    return(jsonify(result))
 
 
 @app.route('/check', methods=['POST'])
