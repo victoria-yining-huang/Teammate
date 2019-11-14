@@ -37,23 +37,40 @@ def start_model(content):
     global process
     global model_dict
 
-    key = generate_key(30)
-
-    model_dict["key"] = key
-    model_dict["status"] = "running"
-
     try:
-        if not process.is_alive():
+        # if model is inactive
+        if not model_dict["status"] == "running":
+            # generate unique key for session
+            key = generate_key(30)
+
+            # update global dictionary
+            model_dict["key"] = key
+            model_dict["status"] = "running"
+
+            # create model process
             process = mp.Process(target=generateTeams,
                                  args=(content, model_dict))
+
+            # start model process
             process.start()
+        # if model is active
+        else:
+            # return failed message
+            return({
+                "Status": "failed",
+                "Message": "Model is already running",
+                "METHOD": "POST"
+            })
     except Exception as e:
+        # an error occured starting the model, return failed
+        init_model_dict()
         return({
             "Status": "failed",
             "Message": e,
             "METHOD": "POST"
         })
 
+    # the model started properly, return success and session key
     return({
         "Status": "started",
         "Key": key
