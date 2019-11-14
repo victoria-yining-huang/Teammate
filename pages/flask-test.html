@@ -15,22 +15,23 @@
     function start() {
       $.ajax({
         url: "/start-model",
-        type: "POST",
+        type: "post",
         success: function(resp) {
+          console.log(resp);
           const key = resp["Key"];
           sessionStorage.setItem("model_key", key);
-          console.log("model key " + key);
         }
       });
     }
     function check() {
       $.ajax({
         url: "/status",
-        type: "POST",
-        data: {
+        type: "post",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
           key: sessionStorage.getItem("model_key")
-        },
-        contentType: "application/json; charset=utf-8",
+        }),
         success: function(resp) {
           console.log(resp);
         }
