@@ -15,7 +15,10 @@
     function start() {
       $.ajax({
         url: "/start",
-        type: "PUT",
+        type: "POST",
+        data: {
+          key: 123
+        },
         success: function(response) {
           console.log("start_job");
         }

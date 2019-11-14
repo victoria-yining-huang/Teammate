@@ -1,11 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
-from rq import Queue
-from redis import Redis
-from rq.job import Job
-from worker import conn
-from test_worker import test
+from threading import Thread
 app = Flask(__name__)
 
 
@@ -57,25 +53,26 @@ def send_js(path):
     return send_from_directory('pages', path)
 
 
-@app.route('/start', methods=['PUT'])
+def generateTeams():
+    print("start")
+    sleep(5)
+    print("continue")
+    sleep(10)
+    print("continue")
+    sleep(15)
+    print("continue")
+    sleep(20)
+    print("stop")
+
+
+@app.route('/start', methods=['POST'])
 def start():
-    print(conn)
-    job = Job.create(test(), 'http://heroku.com', id='my_job_id')
-    q = Queue(connection=conn)
-    print(q.connection)
-    print("jobs", q.get_jobs)
-    q.enqueue_job(job)
-    return("test")
+    key = request.form.get('key')
 
+    thread = Thread(target=generateTeams)
+    thread.start()
 
-@app.route('/check', methods=['GET'])
-def check():
-    redis = Redis()
-    job = Job.fetch('my_job_id', connection=redis)
-    if job.get_status() == "finished":
-        return("done")
-    else:
-        return("not done")
+    return(jsonify({"Message": "Model started", "METHOD": "POST"}))
 
 
 if __name__ == '__main__':
