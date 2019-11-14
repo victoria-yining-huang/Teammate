@@ -1,6 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
+from threading import Thread
 app = Flask(__name__)
 
 
@@ -29,32 +30,41 @@ def respond():
 
 
 @app.route('/', methods=['GET'])
-def welcome():
-    resp = {}
-    resp["message"] = "The model server is active!"
-    return jsonify(resp)
-
-
-@app.route('/ping', methods=['GET'])
 def ping():
-    resp = {}
-    resp["message"] = "The model server is active!"
-    return jsonify(resp)
+    return("The server is active.")
+
+
+def generateTeams():
+    print("start")
+    sleep(5)
+    print("continue")
+    sleep(10)
+    print("continue")
+    sleep(15)
+    print("continue")
+    sleep(20)
+    print("stop")
 
 
 @app.route('/start', methods=['POST'])
 def start():
-    param = request.form.get('name')
-    if param:
-        return jsonify({
-            "Message": f"Welcome {name} to our awesome platform!!",
-            # Add this option to distinct the POST request
-            "METHOD": "POST"
-        })
-    else:
-        return jsonify({
-            "ERROR": "no name found, please send a name."
-        })
+    key = request.form.get('key')
+
+    thread = Thread(target=generateTeams)
+    thread.start()
+
+    return(jsonify({"Message": "Model started", "METHOD": "POST"}))
+
+    # if param:
+    #     return jsonify({
+    #         "Message": f"Welcome {name} to our awesome platform!!",
+    #         # Add this option to distinct the POST request
+    #         "METHOD": "POST"
+    #     })
+    # else:
+    #     return jsonify({
+    #         "ERROR": "no name found, please send a name."
+    #     })
 
 
 if __name__ == '__main__':
