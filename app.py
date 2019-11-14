@@ -24,11 +24,9 @@ def start():
 def check():
     content = request.get_json()
 
-    #status = get_model_status(content)
+    result = get_model_status(content)
 
-    return(jsonify({
-
-    }))
+    return(jsonify(result))
 
 
 @app.route('/stop', methods=['POST'])

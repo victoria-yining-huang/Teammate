@@ -25,7 +25,7 @@ init_model_dict()
 def generateTeams(model_input, model_dict):
     print("start")
     sleep(5)
-    model_dict["status"] = "done"
+    model_dict["status"] = "finished"
     model_dict["output"] = {
         "test": 1,
         "vals": [1, 2, 3]
@@ -77,13 +77,49 @@ def start_model(content):
     })
 
 
-def get_model_status():
+def get_model_status(key):
     if process.is_alive():
-        print("running")
-    elif model_dict["status"] == "done":
-        print("done")
-        print(model_dict["output"])
-        model_dict["status"] = "new"
-        model_dict["output"] = {}
-    elif model_dict["status"] == "new":
-        print("not created yet")
+        if key == model_dict["key"]:
+            return({
+                "Status": "success",
+                "Body": {
+                    "ModelIsFinished": False
+                }
+            })
+        else:
+            return({
+                "Status": "failed",
+                "Message": "Invalid key. The model was not started from your session.",
+                "METHOD": "POST"
+            })
+    else:
+        if key == model_dict["key"]:
+            if model_dict["status"] == "finished":
+                result = model_dict["output"]
+                init_model_dict()
+                return({
+                    "Status": "success",
+                    "Body": {
+                        "ModelIsFinished": True,
+                        "Output": result
+                    }
+                })
+            else:
+                return({
+                    "Status": "failed",
+                    "Message": "Unknown model state.",
+                    "METHOD": "POST"
+                })
+        else:
+            if model_dict["key"] is None:
+                return({
+                    "Status": "failed",
+                    "Message": "No active model or available model result.",
+                    "METHOD": "POST"
+                })
+            else:
+                return({
+                    "Status": "success",
+                    "Message": "Invalid key. The model was not started from your session.",
+                    "METHOD": "POST"
+                })
