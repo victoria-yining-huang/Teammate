@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
-from multiprocessing import multiprocess, Process
+import multiprocessing as mp
 app = Flask(__name__)
 
 
@@ -76,7 +76,7 @@ def start():
     key = request.form.get('key')
     print(key)
 
-    process = Process(target=generateTeams)
+    process = mp.Process(target=generateTeams)
     process.start()
 
     return(jsonify({"Message": "Model started", "METHOD": "POST"}))
@@ -87,7 +87,7 @@ def check():
     key = request.form.get('key')
     print(key)
 
-    return(jsonify({"ActiveThreads": multiprocess.active_count(), "METHOD": "POST"}))
+    return(jsonify({"ActiveThreads": mp.current_process(), "METHOD": "POST"}))
 
 
 if __name__ == '__main__':
