@@ -24,6 +24,8 @@ a:hover {
       padding-left: 20px;
 
 }
+
+
 </style>
   <!-- CSS Classes -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
@@ -154,14 +156,29 @@ a:hover {
               Download Sample File</h4></b>
             </a>
             <br>
-           
+           <!---Constraints-->
            <h4>Would you like to include the following constraints for generating teams?</h4> 
-           <h4>Select <b>ALL</b> that apply.</h4>
-       
-          <input type="checkbox" name="constraint" value="GPA"><h5>GPA</h5><br>
-          <input type="checkbox" name="constraint" value="Gender"><h5>Gender</h5><br>
-          <input type="buttonid" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" onclick="pass_constraints()">>
-          
+          <div>
+            <input type="radio" id="gender" name="constraints" value="gender" checked>
+            <label for="gender">Gender</label>
+          </div>
+
+          <div>
+            <input type="radio" id="GPA" name="constraints" value="GPA">
+            <label for="GPA">GPA</label>
+          </div>
+
+            <div>
+            <input type="radio" id="both" name="constraints" value="both" checked>
+            <label for="both">Both Gender and GPA</label>
+          </div>
+
+            <div>
+            <input type="radio" id="none" name="constraints" value="none">
+            <label for="none">None</label>
+          </div>
+
+          <input id="buttonid" type="button" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" value="Submit" onclick="pass_constraints()"/>
           </div>
 
           <div id= "right">
