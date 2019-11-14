@@ -71,12 +71,7 @@ a:hover {
             <h4><a href="data\students.csv" target="_blank" class="w3-margin-top"><b>
               Download Sample File</b></h4>
             </a>
-            <!--  <br> <h5>2) Uploading an existing team file as a .xlsx file</h5> -->
-            <!--  
-              <input type="file" id="student_data"/>
-              <button onclick="upload()"class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload</button>
-
-            -->
+  
             </div> 
             <!--- Adding instructions for page 1-->
           <div id= "right">
@@ -158,6 +153,15 @@ a:hover {
             <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b><h4>
               Download Sample File</h4></b>
             </a>
+            <br>
+           
+           <h4>Would you like to include the following constraints for generating teams?</h4> 
+           <h4>Select <b>ALL</b> that apply.</h4>
+       
+          <input type="checkbox" name="constraint" value="GPA"><h5>GPA</h5><br>
+          <input type="checkbox" name="constraint" value="Gender"><h5>Gender</h5><br>
+          <input type="buttonid" class="w3-button w3-black w3-padding-large w3-large w3-margin-top" onclick="pass_constraints()">>
+          
           </div>
 
           <div id= "right">
