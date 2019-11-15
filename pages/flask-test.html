@@ -17,7 +17,7 @@
     }
 
     async function timer(key) {
-      await sleep(5000);
+      await sleep(1000);
       check(key).then(function(resp) {
         if (resp["Status"] == "failed") {
           alert(resp["Message"]);
