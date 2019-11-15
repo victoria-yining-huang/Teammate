@@ -24,7 +24,7 @@ init_model_dict()
 
 def generateTeams(model_input, model_dict):
     print("start")
-    sleep(5)
+    sleep(20)
     model_dict["status"] = "finished"
     model_dict["output"] = {
         "test": 1,

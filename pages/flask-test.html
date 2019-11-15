@@ -19,13 +19,13 @@
         success: function(resp) {
           console.log(resp);
           const key = resp["Key"];
-          sessionStorage.setItem("model_key", key);
+          //sessionStorage.setItem("model_key", key);
+          console.log("start timer function");
+          timer(key);
         }
       });
     }
-    function check() {
-      const key = sessionStorage.getItem("model_key");
-      console.log("key ", key);
+    function check(key) {
       $.ajax({
         url: "/status",
         type: "post",
@@ -36,8 +36,30 @@
         }),
         success: function(resp) {
           console.log(resp);
+          return resp;
         }
       });
+
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      async function timer(key) {
+        var stop = false;
+        while (!stop) {
+          console.log("start timer");
+          await sleep(5000);
+          console.log("end timer");
+          console.log("check model");
+          const resp = check(key);
+          if (resp["Body"]["ModelIsFinished"]) {
+            alert("DONE!");
+            stop = true;
+          } else {
+            console.log("!! model still running");
+          }
+        }
+      }
     }
   </script>
 </html>
