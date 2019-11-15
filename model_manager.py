@@ -1,6 +1,7 @@
 import multiprocessing as mp
 from flask_caching import Cache
 from time import sleep
+from model import generateTeams
 import random
 import string
 

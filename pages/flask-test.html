@@ -36,6 +36,9 @@
     }
 
     function start() {
+      let model_input = prepareData();
+      console.log(model_input)
+
       $.ajax({
         url: "/start-model",
         type: "post",
@@ -75,6 +78,35 @@
           console.log(resp);
         }
       });
+    }
+
+    function prepareData() {
+      const students = sessionStorage.getItem("students");
+      const conflicts = sessionStorage.getItem("conflicts");
+      const team_size = sessionStorage.getItem("team_size");
+
+      let num_students = length(students);
+      let num_teams =
+        Math.floor(num_students / team_size) +
+        Math.min(1, num_students % team_size);
+
+      // deduplicate conflicts
+
+
+      // get gpa vector
+      let gpas = two_d.map(function(value,index) { return value[4]; });
+
+      // get gender vector
+      let genders = two_d.map(function(value,index) { return value[5]; });
+
+      return({
+        num_students: num_students,
+        num_teams = num_teams,
+        team_size = team_size,
+        conflicts = conflicts,
+        gpas = gpas,
+        genders = genders
+      })
     }
   </script>
 </html>

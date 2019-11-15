@@ -41,7 +41,7 @@ function generateTeams() {
   sessionStorage.setItem('conflicts', convertArrayToJSON(conflict_data))
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
 
-  window.location.href = "generate_teams.html";
+  window.location.href = "/app/flask-test.html";
 }
 
 function parseStudentData() {

@@ -1,4 +1,3 @@
 mip
 flask
 gunicorn
-flask-caching
