@@ -17,23 +17,19 @@
     }
 
     async function timer(key) {
-      var stop = false;
-      while (!stop) {
-        await sleep(5000);
-        check(key).then(function(resp) {
-          if (resp["Status"] == "failed") {
-            stop = true;
-            alert(resp["Message"]);
+      await sleep(5000);
+      check(key).then(function(resp) {
+        if (resp["Status"] == "failed") {
+          alert(resp["Message"]);
+        } else {
+          if (resp["Body"]["ModelIsFinished"]) {
+            alert("DONE!");
           } else {
-            if (resp["Body"]["ModelIsFinished"]) {
-              stop = true;
-              alert("DONE!");
-            } else {
-              console.log("!! model still running");
-            }
+            console.log("!! model still running");
+            timer(key);
           }
-        });
-      }
+        }
+      });
     }
 
     function start() {
