@@ -20,25 +20,29 @@ function nextTab(thisTab, nextTab) {
 }
 
 function generateTeams() {
-  function convertArrayToJSON(array) {
-    var new_array = "[";
-    for (const row of array) {
-      var new_row = "[";
-      for (const cell of row) {
-        new_row = new_row.concat('"', cell, '",');
-      }
-      new_row = new_row.slice(0, -1).concat("],");
-      new_array = new_array.concat(new_row);
-    }
-    new_array = new_array.slice(0, -1).concat("]");
-    console.log(new_array);
-    return new_array;
-  }
+  // function convertArrayToJSON(array) {
+  //   var new_array = "[";
+  //   for (const row of array) {
+  //     var new_row = "[";
+  //     for (const cell of row) {
+  //       new_row = new_row.concat('"', cell, '",');
+  //     }
+  //     new_row = new_row.slice(0, -1).concat("],");
+  //     new_array = new_array.concat(new_row);
+  //   }
+  //   new_array = new_array.slice(0, -1).concat("]");
+  //   console.log(new_array);
+  //   return new_array;
+  // }
 
   event.preventDefault();
 
-  sessionStorage.setItem('students', convertArrayToJSON(student_data))
-  sessionStorage.setItem('conflicts', convertArrayToJSON(conflict_data))
+  // sessionStorage.setItem('students', convertArrayToJSON(student_data))
+  // sessionStorage.setItem('conflicts', convertArrayToJSON(conflict_data))
+  // sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
+
+  sessionStorage.setItem('students', JSON.stringify(student_data))
+  sessionStorage.setItem('conflicts', JSON.stringify(conflict_data))
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
 
   window.location.href = "/app/flask-test.html";
