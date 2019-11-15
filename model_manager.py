@@ -39,7 +39,7 @@ def start_model(content):
 
     try:
         # if model is inactive
-        if not process.is_alive() and model_dict["status"] is not "running":
+        if model_dict["status"] is not "running":
             # generate unique key for session
             key = generate_key(30)
 
@@ -72,15 +72,14 @@ def start_model(content):
 
     # the model started properly, return success and session key
     return({
-        "Status": "started",
+        "Status": "success",
+        "Message": "The model was started."
         "Key": key
     })
 
 
 def get_model_status(key):
-    print("IS ALIVE?")
-    print(process.is_alive())
-    if process.is_alive():
+    if model_dict["status"] is "running":
         if key == model_dict["key"]:
             return({
                 "Status": "success",
