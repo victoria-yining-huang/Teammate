@@ -81,8 +81,8 @@
     }
 
     function prepareData() {
-      const students = sessionStorage.getItem("students");
-      const conflicts = sessionStorage.getItem("conflicts");
+      const students = JSON.parse(sessionStorage.getItem("students"));
+      const conflicts = JSON.parse(sessionStorage.getItem("conflicts"));
       const team_size = sessionStorage.getItem("team_size");
 
       let num_students = students.length;
