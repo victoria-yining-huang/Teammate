@@ -37,4 +37,4 @@ def stop():
 
 
 if __name__ == '__main__':
-    app.run(processes=1)  # app.run(threaded=True, port=5000)
+    app.run(threaded=False, processes=1)  # app.run(threaded=True, port=5000)
