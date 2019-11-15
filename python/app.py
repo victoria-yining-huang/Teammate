@@ -1,11 +1,16 @@
 # app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
 import multiprocessing as mp
 import model_manager as mm
 app = Flask(__name__)
 
 app.config["APPLICATION_ROOT"] = "/python"
+
+
+@app.route('/app/<path:path>')
+def send_js(path):
+    return send_from_directory('pages', path)
 
 
 @app.route('/start-model', methods=['POST'])
@@ -34,4 +39,4 @@ def stop():
 
 
 if __name__ == '__main__':
-    app.run(threaded=False, processes=1)
+    app.run(threaded=False, processes=1)  # app.run(threaded=True, port=5000)
