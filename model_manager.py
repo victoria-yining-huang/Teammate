@@ -78,6 +78,8 @@ def start_model(content):
 
 
 def get_model_status(key):
+    print("IS ALIVE?")
+    print(process.is_alive())
     if process.is_alive():
         if key == model_dict["key"]:
             return({
@@ -119,7 +121,7 @@ def get_model_status(key):
                 })
             else:
                 return({
-                    "Status": "success",
+                    "Status": "failed",
                     "Message": "Invalid key. The model was not started from your session.",
                     "METHOD": "POST"
                 })
