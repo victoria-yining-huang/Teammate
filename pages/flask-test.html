@@ -23,13 +23,14 @@
         await sleep(5000);
         console.log("end timer");
         console.log("check model");
-        const resp = check(key);
-        if (resp["Body"]["ModelIsFinished"]) {
-          alert("DONE!");
-          stop = true;
-        } else {
-          console.log("!! model still running");
-        }
+        check(key).then(function(resp) {
+          if (resp["Body"]["ModelIsFinished"]) {
+            alert("DONE!");
+            stop = true;
+          } else {
+            console.log("!! model still running");
+          }
+        });
       }
     }
 
@@ -57,7 +58,7 @@
         }),
         success: function(resp) {
           console.log(resp);
-          return resp;
+          resolve(resp);
         }
       });
     }
