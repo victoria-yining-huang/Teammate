@@ -6,6 +6,8 @@ import string
 manager = mp.Manager()
 model_dict = manager.dict()
 process = mp.Process()
+is_running = False
+key = None
 
 
 def generate_key(length):
@@ -13,18 +15,19 @@ def generate_key(length):
     return ''.join(random.choice(lettersAndDigits) for i in range(length))
 
 
-def init_model_dict():
-    model_dict["key"] = None
-    model_dict["status"] = "ready"
-    model_dict["output"] = None
+def init():
+    global is_running
+    global key
+    global model_dict
+
+    is_running = False
+    key = None
+    model_dict = manager.dict()
 
 
-init_model_dict()
-
-
-def generateTeams(model_input, model_dict):
+def generateTeams(model_input, model_dict, key):
     print("start")
-    sleep(20)
+    sleep(10)
     model_dict["status"] = "finished"
     model_dict["output"] = {
         "test": 1,
@@ -35,21 +38,19 @@ def generateTeams(model_input, model_dict):
 
 def start_model(content):
     global process
-    global model_dict
+    global is_running
+    global key
 
     try:
         # if model is inactive
-        if model_dict["status"] is not "running":
+        if not is_running:
             # generate unique key for session
             key = generate_key(30)
-
-            # update global dictionary
-            model_dict["key"] = key
-            model_dict["status"] = "running"
+            is_running = True
 
             # create model process
             process = mp.Process(target=generateTeams,
-                                 args=(content, model_dict))
+                                 args=(content, model_dict, key))
 
             # start model process
             process.start()
@@ -63,7 +64,7 @@ def start_model(content):
             })
     except Exception as e:
         # an error occured starting the model, return failed
-        init_model_dict()
+        init()
         return({
             "Status": "failed",
             "Message": e,
@@ -78,9 +79,13 @@ def start_model(content):
     })
 
 
-def get_model_status(key):
-    if model_dict["status"] is "running":
-        if key == model_dict["key"]:
+def get_model_status(req_key):
+    global is_running
+
+    if is_running:
+        if req_key == key:
+            if not process.is_alive():
+                is_running = False
             return({
                 "Status": "success",
                 "Body": {
@@ -94,10 +99,10 @@ def get_model_status(key):
                 "METHOD": "POST"
             })
     else:
-        if key == model_dict["key"]:
+        if req_key == key:
             if model_dict["status"] == "finished":
                 result = model_dict["output"]
-                init_model_dict()
+                init()
                 return({
                     "Status": "success",
                     "Body": {
@@ -112,7 +117,7 @@ def get_model_status(key):
                     "METHOD": "POST"
                 })
         else:
-            if model_dict["key"] is None:
+            if key is None:
                 return({
                     "Status": "failed",
                     "Message": "No active model or available model result.",
@@ -124,3 +129,11 @@ def get_model_status(key):
                     "Message": "Invalid key. The model was not started from your session.",
                     "METHOD": "POST"
                 })
+
+
+# start_model({"test": [1, 2, 3]})
+# key2 = key
+# stop = False
+# while not stop:
+#     sleep(1)
+#     print(get_model_status(key2))
