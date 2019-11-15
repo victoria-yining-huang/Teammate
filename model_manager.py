@@ -73,7 +73,7 @@ def start_model(content):
     # the model started properly, return success and session key
     return({
         "Status": "success",
-        "Message": "The model was started."
+        "Message": "The model was started.",
         "Key": key
     })
 
