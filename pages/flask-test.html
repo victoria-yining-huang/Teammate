@@ -37,7 +37,7 @@
 
     function start() {
       let model_input = prepareData();
-      console.log(model_input)
+      console.log(model_input);
 
       $.ajax({
         url: "/start-model",
@@ -92,21 +92,24 @@
 
       // deduplicate conflicts
 
-
       // get gpa vector
-      let gpas = students.map(function(value,index) { return value[4]; });
+      let gpas = students.map(function(value, index) {
+        return value[4];
+      });
 
       // get gender vector
-      let genders = students.map(function(value,index) { return value[5]; });
+      let genders = students.map(function(value, index) {
+        return value[5];
+      });
 
-      return({
+      return {
         num_students: num_students,
-        num_teams = num_teams,
-        team_size = team_size,
-        conflicts = conflicts,
-        gpas = gpas,
-        genders = genders
-      })
+        num_teams: num_teams,
+        team_size: team_size,
+        conflicts: conflicts,
+        gpas: gpas,
+        genders: genders
+      };
     }
   </script>
 </html>
