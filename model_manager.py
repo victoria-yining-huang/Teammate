@@ -132,7 +132,11 @@ def get_model_status(req_key):
 
 
 def ping_model():
-    return(process.is_alive())
+    return({
+        "process": process.is_alive(),
+        "is_running": is_running,
+        "key": key
+    })
 
 # start_model({"test": [1, 2, 3]})
 # key2 = "key"
