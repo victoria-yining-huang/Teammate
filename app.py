@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/app/<path:path>')
 def send_js(path):
-    return send_from_directory('static', path)
+    return send_from_directory('html', path)
 
 
 @app.route('/start-model', methods=['POST'])
