@@ -47,19 +47,22 @@
         }
       });
     }
+
     function check(key) {
-      $.ajax({
-        url: "/status",
-        type: "post",
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify({
-          key: key
-        }),
-        success: function(resp) {
-          console.log(resp);
-          resolve(resp);
-        }
+      return new Promise(function(resolve) {
+        $.ajax({
+          url: "/status",
+          type: "post",
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify({
+            key: key
+          }),
+          success: function(resp) {
+            console.log(resp);
+            resolve(resp);
+          }
+        });
       });
     }
   </script>
