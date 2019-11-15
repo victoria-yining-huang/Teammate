@@ -10,6 +10,9 @@
     <button onclick="check()">
       Check Job
     </button>
+    <button onclick="ping()">
+      Ping Job
+    </button>
   </body>
   <script>
     function sleep(ms) {
@@ -61,6 +64,16 @@
             resolve(resp);
           }
         });
+      });
+    }
+
+    function ping() {
+      $.ajax({
+        url: "/ping",
+        type: "get",
+        success: function(resp) {
+          console.log(resp);
+        }
       });
     }
   </script>
