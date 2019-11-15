@@ -85,7 +85,7 @@
       const conflicts = sessionStorage.getItem("conflicts");
       const team_size = sessionStorage.getItem("team_size");
 
-      let num_students = length(students);
+      let num_students = students.length;
       let num_teams =
         Math.floor(num_students / team_size) +
         Math.min(1, num_students % team_size);
