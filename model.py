@@ -8,22 +8,6 @@ from mip import Model, xsum, minimize, BINARY, INTEGER, CONTINUOUS
 # Includes COIN-OR Linear Programming Solver - CLP
 
 
-def prepare_model(num_students, team_size, conflicts, gpas, genders):
-
-    # Get gpa vector
-    gpas = [int(round(float(row[4]))) for row in data_ids]
-
-    print("Create gender vector")
-
-    # Get gender vector
-    genders = [row[5] for row in data_ids]
-
-    print("RUN MODEL")
-
-    d_vars = runModel(num_teams, team_size, num_students,
-                      conflicts, gpas, genders)
-
-
 def run_model(num_students, num_teams, team_size, conflicts, gpas, genders):
 
     #### MIP MODEL ####
@@ -120,48 +104,15 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas, genders):
     # Run the model
     m.optimize()
 
-    m.write('model.lp')
+    d_vars = {"students": x, "conflicts": xs}
 
-    return({'students': x, 'conflicts': xs})
+    results = parse_results(d_vars=d_vars,
+                            num_students=num_students, num_teams=num_teams)
+
+    return(results)
 
 
-def ping():
-    print("piiinnnggg")
-
-
-def generate_teams(data_ids, data_conflicts, num_teams, team_size, num_students):
-
-    print("Generating output")
-
-    print("Deduplicate conflicts")
-
-    # Deduplicate conflicts
-    conflicts = []
-    ids = [row[0] for row in data_ids]
-    for i in range(len(data_conflicts)):
-        conflict = [ids.index(data_conflicts[i][0]),
-                    ids.index(data_conflicts[i][3])]
-        inverse_conflict = [ids.index(data_conflicts[i][3]),
-                            ids.index(data_conflicts[i][0])]
-        if inverse_conflict not in conflicts:
-            conflicts.append(conflict)
-
-    print("Create gpa vector")
-
-    # Get gpa vector
-    gpas = [int(round(float(row[4]))) for row in data_ids]
-
-    print("Create gender vector")
-
-    # Get gender vector
-    genders = [row[5] for row in data_ids]
-
-    print("RUN MODEL")
-
-    d_vars = runModel(num_teams, team_size, num_students,
-                      conflicts, gpas, genders)
-
-    print("CREATE OUTPUT")
+def parse_results(d_vars, num_students, num_teams):
 
     output = {}
 
@@ -176,74 +127,12 @@ def generate_teams(data_ids, data_conflicts, num_teams, team_size, num_students)
         no_c = False
 
     # Summarize solution
-    output['model'] = {}
-    output['model']['hasConflicts'] = no_c
-
-    # Create empty teams
-    output['teams'] = {}
-    for team in range(num_teams):
-        output['teams'][team + 1] = {
-            'members': []
-        }
-
-    # Fill teams with assignments
+    output['hasConflicts'] = no_c
+    output["assignments"] = []
     for i in range(num_students * num_teams):
         if d_vars['students'][i].x >= 0.99:
-            team_number = i - (i//num_teams)*num_teams
-            member_id = data_ids[i//num_teams][0]
-            output['teams'][team_number + 1]['members'].append(member_id)
-
-    #
-    output['people'] = {}
-    for i in range(len(data_ids)):
-        output['people'][data_ids[i][0]] = {
-            'id': data_ids[i][0],
-            'firstName': data_ids[i][1],
-            'lastName': data_ids[i][2],
-            'email': data_ids[i][3],
-            'gpa': round(float(data_ids[i][4])),
-            'gender': data_ids[i][5],
-            'conflicts': []
-        }
-        for j in range(len(data_conflicts)):
-            if data_conflicts[j][0] == data_ids[i][0]:
-                output['people'][data_ids[i][0]]['conflicts'].append(
-                    data_conflicts[j][3])
+            student_index = i//num_teams
+            team_number = i - (student_index)*num_teams
+            output['assignments'].append(team_number)
 
     return output
-
-
-def getTeams():
-
-    print(sys.argv[1])
-    print(sys.argv[2])
-
-    data_ids = json.loads(sys.argv[1].replace(
-        '\\', '').replace('\r', ''), strict=False)
-    data_conflicts = json.loads(sys.argv[2].replace(
-        '\\', '').replace('\r', ''), strict=False)
-
-    print(data_ids)
-    print(data_conflicts)
-
-    team_size = int(sys.argv[3])
-    num_students = len(data_ids)
-    num_teams = num_students//team_size + min(1, num_students % team_size)
-
-    output = generateTeams(data_ids, data_conflicts,
-                           num_teams, team_size, num_students)
-
-    print("json_result_output")
-    print(json.dumps(output))
-
-
-try:
-    getTeams()
-except Exception as e:
-    print("python_error")
-    print(e)
-
-
-def wait():
-    sleep(35)
-    return("done!")

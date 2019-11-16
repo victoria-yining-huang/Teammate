@@ -6,6 +6,11 @@ import model_manager as mm
 app = Flask(__name__)
 
 
+@app.route('/')
+def send_home():
+    return(send_from_directory('html', 'setup.html'))
+
+
 @app.route('/app/<path:path>')
 def send_js(path):
     return send_from_directory('html', path)
@@ -14,6 +19,7 @@ def send_js(path):
 @app.route('/start-model', methods=['POST'])
 def start():
     content = request.get_json()
+    print(content)
     result = mm.start_model(content)
     return(jsonify(result))
 

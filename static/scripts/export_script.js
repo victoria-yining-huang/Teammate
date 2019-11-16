@@ -1,12 +1,10 @@
 
 
-function restartApp(){
-	console.log("hello")
-	
+function restartApp() {
 	sessionStorage.clear()
-	window.location.href="index.php"
+	window.location.href = "/app/setup.html"
 }
 
-function goBacktoEditing(){
+function goBacktoEditing() {
 
 }

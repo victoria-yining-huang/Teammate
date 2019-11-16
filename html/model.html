@@ -2,29 +2,37 @@
 <html>
   <!-- CSS Classes -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link rel="stylesheet" type="text/css" href="www/main.css" />
+  <link rel="stylesheet" href="/static/css/main.css" />
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat"/>
   <!-- Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript" src="generate_teams_script.js"></script>
+  <script type="text/javascript" src="/static/scripts/model_script.js"></script>
 
   <body>
     <!-- Navbar -->
     <div class="w3-top">
       <div class="w3-bar w3-blue w3-card w3-left-align w3-large">
-        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">teammate</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Instructions</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">
+          teammate
+        </a>
       </div>
     </div>
 
     <!-- Page Content -->
     <div class="page-content">
       <div id="tabs" class="w3-container">
+        <div>
+
+        </div>
         <div class="w3-display-middle w3-center">
-          <img width="100px" src="https://www.rosta.ch/wGlobal/wGlobal/layout/images/transparent-google-loader-gif-4.gif" />
+          <img
+            width="100px"
+            src="/static/images/loader.gif"
+          />
           <h3 class="w3-margin-top">Generating Teams...</h3>
+          <h4 id="modelRuntime">Starting Model</h4>
         </div>
       </div>
     </div>

@@ -13,8 +13,12 @@
     <button onclick="ping()">
       Ping Job
     </button>
+    <div id="timer"></div>
   </body>
   <script>
+    var setModelTimer;
+    var modelRuntime = 0;
+
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -26,6 +30,8 @@
           alert(resp["Message"]);
         } else {
           if (resp["Body"]["ModelIsFinished"]) {
+            setTimer = null;
+            window.clearInterval(setModelTimer);
             alert("DONE!");
           } else {
             console.log("!! model still running");
@@ -45,6 +51,8 @@
         success: function(resp) {
           console.log(resp);
           const key = resp["Key"];
+          setModelTimer = setInterval(modelTimer, 1000);
+          modelRuntime = 0;
           //sessionStorage.setItem("model_key", key);
           console.log("start timed checks");
           timer(key);
@@ -110,6 +118,12 @@
         gpas: gpas,
         genders: genders
       };
+    }
+
+    function modelTimer() {
+      modelRuntime = modelRuntime + 1;
+      document.getElementById("timer").innerHTML =
+        String(modelRuntime) + " seconds";
     }
   </script>
 </html>

@@ -2,6 +2,7 @@ import multiprocessing as mp
 from time import sleep
 import random
 import string
+from model import run_model
 
 manager = mp.Manager()
 model_dict = manager.dict()
@@ -25,15 +26,27 @@ def init():
     model_dict = manager.dict()
 
 
-def generateTeams(model_input, model_dict, key):
-    print("start")
-    sleep(10)
+def generate_teams(model_input, model_dict):
+
+    print("!! run model")
+
+    result = run_model(
+        num_students=model_input["num_students"],
+        num_teams=model_input["num_teams"],
+        team_size=model_input["team_size"],
+        conflicts=model_input["conflicts"],
+        gpas=model_input["gpas"],
+        genders=model_input["genders"]
+    )
+
+    print("!! model finished")
+
+    print(result)
+
     model_dict["status"] = "finished"
-    model_dict["output"] = {
-        "test": 1,
-        "vals": [1, 2, 3]
-    }
-    print("stop")
+    model_dict["result"] = result
+
+    print("!! process finished")
 
 
 def start_model(content):
@@ -49,8 +62,8 @@ def start_model(content):
             is_running = True
 
             # create model process
-            process = mp.Process(target=generateTeams,
-                                 args=(content, model_dict, key))
+            process = mp.Process(target=generate_teams,
+                                 args=(content, model_dict))
 
             # start model process
             process.start()
@@ -82,7 +95,7 @@ def start_model(content):
 def get_model_status(req_key):
     global is_running
 
-    if is_running:
+    if process.is_alive():
         if req_key == key:
             if not process.is_alive():
                 is_running = False
@@ -101,13 +114,13 @@ def get_model_status(req_key):
     else:
         if req_key == key:
             if model_dict["status"] == "finished":
-                result = model_dict["output"]
+                result = model_dict["result"]
                 init()
                 return({
                     "Status": "success",
                     "Body": {
                         "ModelIsFinished": True,
-                        "Output": result
+                        "Result": result
                     }
                 })
             else:

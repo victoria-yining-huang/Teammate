@@ -1,4 +1,0 @@
-user_id,first_name,last_name,conflict_first_name,conflict_user_id,conflict_last_name
-jsmith1,,,jdoe2,,
-jdoe2,,,kbrown3,,
-kbrown3,,,mlee4,,
