@@ -1,4 +1,2 @@
-student_id,conflict_student_id
-jsmith1,jdoe2
-jsmith1,mlee4
-jsmith1,kbrown3
+user_id,first_name,last_name,conflict_first_name,conflict_user_id,conflict_last_name
+ej27lee,Eric,Lee,kadutta,Kanika,Dutta

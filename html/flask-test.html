@@ -1,0 +1,129 @@
+<html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <body>
+    <h1>
+      This is a flask test.
+    </h1>
+    <button onclick="start()">
+      Start Job
+    </button>
+    <button onclick="check()">
+      Check Job
+    </button>
+    <button onclick="ping()">
+      Ping Job
+    </button>
+    <div id="timer"></div>
+  </body>
+  <script>
+    var setModelTimer;
+    var modelRuntime = 0;
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function timer(key) {
+      await sleep(1000);
+      check(key).then(function(resp) {
+        if (resp["Status"] == "failed") {
+          alert(resp["Message"]);
+        } else {
+          if (resp["Body"]["ModelIsFinished"]) {
+            setTimer = null;
+            window.clearInterval(setModelTimer);
+            alert("DONE!");
+          } else {
+            console.log("!! model still running");
+            timer(key);
+          }
+        }
+      });
+    }
+
+    function start() {
+      let model_input = prepareData();
+      console.log(model_input);
+
+      $.ajax({
+        url: "/start-model",
+        type: "post",
+        success: function(resp) {
+          console.log(resp);
+          const key = resp["Key"];
+          setModelTimer = setInterval(modelTimer, 1000);
+          modelRuntime = 0;
+          //sessionStorage.setItem("model_key", key);
+          console.log("start timed checks");
+          timer(key);
+        }
+      });
+    }
+
+    function check(key) {
+      return new Promise(function(resolve) {
+        $.ajax({
+          url: "/status",
+          type: "post",
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify({
+            key: key
+          }),
+          success: function(resp) {
+            console.log(resp);
+            resolve(resp);
+          }
+        });
+      });
+    }
+
+    function ping() {
+      $.ajax({
+        url: "/ping",
+        type: "get",
+        success: function(resp) {
+          console.log(resp);
+        }
+      });
+    }
+
+    function prepareData() {
+      const students = JSON.parse(sessionStorage.getItem("students"));
+      const conflicts = JSON.parse(sessionStorage.getItem("conflicts"));
+      const team_size = sessionStorage.getItem("team_size");
+
+      let num_students = students.length;
+      let num_teams =
+        Math.floor(num_students / team_size) +
+        Math.min(1, num_students % team_size);
+
+      // deduplicate conflicts
+
+      // get gpa vector
+      let gpas = students.map(function(value, index) {
+        return value[4];
+      });
+
+      // get gender vector
+      let genders = students.map(function(value, index) {
+        return value[5];
+      });
+
+      return {
+        num_students: num_students,
+        num_teams: num_teams,
+        team_size: team_size,
+        conflicts: conflicts,
+        gpas: gpas,
+        genders: genders
+      };
+    }
+
+    function modelTimer() {
+      modelRuntime = modelRuntime + 1;
+      document.getElementById("timer").innerHTML =
+        String(modelRuntime) + " seconds";
+    }
+  </script>
+</html>

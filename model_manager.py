@@ -1,0 +1,162 @@
+import multiprocessing as mp
+from time import sleep
+import random
+import string
+from model import run_model
+
+manager = mp.Manager()
+model_dict = manager.dict()
+process = mp.Process()
+is_running = False
+key = None
+
+
+def generate_key(length):
+    lettersAndDigits = string.ascii_letters + string.digits
+    return ''.join(random.choice(lettersAndDigits) for i in range(length))
+
+
+def init():
+    global is_running
+    global key
+    global model_dict
+
+    is_running = False
+    key = None
+    model_dict = manager.dict()
+
+
+def generate_teams(model_input, model_dict):
+
+    print("!! run model")
+
+    result = run_model(
+        num_students=model_input["num_students"],
+        num_teams=model_input["num_teams"],
+        team_size=model_input["team_size"],
+        conflicts=model_input["conflicts"],
+        gpas=model_input["gpas"],
+        genders=model_input["genders"]
+    )
+
+    print("!! model finished")
+
+    print(result)
+
+    model_dict["status"] = "finished"
+    model_dict["result"] = result
+
+    print("!! process finished")
+
+
+def start_model(content):
+    global process
+    global is_running
+    global key
+
+    try:
+        # if model is inactive
+        if not is_running:
+            # generate unique key for session
+            key = generate_key(30)
+            is_running = True
+
+            # create model process
+            process = mp.Process(target=generate_teams,
+                                 args=(content, model_dict))
+
+            # start model process
+            process.start()
+        # if model is active
+        else:
+            # return failed message
+            return({
+                "Status": "failed",
+                "Message": "Model is already running",
+                "METHOD": "POST"
+            })
+    except Exception as e:
+        # an error occured starting the model, return failed
+        init()
+        return({
+            "Status": "failed",
+            "Message": e,
+            "METHOD": "POST"
+        })
+
+    # the model started properly, return success and session key
+    return({
+        "Status": "success",
+        "Message": "The model was started.",
+        "Key": key
+    })
+
+
+def get_model_status(req_key):
+    global is_running
+
+    if process.is_alive():
+        if req_key == key:
+            if not process.is_alive():
+                is_running = False
+            return({
+                "Status": "success",
+                "Body": {
+                    "ModelIsFinished": False
+                }
+            })
+        else:
+            return({
+                "Status": "failed",
+                "Message": "Invalid key. The model was not started from your session.",
+                "METHOD": "POST"
+            })
+    else:
+        if req_key == key:
+            if model_dict["status"] == "finished":
+                result = model_dict["result"]
+                init()
+                return({
+                    "Status": "success",
+                    "Body": {
+                        "ModelIsFinished": True,
+                        "Result": result
+                    }
+                })
+            else:
+                return({
+                    "Status": "failed",
+                    "Message": "Unknown model state.",
+                    "METHOD": "POST"
+                })
+        else:
+            if key is None:
+                return({
+                    "Status": "failed",
+                    "Message": "No active model or available model result.",
+                    "METHOD": "POST"
+                })
+            else:
+                return({
+                    "Status": "failed",
+                    "Message": "Invalid key. The model was not started from your session.",
+                    "METHOD": "POST"
+                })
+
+
+def ping_model():
+    return({
+        "process": process.is_alive(),
+        "is_running": is_running,
+        "key": key
+    })
+
+# start_model({"test": [1, 2, 3]})
+# key2 = "key"
+# stop = False
+# while not stop:
+#     sleep(1)
+#     res = get_model_status(key2)
+#     print(res)
+#     if (res["Status"] == "failed"):
+#         stop = True
