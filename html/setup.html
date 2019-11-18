@@ -5,36 +5,66 @@
  box-shadow: 0 20px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
  
 }
+
+a:link{
+  color: darkblue;
+  text-decoration: none;
+}
 a:hover {
   color: blue;
+  text-decoration: underline;
 }
  #left{ 
-  padding: 10px;
-  float:left;  
-  width:60%; 
-  height:500px; 
+        padding: 10px;
+        float:left;  
+        width:60%; 
+        height:500px; 
 } 
-#right{    
-  float:right; 
-  width:40%; 
-  height:300px; 
-  border-left: 3px solid;
-  border-color: #FFD700 ;
-  padding-left: 20px;
+#right{ 
+      
+      float:right; 
+      width:40%; 
+      height:300px; 
+      border-left: 3px solid;
+      border-color: #FFD700 ;
+      padding-left: 20px;
+
 }
-.hidden {
-  display:none;
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 0.5px dotted black;
 }
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px 10px;
+
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 </style>
   <!-- CSS Classes -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link rel="stylesheet" href="/static/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="www/main.css" />
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
   <!-- Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/scripts/setup_script.js"></script>
+  <script type="text/javascript" src="setup_script.js"></script>
 
   <body onload="uploadConflict();teamsize();uploadStudentFile();">
     <!-- Navbar -->
@@ -72,12 +102,7 @@ a:hover {
             <h4><a href="data\students.csv" target="_blank" class="w3-margin-top"><b>
               Download Sample File</b></h4>
             </a>
-            <!--  <br> <h5>2) Uploading an existing team file as a .xlsx file</h5> -->
-            <!--  
-              <input type="file" id="student_data"/>
-              <button onclick="upload()"class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Upload</button>
-
-            -->
+  
             </div> 
             <!--- Adding instructions for page 1-->
           <div id= "right">
@@ -125,7 +150,7 @@ a:hover {
             <h3>Instructions</h3>
             
             <h5>1) Check if the number of students in the uploaded file is same as the one displayed on the top of the page.</h5>
-            <h5>2) Enter the desired team size. The value that you enter is the maximum number of students that would be placed within a team. If the number of students cannot be divided evenly within the entered team size, then some teams may have less than the specified amount. </h5>
+            <h5>2) Enter the desired team size. The value that you enter is the minimum number of students that would be placed within a team. If the number of students cannot be divided evenly within the entered team size, then some teams may have <b>team size +1</b> students. </h5>
             <h5>3) The number of teams for the model will be calculated and displayed below the text field! </h5>
           </div>
           </div>
@@ -155,20 +180,38 @@ a:hover {
             <p id="error" style="color:red; font-weight: bold;"p>
             <p id="successful" style="color:green; font-weight: bold;" p>
             <br />
-            <h5>See a sample table for the student conflict file.</h5>
-            <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b><h4>
-              Download Sample File</h4></b>
-            </a>
+            
+           <!---Constraints-->
+           <h4>Would you like to include the following constraints for generating teams? <br>Select ALL that apply.</h4> 
+          <div class="tooltip">
+            <input type="checkbox" id="gender" name="constraints" value="gender" checked>
+            <label for="gender">Gender</label>
+            <span class="tooltiptext">Gender Constraint will attempt to generate each team will either have majority of women or no women at all.</span>
+          </div>
+          <br>
+          <br>
+          <div class="tooltip">
+            <input type="checkbox" id="GPA" name="constraints" value="GPA" checked>
+            <label for="GPA">GPA</label>
+            <span class="tooltiptext">GPA constraint will attempt to generate  each team will have students from top and bottom GPA tiers, i.e. a low GPA & a high GPA student will be on the same team</span>
+          </div>
+
+           <div>
+            <h5>We are going to give the best possible solution, however, each team may not completely satisfy all the constraints selected. </h5>
+          </div>
+          
           </div>
 
           <div id= "right">
             <h3>Instructions</h3>
             <h5>1) Click the upload conflict button. </h5>
             <h5>2) Find the conflicts file provided to you by Team-7 and click <b>Open</b>.</h5>
-            <h5>2) Make sure it is in <b>.csv</b> format.</h5>
-            <h5>3) If you want to look at an example of a sample file, <br> download the sample file.</h5>
-            <h5>4) Click on the upload button and select the Team-7 file.</h5>
-            <h5>5) A Generate Teams button will appear, click on it.</h5>
+            <h5>3) Make sure it is in <b>.csv</b> format.If you want to look at an example of a sample file, see a sample table for the student conflict file.
+            <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b>
+              Download Sample File</b>
+            </a></h5>
+            <h5>4) Click on the upload button and select the conflict.csv Team-7 file.</h5>
+            <h5>6) A Generate Teams button will appear, click on it.</h5>
           </div>
 
         </div>
