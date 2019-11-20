@@ -22,16 +22,19 @@
 
     <!-- Page Content -->
     <div class="page-content">
-      <div id="tabs" class="w3-container">
-        <div>
-
-        </div>
+      <div id="loader" class="w3-container">
         <div class="w3-display-middle w3-center">
           <img
             width="100px"
             src="/static/images/loader.gif"
           />
           <h3 class="w3-margin-top">Generating Teams...</h3>
+          <h4 id="modelRuntime">Starting Model</h4>
+        </div>
+      </div>
+      <div id="error" class="w3-container">
+        <div class="w3-display-middle w3-center">
+          <h3 class="w3-margin-top">Darn, an error occured!</h3>
           <h4 id="modelRuntime">Starting Model</h4>
         </div>
       </div>
