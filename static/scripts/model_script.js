@@ -26,8 +26,12 @@ async function timer(key) {
 			window.clearInterval(setModelTimer);
 			document.getElementById("modelRuntime").innerHTML = "Model Finished";
 			output = processResult(resp["Result"]);
-			sessionStorage.setItem("output", JSON.stringify(output));
-			window.location.href = "/app/teams.html";
+			if (output["error"] == null) {
+				sessionStorage.setItem("output", JSON.stringify(output));
+				window.location.href = "/app/teams.html";
+			} else {
+				handleError(output)
+			}
 		} else {
 			timer(key);
 		}
@@ -72,7 +76,10 @@ function check(key) {
 				resolve(resp);
 			},
 			error: function (resp) {
-				handleError(resp)
+				handleError({
+					error: true,
+					message: "An internal error occured while running the model. Please restart."
+				})
 			}
 		});
 	});
@@ -162,47 +169,61 @@ function prepareData() {
 
 function processResult(result) {
 
-	const students = JSON.parse(sessionStorage.getItem("students"));
-	const conflicts = JSON.parse(sessionStorage.getItem("conflicts"));
+	try {
 
-	var output = {
-		model: {
-			hasConflicts: result["hasConflicts"]
-		},
-		teams: {},
-		people: {}
-	}
+		const students = JSON.parse(sessionStorage.getItem("students"));
+		const conflicts = JSON.parse(sessionStorage.getItem("conflicts"));
 
-	// Place students in teams
-	for (var i = 0; i < result["assignments"].length; i++) {
-		team = result["assignments"][i] + 1;
-		student = students[i][0]
-		if (team in output["teams"]) {
-			output["teams"][team]["members"].push(student)
-		} else {
-			output["teams"][team] = {}
-			output["teams"][team]["members"] = [student]
+		var output = {
+			model: {
+				hasConflicts: result["hasConflicts"]
+			},
+			teams: {},
+			people: {}
 		}
-	}
 
-	// Create students
-	students.forEach(function (student) {
-		const id = student[0];
-		output["people"][id] = {
-			id: id,
-			firstName: student[1],
-			lastName: student[2],
-			email: student[3],
-			gpa: student[4],
-			gender: student[5],
-			conflicts: []
-		}
-		conflicts.forEach(function (conflict) {
-			if (conflict[0] == id) {
-				output["people"][id]["conflicts"].push(conflict[3]);
+		// Place students in teams
+		for (var i = 0; i < result["assignments"].length; i++) {
+			team = result["assignments"][i] + 1;
+			student = students[i][0]
+			if (team in output["teams"]) {
+				output["teams"][team]["members"].push(student)
+			} else {
+				output["teams"][team] = {}
+				output["teams"][team]["members"] = [student]
 			}
-		});
-	});
+		}
 
-	return (output);
+		// Create students
+		students.forEach(function (student) {
+			const id = student[0];
+			output["people"][id] = {
+				id: id,
+				firstName: student[1],
+				lastName: student[2],
+				email: student[3],
+				gpa: student[4],
+				gender: student[5],
+				conflicts: []
+			}
+			conflicts.forEach(function (conflict) {
+				if (conflict[0] == id) {
+					output["people"][id]["conflicts"].push(conflict[3]);
+				}
+			});
+		});
+
+		return (output);
+
+	} catch (error) {
+		return {
+			error: true,
+			message: "An error occured while processing the model output.\n\nError Details:\n" + error
+		};
+	}
+}
+
+function restartApp() {
+	sessionStorage.clear()
+	window.location.href = "/app/setup.html"
 }
