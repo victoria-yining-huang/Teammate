@@ -75,11 +75,12 @@ function parseStudentData() {
       }
       student_data = parsedata;
       
-      var expectedHeaders = "student_id,first_name,last_name,email,gpa";
+      var expectedHeaders = "user_id,first_name,last_name,email,gpa";
       // error checking for the same header columns as expected
-      //document.getElementById("file-headers").innerHTML = newLinebrk[0];
-      if (String(newLinebrk[0]).localeCompare(expectedHeaders) == -1) { // checking the file extention to make sure that it is a CSV
-        document.getElementById("student-header-error").innerHTML = "Error: Expecting 'student_id,first_name,last_name,email,gpa' as column headers but received '" + newLinebrk[0] + "'. Please adjust the column headers and try again.";
+      //var toni = expectedHeaders == newLinebrk[0].trim();
+      //document.getElementById("file-headers").innerHTML = newLinebrk[0] + toni;
+      if (expectedHeaders == newLinebrk[0].trim() != true) { // checking the file extention to make sure that it is a CSV
+        document.getElementById("student-header-error").innerHTML = "Error: Expecting 'user_id,first_name,last_name,email,gpa' as column headers but received '" + newLinebrk[0] + "'. Please adjust the column headers and try again.";
         document.getElementById("nextstep").style.display = 'none';
         document.getElementById("student-successful").innerHTML = "";
       } else {
