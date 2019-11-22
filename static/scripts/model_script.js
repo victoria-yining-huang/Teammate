@@ -138,18 +138,12 @@ function prepareData() {
 				return parseInt(value[4]);
 			});
 
-			// get gender vector
-			let genders = students.map(function (value, index) {
-				return value[5].toLowerCase();
-			});
-
 			return ({
 				num_students: num_students,
 				num_teams: num_teams,
 				team_size: parseInt(team_size),
 				conflicts: conflicts_new,
-				gpas: gpas,
-				genders: genders
+				gpas: gpas
 			});
 
 		} catch (error) {
@@ -203,7 +197,6 @@ function processResult(result) {
 				lastName: student[2],
 				email: student[3],
 				gpa: student[4],
-				gender: student[5],
 				conflicts: []
 			}
 			conflicts.forEach(function (conflict) {

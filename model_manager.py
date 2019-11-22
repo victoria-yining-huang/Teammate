@@ -31,8 +31,7 @@ def generate_teams(model_input, model_dict):
         num_teams=model_input["num_teams"],
         team_size=model_input["team_size"],
         conflicts=model_input["conflicts"],
-        gpas=model_input["gpas"],
-        genders=model_input["genders"]
+        gpas=model_input["gpas"]
     )
 
     print("!! model finished")

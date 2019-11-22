@@ -8,23 +8,13 @@ from mip import Model, xsum, minimize, BINARY, INTEGER, CONTINUOUS
 # Includes COIN-OR Linear Programming Solver - CLP
 
 
-def run_model(num_students, num_teams, team_size, conflicts, gpas, genders):
+def run_model(num_students, num_teams, team_size, conflicts, gpas):
 
     #### MIP MODEL ####
     n = num_students * num_teams
 
     class_avg = int(round(statistics.mean(gpas), 0))
     gpa_devs = [abs(gpa - class_avg) for gpa in gpas]
-
-    genders_w = [0 for i in range(num_students)]
-    for i, gender in enumerate(genders):
-        if gender.lower() == "w" or gender.lower() == "x":
-            genders_w[i] = 1
-
-    if team_size % 2 != 0:
-        team_size_half = team_size // 2 + 1
-    else:
-        team_size_half = team_size // 2
 
     m = Model()
 
@@ -42,12 +32,8 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas, genders):
     ygpad = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
     zgpa = m.add_var(var_type=INTEGER)
 
-    # Gender constraint decision variables
-    xwid = [m.add_var(var_type=BINARY) for i in range(num_teams)]
-
     # Objective function
-    m.objective = minimize(100*z + 10000*xsum(xs) +
-                           xsum(ygpa) + zgpa + 10*xsum(xwid))
+    m.objective = minimize(100*z + 10000*xsum(xs) + xsum(ygpa) + zgpa)
 
     # Constraint: student can only be selected once
     for i in range(num_students):
@@ -86,20 +72,6 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas, genders):
     # Constraint: select largest deviation from team size
     for j in range(num_teams):
         m += z >= y[j]
-
-    # Constraint: if less than half women, punish
-    for j in range(num_teams):
-        m += team_size_half - xsum(genders_w[i] * x[j + i*num_teams]
-                                   for i in range(num_students)) <= 100 * xwid[j]
-
-    # xij
-    # yj if going to be all males
-    # yj if team is going to be all males
-    # cannot isolate x in group of m, cannot count as w on team (x can be minority of women team)
-    # if not man, then marginalized
-
-    # sum(marginalized) - if(all men) <= 0 for each team
-    # sum(marginalized) + if(all men) >= allman size / 2
 
     # Run the model
     m.optimize()
