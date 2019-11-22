@@ -1,14 +1,14 @@
 import multiprocessing as mp
 from time import sleep
+import requests
 import random
 import string
 from model import run_model
+from flask import Response, jsonify
 
 manager = mp.Manager()
 model_dict = manager.dict()
 process = mp.Process()
-is_running = False
-key = None
 
 
 def generate_key(length):
@@ -17,13 +17,9 @@ def generate_key(length):
 
 
 def init():
-    global is_running
-    global key
     global model_dict
-
-    is_running = False
-    key = None
     model_dict = manager.dict()
+    model_dict["key"] = None
 
 
 def generate_teams(model_input, model_dict):
@@ -51,15 +47,13 @@ def generate_teams(model_input, model_dict):
 
 def start_model(content):
     global process
-    global is_running
-    global key
+    global model_dict
 
     try:
         # if model is inactive
-        if not is_running:
+        if not process.is_alive():
             # generate unique key for session
             key = generate_key(30)
-            is_running = True
 
             # create model process
             process = mp.Process(target=generate_teams,
@@ -70,86 +64,62 @@ def start_model(content):
         # if model is active
         else:
             # return failed message
-            return({
-                "Status": "failed",
-                "Message": "Model is already running",
-                "METHOD": "POST"
-            })
+            return jsonify({
+                'Message': 'The model is already running'
+            }), 503
     except Exception as e:
         # an error occured starting the model, return failed
         init()
-        return({
-            "Status": "failed",
-            "Message": e,
-            "METHOD": "POST"
-        })
+        return jsonify({
+            'Message': 'An error occured when starting the model. Error: \n{}'.format(e)
+        }), 500
 
     # the model started properly, return success and session key
-    return({
-        "Status": "success",
-        "Message": "The model was started.",
-        "Key": key
-    })
+    model_dict["key"] = key
+    return jsonify({
+        'Message': 'The model was started.',
+        'Key': key
+    }), 200
 
 
 def get_model_status(req_key):
-    global is_running
 
     if process.is_alive():
-        if req_key == key:
-            if not process.is_alive():
-                is_running = False
-            return({
-                "Status": "success",
-                "Body": {
-                    "ModelIsFinished": False
-                }
-            })
+        if model_dict["key"] == req_key:
+            return jsonify({
+                'Message': 'The model is still running',
+                'ModelIsFinished': False
+            }), 200
         else:
-            return({
-                "Status": "failed",
-                "Message": "Invalid key. The model was not started from your session.",
-                "METHOD": "POST"
-            })
+            return jsonify({
+                'Message': 'Invalid key. The model was not started from your session.',
+            }), 403
     else:
-        if req_key == key:
-            if model_dict["status"] == "finished":
+        if model_dict["key"]:
+            if model_dict["key"] == req_key:
                 result = model_dict["result"]
                 init()
-                return({
-                    "Status": "success",
-                    "Body": {
-                        "ModelIsFinished": True,
-                        "Result": result
-                    }
-                })
+                return jsonify({
+                    'Message': 'The model is finished.',
+                    "ModelIsFinished": True,
+                    "Result": result
+                }), 200
             else:
-                return({
-                    "Status": "failed",
-                    "Message": "Unknown model state.",
-                    "METHOD": "POST"
-                })
+                return jsonify({
+                    'Message': 'Invalid key. The model was not started from your session.',
+                }), 403
         else:
-            if key is None:
-                return({
-                    "Status": "failed",
-                    "Message": "No active model or available model result.",
-                    "METHOD": "POST"
-                })
-            else:
-                return({
-                    "Status": "failed",
-                    "Message": "Invalid key. The model was not started from your session.",
-                    "METHOD": "POST"
-                })
+            return jsonify({
+                'Message': 'No active model or available model result.',
+            }), 404
 
 
 def ping_model():
-    return({
-        "process": process.is_alive(),
-        "is_running": is_running,
-        "key": key
-    })
+    return Response(
+        response={
+            "Message": "Test",
+        },
+        status=201)
 
 # start_model({"test": [1, 2, 3]})
 # key2 = "key"

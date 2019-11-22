@@ -21,7 +21,7 @@ def start():
     content = request.get_json()
     print(content)
     result = mm.start_model(content)
-    return(jsonify(result))
+    return(result)
 
 
 @app.route('/status', methods=['POST'])
@@ -29,12 +29,12 @@ def check():
     data = request.get_json()
     key = data["key"]
     result = mm.get_model_status(key)
-    return(jsonify(result))
+    return(result)
 
 
 @app.route('/ping', methods=['GET'])
 def ping():
-    return(jsonify(mm.ping_model()))
+    return(mm.ping_model())
 
 
 @app.route('/stop-model', methods=['POST'])
