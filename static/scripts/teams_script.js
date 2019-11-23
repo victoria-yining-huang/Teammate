@@ -335,10 +335,10 @@ function exportData() {
       var person = data["people"][member]
       console.log(member.concat(", ", person["firstName"], " ", person["lastName"]));
 
-      //the necessary 
-      teamString = teamString + person["id"] + "\t" + person["firstName"] + " " + person["lastName"] + "\t"+ person["email"]+ "\t"+ person["gpa"] +"\t"  + i + "\n";
+      //the columns printed
+      teamString = teamString + person["id"] + "\t" + person["firstName"] + "\t" + person["lastName"] + "\t"+ person["email"]+ "\t"+ person["gpa"] +"\t"  + i + "\n";
     }
-    teamString = teamString + "\n"
+    //teamString = teamString + "\n"
   }
 
   console.log(teamString)
@@ -350,7 +350,7 @@ function exportData() {
 function downloadTeams() {
   // //export teams to file when export button is clicked - group 5's way
 
-  download("teams.txt", exportData())
+  download("teams.csv", exportData())
 
   window.location.href = "export.html";
 
