@@ -4,11 +4,6 @@ var data;
 var clickedID;
 var teamNum;
 
-// $.getJSON("data/output.json", function (json) {
-//   sessionStorage.setItem("data", JSON.stringify(json));
-//   getContent();
-// });
-
 // Get the size of an object
 Object.size = function (obj) {
   var size = 0, key;
@@ -19,9 +14,18 @@ Object.size = function (obj) {
 };
 
 window.onload = function () {
-  data = JSON.parse(sessionStorage.getItem('output'));
-  this.sessionStorage.setItem("data", JSON.stringify(data))
-  this.getContent()
+  // data = JSON.parse(sessionStorage.getItem('output'));
+  // this.sessionStorage.setItem("data", JSON.stringify(data))
+
+  $.ajax({
+    url: "/get-sample-output",
+    type: "get",
+    success: function (resp) {
+      sessionStorage.setItem("data", JSON.stringify(resp));
+      getContent();
+    }
+  });
+  //this.getContent()
 }
 
 function getContent() {
@@ -315,11 +319,15 @@ function exportData() {
 
   var teamString = ""
 
+  //add row headings
+      
+    
+
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
 
     var team = data["teams"][i];
 
-    teamString = teamString + "Team " + i + "\n";
+    //teamString = teamString + "Team " + i + "\n";
 
     console.log("Team ".concat(i));
 
@@ -327,7 +335,8 @@ function exportData() {
       var person = data["people"][member]
       console.log(member.concat(", ", person["firstName"], " ", person["lastName"]));
 
-      teamString = teamString + person["id"] + "\t" + person["firstName"] + " " + person["lastName"] + "\n";
+      //the necessary 
+      teamString = teamString + person["id"] + "\t" + person["firstName"] + " " + person["lastName"] + "\t"+ person["email"]+ "\t"+ person["gpa"] +"\t"  + i + "\n";
     }
     teamString = teamString + "\n"
   }
@@ -352,7 +361,7 @@ function downloadTeams() {
 
 function download(filename, text) {
   var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(text));
   element.setAttribute('download', filename);
 
   element.style.display = 'none';

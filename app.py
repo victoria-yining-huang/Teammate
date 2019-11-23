@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from time import sleep
 import multiprocessing as mp
 import model_manager as mm
+import json
 app = Flask(__name__)
 
 
@@ -40,6 +41,13 @@ def ping():
 @app.route('/stop-model', methods=['POST'])
 def stop():
     print("stop!")
+
+
+@app.route('/get-sample-output', methods=["GET"])
+def get_sample_output():
+    with open('data/output.json') as json_file:
+        data = json.load(json_file)
+        return(jsonify(data))
 
 
 if __name__ == '__main__':
