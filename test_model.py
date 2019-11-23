@@ -4,7 +4,7 @@ import numpy as np
 import os
 import datetime
 import math
-from model import generateTeams
+from model import run_model
 
 
 def getTestReport(output, data_ids, data_conflicts, num_teams, team_size, test_name):
@@ -26,23 +26,11 @@ def getTestReport(output, data_ids, data_conflicts, num_teams, team_size, test_n
     bottom_tier = sorted_gpas[0:num_teams]
     top_tier = sorted_gpas[(num_students-num_teams):]
 
-    num_m = [row[5] for row in data_ids].count("m")
-    num_w = [row[5] for row in data_ids].count("w")
-    num_x = [row[5] for row in data_ids].count("x")
-
     f.write("\n### {} ###\n".format(test_name))
 
     f.write("\n## INPUT ##\n")
 
     f.write("Number of students: {}\n".format(num_students))
-    f.write("Genders: {}% men ({}), {}% women ({}), {}% other ({})\n".format(
-        round(num_m/num_students*100, 1),
-        num_m,
-        round(num_w/num_students*100, 1),
-        num_w,
-        round(num_x/num_students*100, 1),
-        num_x,
-    ))
 
     f.write("Average gpa: {}\n".format(class_avg))
     f.write("Bottom tier gpas: {}\n".format(bottom_tier))
@@ -120,30 +108,65 @@ def getTestReport(output, data_ids, data_conflicts, num_teams, team_size, test_n
         f.write("{}\t{}\t{}\t\t{}\t\t{}\t\t{}\n".format(
             i + 1, "%.1f" % round(statistics.mean(gpas_team)), "%.1f" % round(statistics.stdev(gpas_team)), b, t, sorted(gpas_team)))
 
-    # Validate team genders
-    f.write("\nteam \t% men \t% women % other genders\n")
-    for i in range(len(output["teams"])):
-        genders = []
-        gender_counts = {"m": 0, "w": 0, "x": 0}
-        members = output["teams"][i + 1]["members"]
-        size = len(members)
-        for member in members:
-            gender = output["people"][member]["gender"]
-            genders.append(gender)
-            gender_counts[gender] = gender_counts[gender] + 1
-        m = int(round(gender_counts["m"]/size, 2)*100)
-        w = int(round(gender_counts["w"]/size, 2)*100)
-        x = int(round(gender_counts["x"]/size, 2)*100)
-        f.write("{}\t{}\t{}\t{}\t{}\n".format(
-            i + 1, m, w, x, sorted(genders)))
-
 
 def runTest(data_ids, data_conflicts, team_size, test_name="Test"):
 
+    # Calculate number of students and teams
     num_students = len(data_ids)
     num_teams = num_students//team_size + min(1, num_students % team_size)
-    output = generateTeams(data_ids, data_conflicts,
-                           num_teams, team_size, num_students)
+
+    # Deduplicate conflicts
+    conflicts = []
+    ids = [row[0] for row in data_ids]
+    for i in range(len(data_conflicts)):
+        conflict = [ids.index(data_conflicts[i][0]),
+                    ids.index(data_conflicts[i][3])]
+        inverse_conflict = [ids.index(data_conflicts[i][3]),
+                            ids.index(data_conflicts[i][0])]
+        if inverse_conflict not in conflicts:
+            conflicts.append(conflict)
+
+    # Get gpa vector
+    gpas = [int(round(float(row[4]))) for row in data_ids]
+
+    # Run model
+    raw_output = run_model(num_students, num_teams,
+                           team_size, conflicts, gpas)
+
+    output = {
+        "model": {
+            "hasConflicts": raw_output["hasConflicts"]
+        }
+    }
+
+    # Create empty teams
+    output['teams'] = {}
+    for team in range(num_teams):
+        output['teams'][team + 1] = {
+            'members': []
+        }
+
+    # Fill teams with assignments
+    for i, a in enumerate(raw_output["assignments"]):
+        output['teams'][a + 1]["members"].append(data_ids[i][0])
+
+    # Create people
+    output['people'] = {}
+    for i in range(len(data_ids)):
+        output['people'][data_ids[i][0]] = {
+            'id': data_ids[i][0],
+            'firstName': data_ids[i][1],
+            'lastName': data_ids[i][2],
+            'email': data_ids[i][3],
+            'gpa': round(float(data_ids[i][4])),
+            'conflicts': []
+        }
+        for j in range(len(data_conflicts)):
+            if data_conflicts[j][0] == data_ids[i][0]:
+                output['people'][data_ids[i][0]]['conflicts'].append(
+                    data_conflicts[j][3])
+
+    # Create test report file
     getTestReport(output, data_ids, data_conflicts,
                   num_teams, team_size, test_name)
 
@@ -153,14 +176,10 @@ class AverageClass(unittest.TestCase):
         num_students = 60
         gpa_avg = 75
         gpa_stdev = 10
-        prob_m = 0.475
-        prob_w = 0.475
-        prob_x = 0.05
         num_conflicts = 0
         team_size = 6
 
-        data_ids = buildDataIds(num_students, gpa_avg,
-                                gpa_stdev, prob_m, prob_w, prob_x).tolist()
+        data_ids = buildDataIds(num_students, gpa_avg, gpa_stdev).tolist()
 
         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
 
@@ -168,107 +187,7 @@ class AverageClass(unittest.TestCase):
                 test_name="Average Class, no Conflicts")
 
 
-# class AverageClassWithConflicts(unittest.TestCase):
-#     def test(self):
-#         num_students = 75
-#         gpa_avg = 75
-#         gpa_stdev = 10
-#         prob_m = 0.475
-#         prob_w = 0.475
-#         prob_x = 0.05
-#         num_conflicts = 15
-#         team_size = 7
-
-#         data_ids = buildDataIds(num_students, gpa_avg,
-#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-#         runTest(data_ids, data_conflicts, team_size,
-#                 test_name="Average Class, several Conflicts")
-
-
-# class MaleClass(unittest.TestCase):
-#     def test(self):
-#         num_students = 75
-#         gpa_avg = 75
-#         gpa_stdev = 10
-#         prob_m = 0.8
-#         prob_w = 0.175
-#         prob_x = 0.025
-#         num_conflicts = 15
-#         team_size = 10
-
-#         data_ids = buildDataIds(num_students, gpa_avg,
-#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-#         runTest(data_ids, data_conflicts, team_size,
-#                 test_name="Mostly Male Class, several Conflicts")
-
-
-# class FemaleClass(unittest.TestCase):
-#     def test(self):
-#         num_students = 75
-#         gpa_avg = 75
-#         gpa_stdev = 10
-#         prob_m = 0.175
-#         prob_w = 0.8
-#         prob_x = 0.025
-#         num_conflicts = 15
-#         team_size = 10
-
-#         data_ids = buildDataIds(num_students, gpa_avg,
-#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-#         runTest(data_ids, data_conflicts, team_size,
-#                 test_name="Mostly Female Class, several Conflicts")
-
-
-# class LargeTeams(unittest.TestCase):
-#     def test(self):
-#         num_students = 75
-#         gpa_avg = 75
-#         gpa_stdev = 10
-#         prob_m = 0.475
-#         prob_w = 0.475
-#         prob_x = 0.05
-#         num_conflicts = 0
-#         team_size = 20
-
-#         data_ids = buildDataIds(num_students, gpa_avg,
-#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-#         runTest(data_ids, data_conflicts, team_size,
-#                 test_name="Large Teams")
-
-
-# class LargeTeamsWithConflicts(unittest.TestCase):
-#     def test(self):
-#         num_students = 75
-#         gpa_avg = 75
-#         gpa_stdev = 10
-#         prob_m = 0.475
-#         prob_w = 0.475
-#         prob_x = 0.05
-#         num_conflicts = 300
-#         team_size = 20
-
-#         data_ids = buildDataIds(num_students, gpa_avg,
-#                                 gpa_stdev, prob_m, prob_w, prob_x).tolist()
-
-#         data_conflicts = buildDataConflicts(data_ids, num_conflicts)
-
-#         runTest(data_ids, data_conflicts, team_size,
-#                 test_name="Large Teams with Many Conflicts")
-
-
-def buildDataIds(num_students, gpa_avg, gpa_stdev, prob_m, prob_w, prob_x):
+def buildDataIds(num_students, gpa_avg, gpa_stdev):
 
     first_names = np.random.choice(
         ["a", "b", "c", "d", "e", "f", "g"], size=num_students)
@@ -280,13 +199,11 @@ def buildDataIds(num_students, gpa_avg, gpa_stdev, prob_m, prob_w, prob_x):
 
     emails = ["email" for i in range(1, num_students + 1)]
 
-    genders = np.random.choice(
-        ["m", "w", "x"], size=num_students, p=[prob_m, prob_w, prob_x])
     gpas = np.around(np.random.normal(
         gpa_avg, gpa_stdev, size=num_students), 1)
 
     return(np.column_stack((ids, first_names, last_names,
-                            emails, gpas, genders)))
+                            emails, gpas)))
 
 
 def buildDataConflicts(data_ids, num_conflicts):
@@ -312,7 +229,7 @@ def buildDataConflicts(data_ids, num_conflicts):
 
 if __name__ == '__main__':
 
-    f = open("/Users/irkemp/Google Drive/Waterloo/TERM 3B/MSCI 342/Project/Repository/2019-project-team08/python/tests/log.txt", "w+")
+    f = open("/Users/irkemp/Google Drive/Waterloo/TERM 3B/MSCI 342/Project/Repository/2019-project-team08/log.txt", "w+")
 
     f.write("teammate Model Tests\n")
     f.write("Date: {}\n\n".format(

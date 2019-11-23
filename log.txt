@@ -1,0 +1,121 @@
+teammate Model Tests
+Date: 2019-11-23 14:01:39.451871
+
+
+### Average Class, no Conflicts ###
+
+## INPUT ##
+Number of students: 60
+Average gpa: 74
+Bottom tier gpas: [58, 59, 60, 60, 60, 61, 62, 62, 62, 62]
+Top tier gpas: [81, 83, 85, 86, 86, 86, 90, 90, 92, 94]
+Tier 1: [58, 59, 60, 60, 60, 61, 62, 62, 62, 62]
+Tier 2: [62, 63, 64, 65, 66, 66, 67, 68, 68, 68]
+Tier 3: [70, 70, 70, 70, 70, 71, 74, 74, 74, 74]
+Tier 4: [74, 75, 76, 76, 76, 77, 77, 77, 78, 78]
+Tier 5: [78, 78, 79, 79, 80, 80, 81, 81, 81, 81]
+Tier 6: [81, 83, 85, 86, 86, 86, 90, 90, 92, 94]
+Input team size: 6
+Expected number of teams: 10
+Expected team sizes: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
+Input number of conflicts: 0
+
+## OUTPUT ##
+
+Teams contain conflicts: False
+
+team 	size 	conflicts 	members
+1	6	0		['id1', 'id9', 'id24', 'id28', 'id45', 'id60']
+2	6	0		['id2', 'id11', 'id22', 'id38', 'id42', 'id51']
+3	6	0		['id14', 'id29', 'id37', 'id46', 'id47', 'id50']
+4	6	0		['id13', 'id15', 'id31', 'id32', 'id34', 'id36']
+5	6	0		['id7', 'id12', 'id25', 'id26', 'id33', 'id59']
+6	6	0		['id3', 'id6', 'id17', 'id35', 'id39', 'id40']
+7	6	0		['id23', 'id30', 'id49', 'id52', 'id57', 'id58']
+8	6	0		['id10', 'id18', 'id21', 'id43', 'id48', 'id53']
+9	6	0		['id5', 'id8', 'id20', 'id44', 'id54', 'id56']
+10	6	0		['id4', 'id16', 'id19', 'id27', 'id41', 'id55']
+Number of teams and team sizes are correct.
+No conflicts within teams.
+
+team 	avg gpa total dev 	bottom tier 	top tier 	gpas
+Team 1 GPA Tiers
+Contains tier 1
+Contains tier 2
+Contains tier 3
+Contains tier 4
+Missing tier 5
+Contains tier 6
+1	73.0	11.0		True		True		[62, 66, 68, 74, 74, 94]
+Team 2 GPA Tiers
+Contains tier 1
+Contains tier 2
+Missing tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+2	74.0	9.0		True		True		[62, 63, 78, 78, 80, 81]
+Team 3 GPA Tiers
+Contains tier 1
+Contains tier 2
+Contains tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+3	74.0	11.0		True		True		[60, 65, 74, 74, 81, 90]
+Team 4 GPA Tiers
+Contains tier 1
+Contains tier 2
+Contains tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+4	74.0	11.0		True		True		[60, 68, 71, 74, 79, 92]
+Team 5 GPA Tiers
+Contains tier 1
+Contains tier 2
+Missing tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+5	73.0	10.0		True		True		[60, 62, 75, 76, 79, 86]
+Team 6 GPA Tiers
+Missing tier 1
+Contains tier 2
+Missing tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+6	74.0	9.0		True		True		[64, 67, 68, 77, 81, 86]
+Team 7 GPA Tiers
+Contains tier 1
+Contains tier 2
+Missing tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+7	73.0	10.0		True		True		[61, 62, 76, 78, 78, 85]
+Team 8 GPA Tiers
+Contains tier 1
+Contains tier 2
+Contains tier 3
+Contains tier 4
+Contains tier 5
+Contains tier 6
+8	74.0	9.0		True		True		[62, 66, 70, 76, 81, 86]
+Team 9 GPA Tiers
+Contains tier 1
+Missing tier 2
+Contains tier 3
+Missing tier 4
+Contains tier 5
+Contains tier 6
+9	74.0	9.0		True		True		[59, 70, 70, 80, 81, 83]
+Team 10 GPA Tiers
+Contains tier 1
+Missing tier 2
+Contains tier 3
+Contains tier 4
+Missing tier 5
+Contains tier 6
+10	74.0	11.0		True		True		[58, 70, 70, 77, 77, 90]
