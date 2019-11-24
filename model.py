@@ -8,7 +8,7 @@ from mip import Model, xsum, minimize, BINARY, INTEGER, CONTINUOUS
 # Includes COIN-OR Linear Programming Solver - CLP
 
 
-def run_model(num_students, num_teams, team_size, conflicts, gpas):
+def run_model(num_students, num_teams, team_size, conflicts, gpas,ifgpa=True):
 
     #### MIP MODEL ####
     n = num_students * num_teams
@@ -55,19 +55,20 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas):
         m += xsum(x[i + j*num_teams]
                   for j in range(num_students)) + y[i] == team_size
 
+    if(ifgpa==True):
     # Constraint: balance total team gpa to class average
-    for i in range(num_teams):
-        m += xsum((gpas[j] - class_avg) * x[i + j*num_teams]
-                  for j in range(num_students)) + ygpa[i] - ygpa[i + num_teams] == 0
+        for i in range(num_teams):
+            m += xsum((gpas[j] - class_avg) * x[i + j*num_teams]
+                      for j in range(num_students)) + ygpa[i] - ygpa[i + num_teams] == 0
 
-    # Constraint: minimize individual deviation from class average
-    for j in range(num_teams):
-        m += xsum(gpa_devs[i] * x[j + i*num_teams]
-                  for i in range(num_students)) == ygpad[j]
+        # Constraint: minimize individual deviation from class average
+        for j in range(num_teams):
+            m += xsum(gpa_devs[i] * x[j + i*num_teams]
+                      for i in range(num_students)) == ygpad[j]
 
-    # Constraint: select largest deviation from average gpa
-    for j in range(num_teams):
-        m += zgpa >= ygpad[j]
+        # Constraint: select largest deviation from average gpa
+        for j in range(num_teams):
+            m += zgpa >= ygpad[j]
 
     # Constraint: select largest deviation from team size
     for j in range(num_teams):
