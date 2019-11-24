@@ -44,7 +44,7 @@ function generateTeams() {
   sessionStorage.setItem('students', JSON.stringify(student_data))
   sessionStorage.setItem('conflicts', JSON.stringify(conflict_data))
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
-
+  sessionStorage.setItem('ifgpa', document.getElementById("ifgpa").value)
   window.location.href = "/app/model.html";
 }
 
