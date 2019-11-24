@@ -14,10 +14,14 @@ Object.size = function (obj) {
 };
 
 window.onload = function () {
+
+  //sets the JSON object to a data hashmap
+
    data = JSON.parse(sessionStorage.getItem('output'));
    this.sessionStorage.setItem("data", JSON.stringify(data))
    this.getContent()
 
+  //removed the workaround for server errors
   //  $.ajax({
   //    url: "/get-sample-output",
   //    type: "get",
