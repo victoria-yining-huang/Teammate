@@ -327,8 +327,7 @@ function exportData() {
 
     var team = data["teams"][i];
 
-    if(i=1){
-
+    if(i==1){
       teamString = "user_id" + "," + "First Name"+ "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
     }
     
