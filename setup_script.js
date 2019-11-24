@@ -41,6 +41,7 @@ function generateTeams() {
   sessionStorage.setItem('conflicts', convertArrayToJSON(conflict_data))
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
   sessionStorage.setItem('ifgpa', document.getElementById("ifgpa").value)
+  //check ifgpa exists in the session storage
 
   window.location.href = "generate_teams.html";
 }
