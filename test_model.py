@@ -175,7 +175,7 @@ class AverageClass(unittest.TestCase):
     def test(self):
         num_students = 60
         gpa_avg = 75
-        gpa_stdev = 10
+        gpa_stdev = 7
         num_conflicts = 0
         team_size = 6
 
