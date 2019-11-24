@@ -196,7 +196,7 @@ function processResult(result) {
 				firstName: student[1],
 				lastName: student[2],
 				email: student[3],
-				gpa: parseInt(student[4]),
+				gpa: parseInt(student[4]), //fixes the formatting error
 				conflicts: []
 			}
 			conflicts.forEach(function (conflict) {

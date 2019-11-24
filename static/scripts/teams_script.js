@@ -319,8 +319,6 @@ function exportData() {
 
   var teamString = ""
 
-  //add row headings
-
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
 
     var team = data["teams"][i];
@@ -333,11 +331,10 @@ function exportData() {
     for (const member of team["members"]) {
       var person = data["people"][member]
       
-
       //the columns printed
-
       teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + ","+ person["email"]+ ","+ person["gpa"] +","  + i +"\n";
     }
+
     //teamString = teamString + "\n"
   }
 
@@ -351,9 +348,6 @@ function downloadTeams() {
   download("teams.csv", exportData())
 
   window.location.href = "export.html";
-
-  //<a href="data:application/octet-stream;charset=utf-16le;base64,//5mAG8AbwAgAGIAYQByAAoA">text file</a>
-
 
 }
 
