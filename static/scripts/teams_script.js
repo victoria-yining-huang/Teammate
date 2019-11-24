@@ -4,11 +4,6 @@ var data;
 var clickedID;
 var teamNum;
 
-// $.getJSON("data/output.json", function (json) {
-//   sessionStorage.setItem("data", JSON.stringify(json));
-//   getContent();
-// });
-
 // Get the size of an object
 Object.size = function (obj) {
   var size = 0, key;
@@ -19,9 +14,19 @@ Object.size = function (obj) {
 };
 
 window.onload = function () {
-  data = JSON.parse(sessionStorage.getItem('output'));
-  this.sessionStorage.setItem("data", JSON.stringify(data))
-  this.getContent()
+   data = JSON.parse(sessionStorage.getItem('output'));
+   this.sessionStorage.setItem("data", JSON.stringify(data))
+   this.getContent()
+
+  //  $.ajax({
+  //    url: "/get-sample-output",
+  //    type: "get",
+  //    success: function (resp) {
+  //      sessionStorage.setItem("data", JSON.stringify(resp));
+  //      getContent();
+  //   }
+  // });
+  
 }
 
 function getContent() {
@@ -311,29 +316,31 @@ function populate(team) {
 function exportData() {
 
   var data = JSON.parse(sessionStorage.getItem("data"));
-  console.log(data);
 
   var teamString = ""
+
+  //add row headings
 
   for (var i = 1; i <= Object.keys(data["teams"]).length; i++) {
 
     var team = data["teams"][i];
 
-    teamString = teamString + "Team " + i + "\n";
-
-    console.log("Team ".concat(i));
-
+    //adds column headings for the exported file
+    if(i==1){
+      teamString = "user_id" + "," + "First Name"+ "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
+    }
+    
     for (const member of team["members"]) {
       var person = data["people"][member]
-      console.log(member.concat(", ", person["firstName"], " ", person["lastName"]));
+      
 
-      teamString = teamString + person["id"] + "\t" + person["firstName"] + " " + person["lastName"] + "\n";
+      //the columns printed
+
+      teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + ","+ person["email"]+ ","+ person["gpa"] +","  + i +"\n";
     }
-    teamString = teamString + "\n"
+    //teamString = teamString + "\n"
   }
 
-  console.log(teamString)
-  console.log("works")
   return teamString;
 
 }
@@ -341,7 +348,7 @@ function exportData() {
 function downloadTeams() {
   // //export teams to file when export button is clicked - group 5's way
 
-  download("teams.txt", exportData())
+  download("teams.csv", exportData())
 
   window.location.href = "export.html";
 
@@ -352,7 +359,7 @@ function downloadTeams() {
 
 function download(filename, text) {
   var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(text));
   element.setAttribute('download', filename);
 
   element.style.display = 'none';
