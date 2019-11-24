@@ -32,7 +32,7 @@ def generate_teams(model_input, model_dict):
         team_size=model_input["team_size"],
         conflicts=model_input["conflicts"],
         gpas=model_input["gpas"],
-        ifgpa=model_input["ifgpa"]
+        ifgpa=model_input["ifgpa"]=="true"
     )
 
     print("!! model finished")
