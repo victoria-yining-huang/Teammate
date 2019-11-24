@@ -99,6 +99,7 @@ a:hover {
             </button>
           </div>
         </div>
+
         <div id="tab-2" class="hidden">
           <div>    
             <div class="w3-container tab-header w3-center">
@@ -142,7 +143,42 @@ a:hover {
             </button>
           </div>
         </div>
+      
         <div id="tab-3" class="hidden">
+          <div>    
+            <div class="w3-container tab-header w3-center">
+            <h3>GPA Constraint</h3>
+            </div>
+            <div class="w3-container tab-content">
+              <div id="left">     
+              <h5>If you want to distribute students based on their GPA, click on the checkbox below. If not, then only the conflicts will be taken into account<br> 
+              <input type="checkbox" id="ifgpa" checked>GPA</h5>
+              </div>
+            </div>
+             <div id= "right">
+            <h3>Instructions</h3>
+
+            <ol><h5>Selecting the GPA constraint will attempt to distribute students of low, high GPAs unifromly in each team. The GPA constraint has three parts:
+              <li>Average Constraint: Creates a team average and tries to get the team average as close as to the class average </li>
+              <li> Sum of deviation: Makes sure that each team has a similar sum of deviation from the team average.  </li>
+              <li> Top and bottom students: Makes sure there is a very strong student and a very weak student on each team.  </li>
+           </h5>
+           </ol>
+          </div>
+          </div>
+          </div>
+
+          <div class="w3-container w3-blue tab-footer page-footer">
+            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-3', 'tab-2')">
+              Previous Step
+            </button>
+            <button id = "size-nextstep" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-3', 'tab-4')">
+              Next Step
+            </button>
+          </div>
+        </div>
+   
+        <div id="tab-4" class="hidden">
           <div class="w3-container tab-header w3-center">
             <h3>Upload Student Conflicts</h3>
           </div>
@@ -160,12 +196,7 @@ a:hover {
             <h5>See a sample table for the student conflict file.</h5>
             <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b><h4>
               Download Sample File</h4></b>
-            </a>
-
-              <div>
-            <h5>If you want to distribute students based on their GPA, click on the checbox below. If not, then only the conflicts will be taken into account<br> 
-            <input type="checkbox" id="ifgpa" checked>GPA</h5>
-          </div>
+            </a>   
           </div>
 
 
@@ -182,7 +213,7 @@ a:hover {
 
         </div>
           <div class="w3-container w3-blue tab-footer page-footer">
-            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-3', 'tab-2')">
+            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-4', 'tab-3')">
               Previous Step
             </button>
             <button id="generate" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="generateTeams()">
