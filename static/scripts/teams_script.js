@@ -14,18 +14,18 @@ Object.size = function (obj) {
 };
 
 window.onload = function () {
-  // data = JSON.parse(sessionStorage.getItem('output'));
-  // this.sessionStorage.setItem("data", JSON.stringify(data))
+   data = JSON.parse(sessionStorage.getItem('output'));
+   this.sessionStorage.setItem("data", JSON.stringify(data))
 
-  $.ajax({
-    url: "/get-sample-output",
-    type: "get",
-    success: function (resp) {
-      sessionStorage.setItem("data", JSON.stringify(resp));
-      getContent();
-    }
-  });
-  //this.getContent()
+  // $.ajax({
+  //   url: "/get-sample-output",
+  //   type: "get",
+  //   success: function (resp) {
+  //     sessionStorage.setItem("data", JSON.stringify(resp));
+  //     getContent();
+  //  }
+  //});
+  this.getContent()
 }
 
 function getContent() {
