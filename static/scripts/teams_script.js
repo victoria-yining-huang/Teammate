@@ -327,7 +327,11 @@ function exportData() {
 
     var team = data["teams"][i];
 
-    //teamString = teamString + "Team " + i + "\n";
+    if(i=1){
+
+      teamString = "user_id" + "," + "First Name"+ "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
+    }
+    
 
     console.log("Team ".concat(i));
 
@@ -336,7 +340,8 @@ function exportData() {
       console.log(member.concat(", ", person["firstName"], " ", person["lastName"]));
 
       //the columns printed
-      teamString = teamString + person["id"] + "\t" + person["firstName"] + "\t" + person["lastName"] + "\t"+ person["email"]+ "\t"+ person["gpa"] +"\t"  + i + "\n";
+    
+      teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + ","+ person["email"]+ ","+ person["gpa"] +","  + i + "\n";
     }
     //teamString = teamString + "\n"
   }
