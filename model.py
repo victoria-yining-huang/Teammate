@@ -29,9 +29,14 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas):
     z = m.add_var(var_type=INTEGER)  # Sum of team size slack vars
 
     # GPA constraint decision variables
+    topgpa = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
+    botgpa = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
     ygpad = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
+    tdifgpa = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
+    bdifgpa = [m.add_var(var_type=INTEGER) for i in range(num_teams)]
     zgpa = m.add_var(var_type=INTEGER)
-
+    tzdifgpa = m.add_var(var_type=INTEGER)
+    bzdifgpa = m.add_var(var_type=INTEGER)
     # Objective function
     m.objective = minimize(100*z + 10000*xsum(xs) + xsum(ygpa) + zgpa)
 
@@ -72,10 +77,27 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas):
     # Constraint: select largest deviation from team size
     for j in range(num_teams):
         m += z >= y[j]
+    
+    # Constraint: Select the largest different between gpas on each team
+
+    for j in range(num_teams):
+        m += (gpas[i] * x[j + i*num_teams] for i in range(num_students)) >= topgpa[j]
+  
+    # Find the lowest gpa on each team
+    for j in range(num_teams):
+        m +=(gpas[i] * x[j + i*num_teams] for i in range(num_students)) <= botgpa[j]
+    # Find the difference between gpas on each team
+    for j in range(num_teams):
+        m += tdifgpa[j] ==  topgpa[j] - class_avg
+        m += bdifgpa[j] ==  class_avg - botgpa[j]
+    
+    # Select largest difference
+    for j in range(num_teams):
+        m += tzdifgpa <= tdifgpa[j]
+        m += bzdifgpa <= bdifgpa[j]
 
     # Run the model
-    m.optimize()
-
+    m.optimize(max_seconds=60)
     d_vars = {"students": x, "conflicts": xs}
 
     results = parse_results(d_vars=d_vars,
