@@ -161,7 +161,7 @@ function createTeam(team_num, team) {
   table_members.setAttribute("class", "w3-table w3-bordered team-table");
   var header = document.createElement("tr");
 
-  for (const header_text of ["ID", "Name", "GPA", "Gender", "Conflicts", "Move"]) {
+  for (const header_text of ["ID", "Name", "GPA", "Conflicts", "Move"]) {
     var header_cell = document.createElement("th");
     header_cell.innerHTML = header_text;
     header.appendChild(header_cell);
@@ -175,7 +175,7 @@ function createTeam(team_num, team) {
     memberRow.setAttribute("id", "row-" + member);
     const member_data = data["people"][member]
 
-    for (const memberCellIndex of ["id", "fullName", "gpa", "gender", "conflicts", ""]) {
+    for (const memberCellIndex of ["id", "fullName", "gpa", "conflicts", ""]) {
       //create cell for each header and populate each 
       var memberCell = document.createElement("td");
 
