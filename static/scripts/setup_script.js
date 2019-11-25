@@ -120,13 +120,13 @@ function readConflicts() {
       conflict_data = parsedata;
 
 
-      var expectedHeadersforConflict = "user_id,first_name,last_name,conflict_first_name,conflict_user_id,conflict_last_name";
+      var expectedHeadersforConflict = "user_id,first_name,last_name,conflict_user_id,conflict_first_name,conflict_last_name";
       // error checking for the same header columns as expected
      // var toni = expectedHeadersforConflict == newLinebrk[0].trim();
       //document.getElementById("conflict-file-headers").innerHTML = toni;
 
       if (expectedHeadersforConflict == newLinebrk[0].trim() != true) { // checking the file extention to make sure that it is a CSV
-        document.getElementById("conflict-header-error").innerHTML = "Error: Expecting 'user_id,first_name,last_name,conflict_first_name,conflict_user_id,conflict_last_name' as column headers but received '" + newLinebrk[0] + "'. Please adjust the column headers and try again.";
+        document.getElementById("conflict-header-error").innerHTML = "Error: Expecting 'user_id,first_name,last_name,conflict_user_id,conflict_first_name,conflict_last_name' as column headers but received '" + newLinebrk[0] + "'. Please adjust the column headers and try again.";
         document.getElementById("generate").style.display = 'none';
         document.getElementById("successful").innerHTML = "";
       } else {
