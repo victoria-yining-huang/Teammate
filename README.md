@@ -26,3 +26,5 @@ To setup a development environment, follow these steps:
 4. Using the terminal, open the root folder of the project
 5. Run the command `flask run` to launch Flask on a local port
 6. Open the local host address in a browser to view the deployed application
+
+## Usage Instructions
