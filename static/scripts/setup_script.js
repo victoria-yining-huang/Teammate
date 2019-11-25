@@ -48,7 +48,7 @@ function generateTeams() {
   window.location.href = "/app/model.html";
 }
 
-function parsingStudentData() {
+function parseStudentData() {
   let input = document.getElementById("student_data");
   if (input.files && input.files[0]) {
     var myFile = input.files[0];
@@ -387,38 +387,6 @@ function generateTeams() {
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
 
   window.location.href = "/app/model.html";
-}
-
-function parseStudentData() {
-  let input = document.getElementById("student_data");
-  if (input.files && input.files[0]) {
-    var myFile = input.files[0];
-    var reader = new FileReader();
-    reader.addEventListener("load", function (e) {
-      let csvdata = e.target.result;
-      let parsedata = [];
-      let newLinebrk = csvdata.split("\n");
-      for (let i = 0; i < newLinebrk.length; i++) {
-        parsedata.push(newLinebrk[i].split(","));
-      }
-      parsedata.splice(0, 1);
-      for (var i = 0; i < parsedata.length; i++) {
-        console.log(i)
-        for (var j = 0; j < parsedata[i].length; j++) {
-          parsedata[i][j] = parsedata[i][j].replace(/(['"])/g, "");
-        }
-        if (i == parsedata.length - 1) {
-          if (parsedata[i][0] == "") {
-            console.log("EMPTY ROW")
-            parsedata.splice(i, 1)
-          }
-        }
-      }
-      student_data = parsedata;
-
-    });
-    reader.readAsBinaryString(myFile);
-  }
 }
 
 function getNumStudents(array) {
