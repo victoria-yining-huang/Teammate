@@ -406,6 +406,14 @@ function showIssues() {
 //    console.log("bottom is" + bottom);
 //}
 
+function getFullName(id) {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    var firstName = data['people'][id]["firstName"];
+    var lastName = data['people'][id]["lastName"];
+    var fullName = firstName + " " + lastName;
+    return fullName;
+}
+
 function getConflictIssues(){
 
     // this gets the personal conflicts within each team
@@ -414,12 +422,25 @@ function getConflictIssues(){
       var membersOfTeam = data['teams'][Object.values(team)];
       for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
         student = data['people'][membersOfTeam['members'][j]];
-        console.log("student:" + student["id"])
+
         if (student['conflicts'].length !== 0) {
+        issueFullNameList = [];
           // array intersection between conflicts array and team member array for any given member
           issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
-          console.log(student["id"] +issue);
+          if (issue.length>0) {
+            var firstName = student["firstName"];
+            var lastName = student["lastName"];
+            var fullName = firstName + " " + lastName;
+            for (var k = 0; k < issue.length; k++) {
+            issueFullName = getFullName(issue[k]);
+            issueFullNameList.push(issueFullName);
         }
+        var issueNamesAsString = issueFullNameList.join(', ');
+        console.log(fullName + " " + "has a conflict with " + issueNamesAsString);
+        }
+        }
+
+
       }
     }
 }

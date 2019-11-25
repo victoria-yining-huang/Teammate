@@ -39,7 +39,7 @@
       "email": "kbrown3@uwaterloo.ca",
       "gpa": "95",
       "gender": "f",
-      "conflicts": ["mlee4", "jsmith1", "jdoe2"]
+      "conflicts": ["mlee4", "jsmith1", "jdoe2", "rryan7"]
     },
     "mlee4": {
       "id": "mlee4",
