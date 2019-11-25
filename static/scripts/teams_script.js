@@ -17,20 +17,20 @@ window.onload = function () {
 
   //sets the JSON object to a data hashmap
 
-   data = JSON.parse(sessionStorage.getItem('output'));
-   this.sessionStorage.setItem("data", JSON.stringify(data))
-   this.getContent()
+//   data = JSON.parse(sessionStorage.getItem('output'));
+//   this.sessionStorage.setItem("data", JSON.stringify(data))
+//   this.getContent()
 
   //removed the workaround for server errors
-  //  $.ajax({
-  //    url: "/get-sample-output",
-  //    type: "get",
-  //    success: function (resp) {
-  //      sessionStorage.setItem("data", JSON.stringify(resp));
-  //      getContent();
-  //   }
-  // });
-  
+    $.ajax({
+      url: "/get-sample-output",
+      type: "get",
+      success: function (resp) {
+        sessionStorage.setItem("data", JSON.stringify(resp));
+        getContent();
+     }
+   });
+
 }
 
 function getContent() {
@@ -176,7 +176,7 @@ function createTeam(team_num, team) {
     const member_data = data["people"][member]
 
     for (const memberCellIndex of ["id", "fullName", "gpa", "gender", "conflicts", ""]) {
-      //create cell for each header and populate each 
+      //create cell for each header and populate each
       var memberCell = document.createElement("td");
 
       var firstName = member_data["firstName"];
@@ -331,10 +331,10 @@ function exportData() {
     if(i==1){
       teamString = "user_id" + "," + "First Name"+ "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
     }
-    
+
     for (const member of team["members"]) {
       var person = data["people"][member]
-      
+
       //the columns printed
       teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + ","+ person["email"]+ ","+ person["gpa"] +","  + i +"\n";
     }
@@ -366,4 +366,66 @@ function download(filename, text) {
   element.click();
 
   document.body.removeChild(element);
+}
+
+//----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+//---------------------------------------- these are for the issue box -------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+function showIssues() {
+// this adds elements on the frontend and populates the issue boxes
+
+}
+
+//function getGPATopBottomTiers(){
+//// this finds the people who are in top and bottom tiers of GPA
+//// top/bottom tier: top/bottom n GPAs (including duplicated values), where n = number of teams
+//    var data = JSON.parse(sessionStorage.getItem("data"));
+//    var n = data["teams"].length;
+//    gpa = [];
+////    for (var person in data["people"]) {
+////        console.log(person + );
+////
+//////        temp = [];
+//////        temp.push(Object.keys(person));
+//////        temp.push(Object.values(person)["gpa"]);
+//////        gpa.push(temp);
+//////        temp = [];
+////    }
+//    console.log(gpa);
+//
+//    gpaSorted = gpa.sort(function(a, b)
+//    {
+//        return a[1] - b[1];
+//    });
+//
+//    top = gpaSorted.slice(0, n);
+//    console.log("top is" + top);
+//    bottom = gpaSorted.slice((gpaSorted.length - 5), gpaSorted.length);
+//    console.log("bottom is" + bottom);
+//}
+
+function getConflictIssues(){
+
+    // this gets the personal conflicts within each team
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    for (var team in data['teams']) {
+      var membersOfTeam = data['teams'][Object.values(team)];
+      for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
+        student = data['people'][membersOfTeam['members'][j]];
+        console.log("student:" + student["id"])
+        if (student['conflicts'].length !== 0) {
+          // array intersection between conflicts array and team member array for any given member
+          issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
+          console.log(student["id"] +issue);
+        }
+      }
+    }
+}
+
+function getGPAIssues(){
+// a GPA issue occurs if the team is missing either a bottom or a top tier or both
+
+
 }
