@@ -2,7 +2,13 @@
 
 ## Data Disclaimer
 
-> **WARNING**: The application should (and can) be run locally if sensitive student data is being uploaded. Refer to the _Setup the Development Environment_ section for instructions.
+> **WARNING**: It is highly recommended to run the application locally if sensitive student data is being uploaded. Refer to the _Setup the Development Environment_ section for instructions.
+
+The application temporarily stores data in both your browser session storage and server memory. Personal identifiable information (first name, last name, user id) of the data is only used locally for display purposes, and does not get sent to the server. The model receives the data as student 1, 2, ... , n and returns the team assignments of student 1, 2, ... , n.
+
+In addition, every instance of the model is protected using a client-specific key, assigned when the model is started, which prevents any requests to the server from accessing a model that did not originate from the client that initiated the model.
+
+While these security measures are in place, it is not recommended to
 
 ## Deploy the Application
 
@@ -14,14 +20,9 @@ To deploy the application on Heroku, follow these steps:
 
 ## Setup the Development Environment
 
-To setup a development environment
+To setup a development environment, follow these steps:
 
 1. Clone the GitHub repository to your local device
 2. Using the terminal, open the root folder of the project
 3. Run the command `flask run` to launch Flask on a local port
-4. Open the local host address to
-
-If an error occurs when attempting to run the model on a new local device, there is likely an issue related to your local environment and the Python multiprocessing module. Please refer to these guides:
-
-[Windows]()
-[Mac]()
+4. Open the local host address in a browser to view the deployed application
