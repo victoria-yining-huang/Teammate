@@ -6,9 +6,14 @@ import string
 from model import run_model
 from flask import Response, jsonify
 
-manager = mp.Manager()
-model_dict = manager.dict()
-process = mp.Process()
+if __name__ == '__main__':
+    global manager
+    global model_dict
+    global process
+
+    manager = mp.Manager()
+    model_dict = manager.dict()
+    process = mp.Process()
 
 
 def generate_key(length):
@@ -119,13 +124,3 @@ def ping_model():
             "Message": "Test",
         },
         status=201)
-
-# start_model({"test": [1, 2, 3]})
-# key2 = "key"
-# stop = False
-# while not stop:
-#     sleep(1)
-#     res = get_model_status(key2)
-#     print(res)
-#     if (res["Status"] == "failed"):
-#         stop = True
