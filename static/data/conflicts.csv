@@ -1,4 +1,4 @@
-user_id,first_name,last_name,conflict_first_name,conflict_user_id,conflict_last_name
-mherm2,Mohammad,Herman,Willy,wmitc5,Mitchell
-hvanc2,Hung,Vance,Janette,jsala4,Salas
-hvanc2,Hung,Vance,Aurelio,ajone1,Jones
+user_id,first_name,last_name,conflict_user_id,conflict_first_name,conflict_last_name
+mherm2,Mohammad,Herman,wmitc5,Willy,Mitchell
+hvanc2,Hung,Vance,jsala4,Janette,Salas
+hvanc2,Hung,Vance,ajone1,Aurelio,Jones
