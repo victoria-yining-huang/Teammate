@@ -48,7 +48,7 @@ function generateTeams() {
   window.location.href = "/app/model.html";
 }
 
-function parseStudentData() {
+function parsingStudentData() {
   let input = document.getElementById("student_data");
   if (input.files && input.files[0]) {
     var myFile = input.files[0];
