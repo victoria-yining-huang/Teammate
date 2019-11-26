@@ -330,10 +330,6 @@ $("p").remove();
     console.log("bottom" + bottom);
 
 //now begins personal conflict
-    conflict = [];
-
-
-
 
   var data = JSON.parse(sessionStorage.getItem("data"));
   for (var team in data['teams']) {
@@ -345,15 +341,16 @@ $("p").remove();
       student = data['people'][membersOfTeam['members'][j]];
 
       for (t = 0; t < student['conflicts'].length; t++) {
-        conflict = [];
 
          if (membersOfTeam['members'].includes(student['conflicts'][t])){
              console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
              var conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
              var para = document.createElement("p");
+             para.setAttribute("class", "card-body");
             para.innerHTML = conflictString;
-            console.log(conflictString)
+            console.log(conflictString);
             document.getElementById("issueBox-" + team).appendChild(para);
+
          }
     }
 
@@ -381,6 +378,7 @@ for (var team in data['teams']) {
 
         var para = document.createElement("p");
         para.innerHTML = st;
+        para.setAttribute("class", "card-body");
         document.getElementById("issueBox-" + team).appendChild(para);
         }
         if (hasBott == false) {
@@ -389,6 +387,7 @@ for (var team in data['teams']) {
 
         var para = document.createElement("p");
         para.innerHTML = st;
+        para.setAttribute("class", "card-body");
         document.getElementById("issueBox-" + team).appendChild(para);
         }
 
