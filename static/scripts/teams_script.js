@@ -3,7 +3,7 @@ var dataStr;
 var data;
 var clickedID;
 var teamNum;
-
+var oldTeam;
 
 // Get the size of an object
 Object.size = function (obj) {
@@ -51,34 +51,38 @@ function getContent() {
 getConflictIssues();
 }
 
-function showMoveBanner(fullName, team_num) {
+function showMoveBanner(fullName) {
   var data = JSON.parse(sessionStorage.getItem("data"));
   $('#move-banner').show();
-  document.getElementById("move-banner-message").innerHTML = `Move ${fullName} from team ${team_num} to team:`
+  console.log(oldTeam)
+  document.getElementById("move-banner-message").innerHTML = "Move "+ `${fullName} from team `+ oldTeam +" "+ "to team:"
 }
 
 function hideMoveBanner() {
   $('#move-banner').hide();
 }
 
-function generateDropDown(team_num) {
+function generateDropDown() {
 
   $('#generateTeams')
     .find('option')
     .remove()
     .end();
 
+
   var data = JSON.parse(sessionStorage.getItem("data"));
   var x = document.getElementById("generateTeams");
   var size = Object.size(data["teams"]);
 
   for (var i = 1; i <= size; i++) {
-    if (i != team_num) {
+    if (i != oldTeam) {
       var option = document.createElement("option");
       option.text = i;
       x.add(option);
     }
   }
+
+
 }
 
 function moveMember() {
@@ -86,7 +90,7 @@ function moveMember() {
   var selectBox = document.getElementById("generateTeams");
   var newTeam = selectBox.options[selectBox.selectedIndex].value;
   var oldRow = document.getElementById("row-" + clickedID);
-  var oldTeam = parseInt(oldRow.parentNode.id.replace("table-", ""));
+  //var oldTeam = parseInt(oldRow.parentNode.id.replace("table-", ""));
   oldRow.parentNode.removeChild(oldRow);
 
   var newTeamTable = document.getElementById("table-" + newTeam);
@@ -114,6 +118,9 @@ function findMovedMemberInfo(clicked) {
   var sel = document.getElementById("generateTeams");
 
   clickedID = clicked;
+  var oldRow = document.getElementById("row-" + clickedID);
+  oldTeam = parseInt(oldRow.parentNode.id.replace("table-", ""));
+  console.log("ot"+oldTeam)
 
   console.log("student to move:" + clicked);
 
@@ -210,7 +217,7 @@ function createTeam(team_num, team) {
         btn.type = "button";
         btn.className = "btn btn-primary mb-2 mr-sm-2";
         btn.setAttribute("id", member);
-        btn.setAttribute("onClick", `generateDropDown(${team_num}); showMoveBanner("${fullName}", ${team_num}); findMovedMemberInfo(this.id);`);
+        btn.setAttribute("onClick", `findMovedMemberInfo(this.id);generateDropDown(); showMoveBanner("${fullName}"); `);
         btn.value = "move";
         memberCell.appendChild(btn);
 
