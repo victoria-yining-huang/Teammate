@@ -11,13 +11,13 @@ a:hover {
  #left{ 
   padding: 10px;
   float:left;  
-  width:60%; 
+  width:50%; 
   height:500px; 
 } 
 #right{    
   float:right; 
   width:40%; 
-  height:300px; 
+  height:400px; 
   border-left: 3px solid;
   border-color: #FFD700 ;
   padding-left: 20px;
@@ -71,7 +71,7 @@ a:hover {
             <p id="file-headers"p>
             <br />
             <h4>See a sample table for the student data file.</h4>
-            <h4><a href="data\students.csv" target="_blank" class="w3-margin-top"><b>
+            <h4><a href="static/data/students.csv" target="_blank" class="w3-margin-top"><b>
               Download Sample File</b></h4>
             </a>
             <!--  <br> <h5>2) Uploading an existing team file as a .xlsx file</h5> -->
@@ -99,6 +99,7 @@ a:hover {
             </button>
           </div>
         </div>
+
         <div id="tab-2" class="hidden">
           <div>    
             <div class="w3-container tab-header w3-center">
@@ -142,7 +143,40 @@ a:hover {
             </button>
           </div>
         </div>
+      
         <div id="tab-3" class="hidden">
+          <div>    
+            <div class="w3-container tab-header w3-center">
+            <h3>GPA Constraint</h3>
+            </div>
+            <div class="w3-container tab-content">
+              <div id="left">     
+              <h5>If you want to distribute students based on their GPA, click on the checkbox below. If not, then only the students conflicts will be taken into account<br> 
+              <input type="checkbox" id="ifgpa" checked>GPA</h5>
+              </div>
+              <div id= "right">
+              <h3>Instructions</h3>
+              <h5>Selecting the GPA constraint will attempt to distribute students of low, high GPAs unifromly in each team. The GPA constraint has three parts:
+              <ol>
+              <li>Average Constraint: Creates a team average and tries to get the team average as close as to the class average </li>
+              <li> Sum of deviation: Makes sure that each team has a similar sum of deviation from the team average.  </li>
+              <li> Top and bottom students: Makes sure there is a very strong student and a very weak student on each team.  </li>
+              </ol>
+              </h5>
+              </div>
+          </div>    
+          </div>
+          <div class="w3-container w3-blue tab-footer page-footer">
+            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-3', 'tab-2')">
+              Previous Step
+            </button>
+            <button id = "size-nextstep" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-3', 'tab-4')">
+              Next Step
+            </button>
+          </div>
+        </div>
+   
+        <div id="tab-4" class="hidden">
           <div class="w3-container tab-header w3-center">
             <h3>Upload Student Conflicts</h3>
           </div>
@@ -155,12 +189,18 @@ a:hover {
               <div id="file-upload-filename"></div>
             <!--</form>-->
             <p id="error" style="color:red; font-weight: bold;"p>
+
+            <p id="conflict-header-error" style="color:red; font-weight: bold;" p>
+
             <p id="successful" style="color:green; font-weight: bold;" p>
+
+            <p id="conflict-file-headers"p>
+
             <br />
             <h5>See a sample table for the student conflict file.</h5>
-            <a href="data\conflicts.csv" target="_blank" class="w3-margin-top"><b><h4>
+            <a href="static/data/conflicts.csv" target="_blank" class="w3-margin-top"><b><h4>
               Download Sample File</h4></b>
-            </a>
+            </a>   
           </div>
 
           <div id= "right">
@@ -175,7 +215,7 @@ a:hover {
 
         </div>
           <div class="w3-container w3-blue tab-footer page-footer">
-            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-3', 'tab-2')">
+            <button class="w3-button w3-black w3-xlarge w3-hover-white" onclick="nextTab('tab-4', 'tab-3')">
               Previous Step
             </button>
             <button id="generate" class="w3-button w3-black w3-xlarge w3-hover-white" onclick="generateTeams()">

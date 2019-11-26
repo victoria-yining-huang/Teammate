@@ -106,6 +106,7 @@ function prepareData() {
 	const students = JSON.parse(sessionStorage.getItem("students"));
 	const conflicts = JSON.parse(sessionStorage.getItem("conflicts"));
 	const team_size = sessionStorage.getItem("team_size");
+	const ifgpa = sessionStorage.getItem("ifgpa");
 
 	if (students != null && conflicts != null && team_size != null) {
 
@@ -134,6 +135,7 @@ function prepareData() {
 			}
 
 			// get gpa vector
+		
 			let gpas = students.map(function (value, index) {
 				return parseInt(value[4]);
 			});
@@ -143,7 +145,8 @@ function prepareData() {
 				num_teams: num_teams,
 				team_size: parseInt(team_size),
 				conflicts: conflicts_new,
-				gpas: gpas
+				gpas: gpas,
+				ifgpa : ifgpa
 			});
 
 		} catch (error) {
@@ -196,7 +199,7 @@ function processResult(result) {
 				firstName: student[1],
 				lastName: student[2],
 				email: student[3],
-				gpa: student[4],
+				gpa: parseInt(student[4]), //fixes the formatting error
 				conflicts: []
 			}
 			conflicts.forEach(function (conflict) {
