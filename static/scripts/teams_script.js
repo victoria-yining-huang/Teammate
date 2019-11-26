@@ -307,33 +307,6 @@ function showIssues() {
 
 }
 
-//function getGPATopBottomTiers(){
-//// this finds the people who are in top and bottom tiers of GPA
-//// top/bottom tier: top/bottom n GPAs (including duplicated values), where n = number of teams
-//    var data = JSON.parse(sessionStorage.getItem("data"));
-//    var n = data["teams"].length;
-//    gpa = [];
-////    for (var person in data["people"]) {
-////        console.log(person + );
-////
-//////        temp = [];
-//////        temp.push(Object.keys(person));
-//////        temp.push(Object.values(person)["gpa"]);
-//////        gpa.push(temp);
-//////        temp = [];
-////    }
-//    console.log(gpa);
-//
-//    gpaSorted = gpa.sort(function(a, b)
-//    {
-//        return a[1] - b[1];
-//    });
-//
-//    top = gpaSorted.slice(0, n);
-//    console.log("top is" + top);
-//    bottom = gpaSorted.slice((gpaSorted.length - 5), gpaSorted.length);
-//    console.log("bottom is" + bottom);
-//}
 
 function getFullName(id) {
     var data = JSON.parse(sessionStorage.getItem("data"));
@@ -343,55 +316,6 @@ function getFullName(id) {
     return fullName;
 }
 
-
-
-
-//function getConflictIssues(){
-//    console.log(data)
-//
-//    issueFullNameList = [];
-//    // this gets the personal conflicts within each team
-//    var data = JSON.parse(sessionStorage.getItem("data"));
-//    for (var team in data['teams']) {
-//    issueFullNameList = [];
-//      var conflictString = "";
-//      while (document.getElementById("issueBox-" + team).firstChild) {
-//        document.getElementById("issueBox-" + team).removeChild(document.getElementById("issueBox-" + team).firstChild);
-//      }
-//      var membersOfTeam = data['teams'][Object.values(team)];
-//      for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
-//        student = data['people'][membersOfTeam['members'][j]];
-//
-//        if (student['conflicts'].length !== 0) {
-//
-//          // array intersection between conflicts array and team member array for any given member
-//          issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
-//          console.log("issue for student" + student["id"] + "is " + issue)
-//          if (issue.length!==0) {
-//            var firstName = student["firstName"];
-//            var lastName = student["lastName"];
-//            var fullName = firstName + " " + lastName;
-//            for (var k = 0; k < issue.length; k++) {
-//            console.log(issue[k])
-//            issueFullName = getFullName(issue[k]);
-//            console.log(issueFullName)
-//            issueFullNameList.push(issueFullName);
-//        }
-//        var issueNamesAsString = issueFullNameList.join(', ');
-//        conflictString = fullName + " " + "has a conflict with " + issueNamesAsString;
-//        console.log(conflictString);
-//
-//
-//        }
-//        }
-//      }
-//        var para = document.createElement("P");
-//        para.innerHTML = conflictString;
-//        console.log("trying to append child to issueBox-" + team)
-//        document.getElementById("issueBox-" + team).appendChild(para);
-//        console.log("append successful")
-//    }
-//}
 
 function getConflictIssues(){
     console.log(data)
