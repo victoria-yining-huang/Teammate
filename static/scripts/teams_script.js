@@ -31,6 +31,8 @@ window.onload = function () {
      }
    });
 
+
+
 }
 
 function getContent() {
@@ -102,7 +104,8 @@ function moveMember() {
 
   sessionStorage.setItem("data", JSON.stringify(data))
 
-  hideMoveBanner()
+  hideMoveBanner();
+  getConflictIssues();
 
 }
 
@@ -236,88 +239,12 @@ function createTeam(team_num, team) {
 
   var container = document.getElementById("teams-container");
   container.appendChild(row);
+  getConflictIssues();
 }
 
 
 
 
-
-function populate(team) {
-  //make header row
-  var element = document.getElementById(team);
-
-  var table = document.createElement("table");
-  table.setAttribute("class", "table");
-  table.setAttribute("style", "table-layout: fixed");
-
-  //initialize header row
-  var head = document.createElement("THead");
-  var tr = document.createElement("TR");
-  var colHeaders = ["ID", "Name", "Acad", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"];
-  for (var j = 0; j < colHeaders.length; j++) {
-    var th = document.createElement("TH");
-    th.setAttribute("scope", "col");
-    th.style.width = "12.5%";
-    th.appendChild(document.createTextNode(colHeaders[j]));
-    tr.appendChild(th);
-  }
-  head.appendChild(tr);
-  table.appendChild(head);
-  element.appendChild(table);
-
-  sortTeam(team); // sort by academic standing
-
-  var teams = getTeams();
-  var students = getStudents();
-
-  //initialize tbody
-  var body = document.createElement("tbody");
-  var thisTeam = teams[team];
-
-  for (var i = 0; i < thisTeam.length; i++) {
-    var studentID = thisTeam[i]; //get a student from the team and store id
-    //get student info
-    var student = students[studentID]["name"];
-    var gender = students[studentID]["gender"];
-    var acad = students[studentID]["acad"];
-    var conflict = students[studentID]["conflict"];
-
-    // create move button for student
-    var btn = document.createElement("BUTTON");
-    btn.setAttribute("class", "btn btn-primary move-button");
-    // set button onclick = showMoveBar('studentID-team#')
-    btn.setAttribute("onClick", "showMoveBar('" + studentID + "-" + team + "')");
-    btn.appendChild(document.createTextNode("move"));
-
-    var btnBorder = document.createElement("TD");
-    btnBorder.appendChild(btn);
-
-    var studentAttributes = [studentID, student, gpa, gender, conflict];
-
-    //create new TR element for this row
-    var tr = document.createElement("TR");
-    var th = document.createElement("TH");
-    th.setAttribute("scope", "row");
-    th.append(document.createTextNode(i + 1));
-    th.appendChild(tr);
-
-    //fill row with attributes
-    for (k = 0; k < studentAttributes.length; k++) {
-      var td = document.createElement("TD");
-      if ((k !== 1) & (k !== 6)) {
-        td.style.whiteSpace = "nowrap";
-        td.style.overflow = "hidden";
-        td.style.textOverflow = "ellipsis";
-      }
-      td.appendChild(document.createTextNode(studentAttributes[k]));
-      tr.appendChild(td);
-    }
-    tr.appendChild(btnBorder); // add move button to student row
-    body.appendChild(tr);
-  }
-  table.appendChild(body);
-  element.appendChild(table);
-}
 
 function exportData() {
 
@@ -470,14 +397,14 @@ function getConflictIssues(){
     console.log(data)
     conflict = [];
 
+      $("p").remove();
+
     issueFullNameList = [];
-    // this gets the personal conflicts within each team
+
     var data = JSON.parse(sessionStorage.getItem("data"));
     for (var team in data['teams']) {
       var conflictString = "";
-      while (document.getElementById("issueBox-" + team).firstChild) {
-        document.getElementById("issueBox-" + team).removeChild(document.getElementById("issueBox-" + team).firstChild);
-      }
+
       var membersOfTeam = data['teams'][Object.values(team)];
       for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
         student = data['people'][membersOfTeam['members'][j]];
@@ -488,44 +415,15 @@ function getConflictIssues(){
          if (membersOfTeam['members'].includes(student['conflicts'][t])){
              console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
              conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
-             var para = document.createElement("P");
+             var para = document.createElement("p");
+             para.setAttribute("id", "issuesClear");
             para.innerHTML = conflictString;
+            console.log(conflictString)
             document.getElementById("issueBox-" + team).appendChild(para);
 
          }
-
-
-
-
-          //issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
-         // console.log("issue for student" + student["id"] + "is " + issue)
-//          if (issue.length!==0) {
-//            var firstName = student["firstName"];
-//            var lastName = student["lastName"];
-//            var fullName = firstName + " " + lastName;
-//            for (var k = 0; k < issue.length; k++) {
-//            console.log(issue[k])
-//            issueFullName = getFullName(issue[k]);
-//            console.log(issueFullName)
-//            issueFullNameList.push(issueFullName);
-//        }
-//        var issueNamesAsString = issueFullNameList.join(', ');
-//        conflictString = fullName + " " + "has a conflict with " + issueNamesAsString;
-//        console.log(conflictString);
-//
-//
-//        }
-//        }
-//      }
-//        var para = document.createElement("P");
-//        para.innerHTML = conflictString;
-//        console.log("trying to append child to issueBox-" + team)
-//        document.getElementById("issueBox-" + team).appendChild(para);
-//        console.log("append successful")
     }
-
 }
-
 }
 }
 
