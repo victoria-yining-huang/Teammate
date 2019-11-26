@@ -35,11 +35,13 @@ To setup a development environment, follow these steps:
 5. Ensure that the number of students found in the inputted file is correct
 6. Enter the preferred team size. The system will not accept negative integers, floats, or numbers larger than the total number of students found
 7. After entering an accepted team size, click the 'Next Step' button
-8. Access the Conflict Data file provided by Team 7 or download a sample Conflict Data file using the 'Download Sample File' button
-9. Click on the 'Upload Conflict Data' button and upload the Conflict Data file ensuring that the file is in .CSV format and has the correct header columns. If the uploaded file is not in an acceptable format, error messages will appear to assist
-10. Upon an upload of the correct Conflict Data file, click the 'Generate Teams' button in the bottom right hand corner
-11. On the Teams page, view the generated teams based on the uploaded files and team size specifications
-12. If you wish to move a member of a team, click on the move button next to the students name and specify which team to move them to in the displayed drop down
-13. Click submit to move the student
-14. When ready to export the generated teams, click the 'Export Teams' button where a file names 'teams.csv' will download to your local computer
-15. Click the 'Return to Start' button to return to the start of teammate.
+8. Select the GPA checkbox if you want to distribute students based on their GPA, otherwise only student conflicts will be taken into account
+9. Click the 'Next Step' button
+10. Access the Conflict Data file provided by Team 7 or download a sample Conflict Data file using the 'Download Sample File' button
+11. Click on the 'Upload Conflict Data' button and upload the Conflict Data file ensuring that the file is in .CSV format and has the correct header columns. If the uploaded file is not in an acceptable format, error messages will appear to assist
+12. Upon an upload of the correct Conflict Data file, click the 'Generate Teams' button in the bottom right hand corner
+13. On the Teams page, view the generated teams based on the uploaded files and team size specifications
+14. If you wish to move a member of a team, click on the move button next to the students name and specify which team to move them to in the displayed drop down
+15. Click submit to move the student
+16. When ready to export the generated teams, click the 'Export Teams' button where a file names 'teams.csv' will download to your local computer
+17. Click the 'Return to Start' button to return to the start of teammate.
