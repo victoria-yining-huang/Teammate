@@ -419,8 +419,56 @@ function getFullName(id) {
 
 
 
+//function getConflictIssues(){
+//    console.log(data)
+//
+//    issueFullNameList = [];
+//    // this gets the personal conflicts within each team
+//    var data = JSON.parse(sessionStorage.getItem("data"));
+//    for (var team in data['teams']) {
+//    issueFullNameList = [];
+//      var conflictString = "";
+//      while (document.getElementById("issueBox-" + team).firstChild) {
+//        document.getElementById("issueBox-" + team).removeChild(document.getElementById("issueBox-" + team).firstChild);
+//      }
+//      var membersOfTeam = data['teams'][Object.values(team)];
+//      for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
+//        student = data['people'][membersOfTeam['members'][j]];
+//
+//        if (student['conflicts'].length !== 0) {
+//
+//          // array intersection between conflicts array and team member array for any given member
+//          issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
+//          console.log("issue for student" + student["id"] + "is " + issue)
+//          if (issue.length!==0) {
+//            var firstName = student["firstName"];
+//            var lastName = student["lastName"];
+//            var fullName = firstName + " " + lastName;
+//            for (var k = 0; k < issue.length; k++) {
+//            console.log(issue[k])
+//            issueFullName = getFullName(issue[k]);
+//            console.log(issueFullName)
+//            issueFullNameList.push(issueFullName);
+//        }
+//        var issueNamesAsString = issueFullNameList.join(', ');
+//        conflictString = fullName + " " + "has a conflict with " + issueNamesAsString;
+//        console.log(conflictString);
+//
+//
+//        }
+//        }
+//      }
+//        var para = document.createElement("P");
+//        para.innerHTML = conflictString;
+//        console.log("trying to append child to issueBox-" + team)
+//        document.getElementById("issueBox-" + team).appendChild(para);
+//        console.log("append successful")
+//    }
+//}
+
 function getConflictIssues(){
     console.log(data)
+    conflict = [];
 
     issueFullNameList = [];
     // this gets the personal conflicts within each team
@@ -434,35 +482,51 @@ function getConflictIssues(){
       for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
         student = data['people'][membersOfTeam['members'][j]];
 
-        if (student['conflicts'].length !== 0) {
+        for (t = 0; t<student['conflicts'].length; t++) {
+            conflict = [];
 
-          // array intersection between conflicts array and team member array for any given member
-          issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
-          console.log("issue for student" + student["id"] + "is " + issue)
-          if (issue.length!==0) {
-            var firstName = student["firstName"];
-            var lastName = student["lastName"];
-            var fullName = firstName + " " + lastName;
-            for (var k = 0; k < issue.length; k++) {
-            console.log(issue[k])
-            issueFullName = getFullName(issue[k]);
-            console.log(issueFullName)
-            issueFullNameList.push(issueFullName);
-        }
-        var issueNamesAsString = issueFullNameList.join(', ');
-        conflictString = fullName + " " + "has a conflict with " + issueNamesAsString;
-        console.log(conflictString);
+         if (membersOfTeam['members'].includes(student['conflicts'][t])){
+             console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
+             conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
+             var para = document.createElement("P");
+            para.innerHTML = conflictString;
+            document.getElementById("issueBox-" + team).appendChild(para);
+
+         }
 
 
-        }
-        }
-      }
-        var para = document.createElement("P");
-        para.innerHTML = conflictString;
-        console.log("trying to append child to issueBox-" + team)
-        document.getElementById("issueBox-" + team).appendChild(para);
-        console.log("append successful")
+
+
+          //issue = data['teams'][Object.values(team)]['members'].filter(value => -1 !== data['people'][data['teams'][Object.values(team)]['members'][j]]['conflicts'].indexOf(value));
+         // console.log("issue for student" + student["id"] + "is " + issue)
+//          if (issue.length!==0) {
+//            var firstName = student["firstName"];
+//            var lastName = student["lastName"];
+//            var fullName = firstName + " " + lastName;
+//            for (var k = 0; k < issue.length; k++) {
+//            console.log(issue[k])
+//            issueFullName = getFullName(issue[k]);
+//            console.log(issueFullName)
+//            issueFullNameList.push(issueFullName);
+//        }
+//        var issueNamesAsString = issueFullNameList.join(', ');
+//        conflictString = fullName + " " + "has a conflict with " + issueNamesAsString;
+//        console.log(conflictString);
+//
+//
+//        }
+//        }
+//      }
+//        var para = document.createElement("P");
+//        para.innerHTML = conflictString;
+//        console.log("trying to append child to issueBox-" + team)
+//        document.getElementById("issueBox-" + team).appendChild(para);
+//        console.log("append successful")
     }
+
+}
+
+}
 }
 
 function getGPAIssues(){
