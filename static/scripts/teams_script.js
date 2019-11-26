@@ -37,6 +37,7 @@ window.onload = function () {
 
 function getContent() {
 
+
   var data = JSON.parse(sessionStorage.getItem("data"));
 
   if (data["model"]["hasConflicts"]) {
@@ -239,7 +240,8 @@ function createTeam(team_num, team) {
 
   var container = document.getElementById("teams-container");
   container.appendChild(row);
-  getConflictIssues();
+
+
 }
 
 
@@ -302,11 +304,6 @@ function download(filename, text) {
 //---------------------------------------- these are for the issue box -------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
-function showIssues() {
-// this adds elements on the frontend and populates the issue boxes
-
-}
-
 
 function getFullName(id) {
     var data = JSON.parse(sessionStorage.getItem("data"));
@@ -318,8 +315,31 @@ function getFullName(id) {
 
 
 function getConflictIssues(){
-    console.log(data)
+
+// this finds the people who are in top and bottom tiers of GPA
+// top/bottom tier: top/bottom n GPAs (including duplicated values), where n = number of teams
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    var n = Object.size(data["teams"]);
+    console.log(n)
+    gpa = [];
+     for (var team in data['teams']) {
+        var membersOfTeam = data['teams'][Object.values(team)];
+        for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
+            student = data['people'][membersOfTeam['members'][j]];
+            gpa.push(student["gpa"]);
+     }
+}
+   gpa.sort(function(a, b){return b-a});
+
+    var top = gpa.slice(0, n);
+    var bottom = gpa.slice((gpa.length - n), gpa.length);
+    console.log("gpa" + gpa);
+    console.log("top" + top);
+    console.log("bottom" + bottom);
+
+//now begins personal conflict
     conflict = [];
+
 
       $("p").remove();
 
@@ -338,21 +358,40 @@ function getConflictIssues(){
 
          if (membersOfTeam['members'].includes(student['conflicts'][t])){
              console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
-             conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
+             var conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
              var para = document.createElement("p");
-             para.setAttribute("id", "issuesClear");
             para.innerHTML = conflictString;
             console.log(conflictString)
             document.getElementById("issueBox-" + team).appendChild(para);
-
          }
     }
-}
-}
-}
-
-function getGPAIssues(){
-// a GPA issue occurs if the team is missing either a bottom or a top tier or both
 
 
+
+    }
 }
+for (var team in data['teams']) {
+    var membersOfTeam = data['teams'][Object.values(team)];
+      for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
+        student = data['people'][membersOfTeam['members'][j]];
+        if (!top.includes(student["gpa"])) {
+                st = "This team is missing a top tier student"
+                console.log("team" + team + "is missing a top tier student")
+
+             var para = document.createElement("p");
+            para.innerHTML = st;
+                document.getElementById("issueBox-" + team).appendChild(para);
+                break;
+            }
+            if (!bottom.includes(student["gpa"])) {
+                st = "This team is missing a bottom tier student"
+                console.log("team" + team + "is missing a top tier student")
+
+            para.innerHTML = st;
+                document.getElementById("issueBox-" + team).appendChild(para);
+                break;
+            }}
+}
+
+}
+
