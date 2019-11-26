@@ -74,7 +74,7 @@ function parseStudentData() {
         }
       }
       student_data = parsedata;
-      
+
       var expectedHeaders = "user_id,first_name,last_name,email,gpa";
       // error checking for the same header columns as expected
       //var toni = expectedHeaders == newLinebrk[0].trim();
@@ -123,7 +123,7 @@ function readConflicts() {
 
       var expectedHeadersforConflict = "user_id,first_name,last_name,conflict_user_id,conflict_first_name,conflict_last_name";
       // error checking for the same header columns as expected
-     // var toni = expectedHeadersforConflict == newLinebrk[0].trim();
+      // var toni = expectedHeadersforConflict == newLinebrk[0].trim();
       //document.getElementById("conflict-file-headers").innerHTML = toni;
 
       if (expectedHeadersforConflict == newLinebrk[0].trim() != true) { // checking the file extention to make sure that it is a CSV
@@ -385,6 +385,7 @@ function generateTeams() {
   sessionStorage.setItem('students', JSON.stringify(student_data))
   sessionStorage.setItem('conflicts', JSON.stringify(conflict_data))
   sessionStorage.setItem('team_size', document.getElementById("teamSize").value)
+  sessionStorage.setItem('ifgpa', document.getElementById("ifgpa").checked)
 
   window.location.href = "/app/model.html";
 }

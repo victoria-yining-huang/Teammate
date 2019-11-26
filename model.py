@@ -8,7 +8,7 @@ from mip import Model, xsum, minimize, BINARY, INTEGER, CONTINUOUS
 # Includes COIN-OR Linear Programming Solver - CLP
 
 
-def run_model(num_students, num_teams, team_size, conflicts, gpas,ifgpa=True):
+def run_model(num_students, num_teams, team_size, conflicts, gpas, ifgpa=True):
 
     #### MIP MODEL ####
     n = num_students * num_teams
@@ -60,8 +60,8 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas,ifgpa=True):
         m += xsum(x[i + j*num_teams]
                   for j in range(num_students)) + y[i] == team_size
 
-    if(ifgpa==True):
-    # Constraint: balance total team gpa to class average
+    if(ifgpa == True):
+        # Constraint: balance total team gpa to class average
         for i in range(num_teams):
             m += xsum((gpas[j] - class_avg) * x[i + j*num_teams]
                       for j in range(num_students)) + ygpa[i] - ygpa[i + num_teams] == 0
@@ -75,27 +75,28 @@ def run_model(num_students, num_teams, team_size, conflicts, gpas,ifgpa=True):
         for j in range(num_teams):
             m += zgpa >= ygpad[j]
 
+        # Constraint: Select the largest different between gpas on each team
+        for j in range(num_teams):
+            m += (gpas[i] * x[j + i*num_teams]
+                  for i in range(num_students)) >= topgpa[j]
+
+        # Find the lowest gpa on each team
+        for j in range(num_teams):
+            m += (gpas[i] * x[j + i*num_teams]
+                  for i in range(num_students)) <= botgpa[j]
+        # Find the difference between gpas on each team
+        for j in range(num_teams):
+            m += tdifgpa[j] == topgpa[j] - class_avg
+            m += bdifgpa[j] == class_avg - botgpa[j]
+
+        # Select largest difference
+        for j in range(num_teams):
+            m += tzdifgpa <= tdifgpa[j]
+            m += bzdifgpa <= bdifgpa[j]
+
     # Constraint: select largest deviation from team size
     for j in range(num_teams):
         m += z >= y[j]
-    
-    # Constraint: Select the largest different between gpas on each team
-
-    for j in range(num_teams):
-        m += (gpas[i] * x[j + i*num_teams] for i in range(num_students)) >= topgpa[j]
-  
-    # Find the lowest gpa on each team
-    for j in range(num_teams):
-        m +=(gpas[i] * x[j + i*num_teams] for i in range(num_students)) <= botgpa[j]
-    # Find the difference between gpas on each team
-    for j in range(num_teams):
-        m += tdifgpa[j] ==  topgpa[j] - class_avg
-        m += bdifgpa[j] ==  class_avg - botgpa[j]
-    
-    # Select largest difference
-    for j in range(num_teams):
-        m += tzdifgpa <= tdifgpa[j]
-        m += bzdifgpa <= bdifgpa[j]
 
     # Run the model
     m.optimize(max_seconds=60)
