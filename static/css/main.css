@@ -33,7 +33,6 @@
   margin: 20px 0px 20px;
 }
 
-
 .card-name {
   padding: 16px;
   background-color: #f7f7f7;
@@ -59,7 +58,9 @@
   width: 2%;
 }
 
-
+.issues-content {
+  padding: 16px;
+}
 
 body,
 h1,

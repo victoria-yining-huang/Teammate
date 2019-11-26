@@ -17,22 +17,19 @@ window.onload = function () {
 
   //sets the JSON object to a data hashmap
 
-//   data = JSON.parse(sessionStorage.getItem('output'));
-//   this.sessionStorage.setItem("data", JSON.stringify(data))
-//   this.getContent()
+  data = JSON.parse(sessionStorage.getItem('output'));
+  this.sessionStorage.setItem("data", JSON.stringify(data))
+  this.getContent()
 
   //removed the workaround for server errors
-    $.ajax({
-      url: "/get-sample-output",
-      type: "get",
-      success: function (resp) {
-        sessionStorage.setItem("data", JSON.stringify(resp));
-        getContent();
-     }
-   });
-
-
-
+  // $.ajax({
+  //   url: "/get-sample-output",
+  //   type: "get",
+  //   success: function (resp) {
+  //     sessionStorage.setItem("data", JSON.stringify(resp));
+  //     getContent();
+  //   }
+  // });
 }
 
 function getContent() {
@@ -257,15 +254,15 @@ function exportData() {
     var team = data["teams"][i];
 
     //adds column headings for the exported file
-    if(i==1){
-      teamString = "user_id" + "," + "First Name"+ "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
+    if (i == 1) {
+      teamString = "user_id" + "," + "First Name" + "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
     }
 
     for (const member of team["members"]) {
       var person = data["people"][member]
 
       //the columns printed
-      teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + ","+ person["email"]+ ","+ person["gpa"] +","  + i +"\n";
+      teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + "," + person["email"] + "," + person["gpa"] + "," + i + "\n";
     }
 
     //teamString = teamString + "\n"
@@ -303,56 +300,57 @@ function download(filename, text) {
 //----------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
 function showIssues() {
-// this adds elements on the frontend and populates the issue boxes
+  // this adds elements on the frontend and populates the issue boxes
 
 }
 
 
 function getFullName(id) {
-    var data = JSON.parse(sessionStorage.getItem("data"));
-    var firstName = data['people'][id]["firstName"];
-    var lastName = data['people'][id]["lastName"];
-    var fullName = firstName + " " + lastName;
-    return fullName;
+  var data = JSON.parse(sessionStorage.getItem("data"));
+  var firstName = data['people'][id]["firstName"];
+  var lastName = data['people'][id]["lastName"];
+  var fullName = firstName + " " + lastName;
+  return fullName;
 }
 
 
-function getConflictIssues(){
-    console.log(data)
-    conflict = [];
+function getConflictIssues() {
+  conflict = [];
 
-      $("p").remove();
+  $("p").remove();
 
-    issueFullNameList = [];
+  issueFullNameList = [];
 
-    var data = JSON.parse(sessionStorage.getItem("data"));
-    for (var team in data['teams']) {
-      var conflictString = "";
+  var data = JSON.parse(sessionStorage.getItem("data"));
+  for (var team in data['teams']) {
+    var conflictString = "";
 
-      var membersOfTeam = data['teams'][Object.values(team)];
-      for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
-        student = data['people'][membersOfTeam['members'][j]];
+    var membersOfTeam = data['teams'][team];
 
-        for (t = 0; t<student['conflicts'].length; t++) {
-            conflict = [];
+    for (var j = 0; j < data['teams'][team]['members'].length; j++) {
+      student = data['people'][membersOfTeam['members'][j]];
 
-         if (membersOfTeam['members'].includes(student['conflicts'][t])){
-             console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
-             conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
-             var para = document.createElement("p");
-             para.setAttribute("id", "issuesClear");
-            para.innerHTML = conflictString;
-            console.log(conflictString)
-            document.getElementById("issueBox-" + team).appendChild(para);
+      for (t = 0; t < student['conflicts'].length; t++) {
+        conflict = [];
 
-         }
+        if (membersOfTeam['members'].includes(student['conflicts'][t])) {
+          console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
+          conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
+          var para = document.createElement("p");
+          para.setAttribute("id", "issuesClear");
+          para.setAttribute("class", "issues-content");
+          para.innerHTML = conflictString;
+          console.log(conflictString)
+          document.getElementById("issueBox-" + team).appendChild(para);
+
+        }
+      }
     }
-}
-}
+  }
 }
 
-function getGPAIssues(){
-// a GPA issue occurs if the team is missing either a bottom or a top tier or both
+function getGPAIssues() {
+  // a GPA issue occurs if the team is missing either a bottom or a top tier or both
 
 
 }
