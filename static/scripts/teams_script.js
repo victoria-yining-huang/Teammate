@@ -4,6 +4,7 @@ var data;
 var clickedID;
 var teamNum;
 
+
 // Get the size of an object
 Object.size = function (obj) {
   var size = 0, key;
@@ -50,7 +51,7 @@ function getContent() {
     createTeam(teamNum, team);
   }
 
-
+getConflictIssues();
 }
 
 function showMoveBanner(fullName, team_num) {
@@ -70,7 +71,7 @@ function generateDropDown(team_num) {
     .remove()
     .end();
 
-  var data = JSON.parse(sessionStorage.data);
+  var data = JSON.parse(sessionStorage.getItem("data"));
   var x = document.getElementById("generateTeams");
   var size = Object.size(data["teams"]);
 
@@ -121,17 +122,6 @@ function findMovedMemberInfo(clicked) {
 
 }
 
-function getTeams() {
-  return JSON.parse(sessionStorage.teams);
-}
-
-function getStudents() {
-  return JSON.parse(sessionStorage.students);
-}
-
-function getIssues() {
-  return JSON.parse(sessionStorage.issues);
-}
 
 function createTeam(team_num, team) {
 
@@ -245,9 +235,6 @@ function createTeam(team_num, team) {
 }
 
 
-
-
-
 function exportData() {
 
   var data = JSON.parse(sessionStorage.getItem("data"));
@@ -316,6 +303,7 @@ function getFullName(id) {
 
 function getConflictIssues(){
 
+$("p").remove();
 // this finds the people who are in top and bottom tiers of GPA
 // top/bottom tier: top/bottom n GPAs (including duplicated values), where n = number of teams
     var data = JSON.parse(sessionStorage.getItem("data"));
@@ -341,7 +329,7 @@ function getConflictIssues(){
     conflict = [];
 
 
-      $("p").remove();
+
 
     issueFullNameList = [];
 
@@ -371,26 +359,36 @@ function getConflictIssues(){
     }
 }
 for (var team in data['teams']) {
+    var hasTop = false;
+    var hasBott = false;
     var membersOfTeam = data['teams'][Object.values(team)];
       for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
         student = data['people'][membersOfTeam['members'][j]];
-        if (!top.includes(student["gpa"])) {
-                st = "This team is missing a top tier student"
-                console.log("team" + team + "is missing a top tier student")
-
-             var para = document.createElement("p");
-            para.innerHTML = st;
-                document.getElementById("issueBox-" + team).appendChild(para);
-                break;
+        console.log("student is " + student["id"])
+        if (top.includes(student["gpa"])) {
+            hasTop = true;
             }
-            if (!bottom.includes(student["gpa"])) {
-                st = "This team is missing a bottom tier student"
-                console.log("team" + team + "is missing a top tier student")
+        if (bottom.includes(student["gpa"])) {
+            hasBott = true;
+            }
+           }
+        if (hasTop == false) {
+        st = "This team is missing a top tier student"
+        console.log("team" + team + "is missing a top tier student")
 
-            para.innerHTML = st;
-                document.getElementById("issueBox-" + team).appendChild(para);
-                break;
-            }}
+        var para = document.createElement("p");
+        para.innerHTML = st;
+        document.getElementById("issueBox-" + team).appendChild(para);
+        }
+        if (hasBott == false) {
+        st = "This team is missing a bottom tier student"
+        console.log("team" + team + "is missing a bottom tier student")
+
+        var para = document.createElement("p");
+        para.innerHTML = st;
+        document.getElementById("issueBox-" + team).appendChild(para);
+        }
+
 }
 
 }
