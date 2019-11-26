@@ -42,6 +42,7 @@ To setup a development environment, follow these steps:
 12. Upon an upload of the correct Conflict Data file, click the 'Generate Teams' button in the bottom right hand corner
 13. On the Teams page, view the generated teams based on the uploaded files and team size specifications
 14. If you wish to move a member of a team, click on the move button next to the students name and specify which team to move them to in the displayed drop down
-15. Click submit to move the student
-16. When ready to export the generated teams, click the 'Export Teams' button where a file names 'teams.csv' will download to your local computer
-17. Click the 'Return to Start' button to return to the start of teammate.
+15. The personal conflicts within each team will be populated in the issue boxes. These will be updated after moving each member.
+16. Click submit to move the student
+17. When ready to export the generated teams, click the 'Export Teams' button where a file names 'teams.csv' will download to your local computer
+18. Click the 'Return to Start' button to return to the start of teammate.
