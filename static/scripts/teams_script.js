@@ -17,20 +17,22 @@ window.onload = function () {
 
   //sets the JSON object to a data hashmap
 
-   data = JSON.parse(sessionStorage.getItem('output'));
-   this.sessionStorage.setItem("data", JSON.stringify(data))
-   this.getContent()
+//   data = JSON.parse(sessionStorage.getItem('output'));
+//   this.sessionStorage.setItem("data", JSON.stringify(data))
+//   this.getContent()
 
   //removed the workaround for server errors
-  //  $.ajax({
-  //    url: "/get-sample-output",
-  //    type: "get",
-  //    success: function (resp) {
-  //      sessionStorage.setItem("data", JSON.stringify(resp));
-  //      getContent();
-  //   }
-  // });
-  
+    $.ajax({
+      url: "/get-sample-output",
+      type: "get",
+      success: function (resp) {
+        sessionStorage.setItem("data", JSON.stringify(resp));
+        getContent();
+     }
+   });
+
+
+
 }
 
 function getContent() {
@@ -51,6 +53,7 @@ function getContent() {
 }
 
 function showMoveBanner(fullName, team_num) {
+  var data = JSON.parse(sessionStorage.getItem("data"));
   $('#move-banner').show();
   document.getElementById("move-banner-message").innerHTML = `Move ${fullName} from team ${team_num} to team:`
 }
@@ -80,6 +83,7 @@ function generateDropDown(team_num) {
 }
 
 function moveMember() {
+  var data = JSON.parse(sessionStorage.getItem("data"));
   var selectBox = document.getElementById("generateTeams");
   var newTeam = selectBox.options[selectBox.selectedIndex].value;
   var oldRow = document.getElementById("row-" + clickedID);
@@ -100,7 +104,9 @@ function moveMember() {
 
   sessionStorage.setItem("data", JSON.stringify(data))
 
-  hideMoveBanner()
+  hideMoveBanner();
+  getConflictIssues();
+
 }
 
 function findMovedMemberInfo(clicked) {
@@ -138,6 +144,7 @@ function createTeam(team_num, team) {
   cell_divider.setAttribute("class", "w3-cell cell-divider");
   var cell_team_issues = document.createElement("div");
   cell_team_issues.setAttribute("class", "w3-container w3-cell cell-team-issues w3-card");
+  cell_team_issues.setAttribute("id", "issueBox-" + teamNum);
   row.appendChild(cell_team_members);
   row.appendChild(cell_divider);
   row.appendChild(cell_team_issues);
@@ -151,8 +158,6 @@ function createTeam(team_num, team) {
   issueName.setAttribute("class", "card-name ");
   issueName.innerHTML = "Issues";
   cell_team_issues.appendChild(issueName);
-
-
 
   var table_members = document.createElement("table");
 
@@ -234,88 +239,12 @@ function createTeam(team_num, team) {
 
   var container = document.getElementById("teams-container");
   container.appendChild(row);
+  getConflictIssues();
 }
 
 
 
 
-
-function populate(team) {
-  //make header row
-  var element = document.getElementById(team);
-
-  var table = document.createElement("table");
-  table.setAttribute("class", "table");
-  table.setAttribute("style", "table-layout: fixed");
-
-  //initialize header row
-  var head = document.createElement("THead");
-  var tr = document.createElement("TR");
-  var colHeaders = ["ID", "Name", "Acad", "Prog Skill", "Proj Skill", "Gender", "Conflicts", "Move"];
-  for (var j = 0; j < colHeaders.length; j++) {
-    var th = document.createElement("TH");
-    th.setAttribute("scope", "col");
-    th.style.width = "12.5%";
-    th.appendChild(document.createTextNode(colHeaders[j]));
-    tr.appendChild(th);
-  }
-  head.appendChild(tr);
-  table.appendChild(head);
-  element.appendChild(table);
-
-  sortTeam(team); // sort by academic standing
-
-  var teams = getTeams();
-  var students = getStudents();
-
-  //initialize tbody
-  var body = document.createElement("tbody");
-  var thisTeam = teams[team];
-
-  for (var i = 0; i < thisTeam.length; i++) {
-    var studentID = thisTeam[i]; //get a student from the team and store id
-    //get student info
-    var student = students[studentID]["name"];
-    var gender = students[studentID]["gender"];
-    var acad = students[studentID]["acad"];
-    var conflict = students[studentID]["conflict"];
-
-    // create move button for student
-    var btn = document.createElement("BUTTON");
-    btn.setAttribute("class", "btn btn-primary move-button");
-    // set button onclick = showMoveBar('studentID-team#')
-    btn.setAttribute("onClick", "showMoveBar('" + studentID + "-" + team + "')");
-    btn.appendChild(document.createTextNode("move"));
-
-    var btnBorder = document.createElement("TD");
-    btnBorder.appendChild(btn);
-
-    var studentAttributes = [studentID, student, gpa, gender, conflict];
-
-    //create new TR element for this row
-    var tr = document.createElement("TR");
-    var th = document.createElement("TH");
-    th.setAttribute("scope", "row");
-    th.append(document.createTextNode(i + 1));
-    th.appendChild(tr);
-
-    //fill row with attributes
-    for (k = 0; k < studentAttributes.length; k++) {
-      var td = document.createElement("TD");
-      if ((k !== 1) & (k !== 6)) {
-        td.style.whiteSpace = "nowrap";
-        td.style.overflow = "hidden";
-        td.style.textOverflow = "ellipsis";
-      }
-      td.appendChild(document.createTextNode(studentAttributes[k]));
-      tr.appendChild(td);
-    }
-    tr.appendChild(btnBorder); // add move button to student row
-    body.appendChild(tr);
-  }
-  table.appendChild(body);
-  element.appendChild(table);
-}
 
 function exportData() {
 
@@ -331,10 +260,10 @@ function exportData() {
     if(i==1){
       teamString = "user_id" + "," + "First Name"+ "," + "Last Name" + "," + "e-mail" + "," + "GPA" + "," + "Team" + "\n"
     }
-    
+
     for (const member of team["members"]) {
       var person = data["people"][member]
-      
+
       //the columns printed
       teamString = teamString + person["id"] + "," + person["firstName"] + "," + person["lastName"] + ","+ person["email"]+ ","+ person["gpa"] +","  + i +"\n";
     }
@@ -366,4 +295,64 @@ function download(filename, text) {
   element.click();
 
   document.body.removeChild(element);
+}
+
+//----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+//---------------------------------------- these are for the issue box -------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+function showIssues() {
+// this adds elements on the frontend and populates the issue boxes
+
+}
+
+
+function getFullName(id) {
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    var firstName = data['people'][id]["firstName"];
+    var lastName = data['people'][id]["lastName"];
+    var fullName = firstName + " " + lastName;
+    return fullName;
+}
+
+
+function getConflictIssues(){
+    console.log(data)
+    conflict = [];
+
+      $("p").remove();
+
+    issueFullNameList = [];
+
+    var data = JSON.parse(sessionStorage.getItem("data"));
+    for (var team in data['teams']) {
+      var conflictString = "";
+
+      var membersOfTeam = data['teams'][Object.values(team)];
+      for (var j = 0; j < data['teams'][Object.values(team)]['members'].length; j++) {
+        student = data['people'][membersOfTeam['members'][j]];
+
+        for (t = 0; t<student['conflicts'].length; t++) {
+            conflict = [];
+
+         if (membersOfTeam['members'].includes(student['conflicts'][t])){
+             console.log("student" + getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t]))
+             conflictString = getFullName(student["id"]) + " has a conflict with " + getFullName(student['conflicts'][t])
+             var para = document.createElement("p");
+             para.setAttribute("id", "issuesClear");
+            para.innerHTML = conflictString;
+            console.log(conflictString)
+            document.getElementById("issueBox-" + team).appendChild(para);
+
+         }
+    }
+}
+}
+}
+
+function getGPAIssues(){
+// a GPA issue occurs if the team is missing either a bottom or a top tier or both
+
+
 }
