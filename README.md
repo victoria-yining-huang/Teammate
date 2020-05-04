@@ -1,5 +1,7 @@
 # Teammate Documentation
 
+Find the deployed software here: http://msci342-teammate.herokuapp.com/
+
 ## Data Disclaimer
 
 > **WARNING**: It is highly recommended to run the application locally if sensitive student data is being uploaded. Refer to the _Setup the Development Environment_ section for instructions.
